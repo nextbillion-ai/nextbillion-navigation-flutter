@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Theme applied to the Android Window while the process is starting when the OS's Dark Mode setting is off -->
+    <style name="LaunchTheme" parent="@android:style/Theme.Light.NoTitleBar">
+        <!-- Show a splash screen on the activity. Automatically removed when
+             the Flutter engine draws its first frame -->
+        <item name="android:windowBackground">@drawable/launch_background</item>
+    </style>
+    <!-- Theme applied to the Android Window as soon as the process has started.
+         This theme determines the color of the Android Window while your
+         Flutter UI initializes, as well as behind your Flutter UI while its
+         running.
+
+         This Theme is only used starting with V2 of Flutter's Android embedding. -->
+    <style name="NormalTheme" parent="@android:style/Theme.Light.NoTitleBar">
+        <item name="android:windowBackground">?android:colorBackground</item>
+    </style>
+
+    <style name="CustomNavigationViewLight" parent="NavigationViewLight">
+        <!--customize your navigation style-->
+        <item name="navViewRouteStyle">@style/CustomRouteStyle</item>
+        <item name="navViewBannerBackground">#FFC84E0D</item>
+        <item name="navViewBannerPrimaryText">#FF9E10FF</item>
+        <item name="navViewBannerSecondaryText">#FFFA8C1C</item>
+        <item name="navViewBannerManeuverPrimary">#FF4E2EFF</item>
+        <item name="navViewPrimaryText">#FFFF0115</item>
+        <item name="navViewSecondaryText">#FF1A6620</item>
+        <item name="navigationViewRouteOverviewDrawable">@drawable/ic_baseline_navigation_24</item>
+        <item name="navViewRouteOverviewBackground">#FF41FF00</item>
+        <item name="navViewListBackground">#FFFFC0A8</item>
+        <item name="navViewListPrimary">#FF6E7ACA</item>
+        <item name="navViewListSecondary">#FF003CE0</item>
+        <item name="navViewListManeuverPrimary">#FFA90403</item>
+        <item name="navViewListManeuverSecondary">#FFA90403</item>
+        <item name="navigationViewReCentreInfoColor">#FFA90403</item>
+        <item name="navigationViewReCentreBackgroundDrawable">@drawable/recenter_btn_background</item>
+        <item name="navViewSoundColor">#FFA90403</item>
+        <item name="navViewSoundBackgroundColor">#FF6E7ACA</item>
+        <item name="navViewPauseColor">#FFFFC0A8</item>
+        <item name="navViewPauseBackgroundColor">#FFFFFFFF</item>
+        <item name="navViewRestartColor">#FFFFC0A8</item>
+        <item name="navViewRestartBackgroundColor">#FFFFFFFF</item>
+        <item name="navigationCurrentSpeedBackgroundColor">#FF6E7ACA</item>
+        <item name="navigationCurrentSpeedTextColor">#FF000000</item>
+        <item name="navigationCurrentSpeedUnitTextColor">#FF9E10FF</item>
+        <item name="navViewMapStyle">https://api.nextbillion.io/tt/style/1/style/22.2.1-9?map=2/basic_street-light</item>
+    </style>
+
+
+    <style name="CustomRouteStyle" parent="NavigationMapRoute">
+        <item name="routeColor">#FFE97F2F</item>
+        <item name="routeScale">1.0</item>
+        <item name="alternativeRouteScale">1.0</item>
+        <item name="routeShieldColor">#FF54E910</item>
+        <item name="routeFloatDurationBackgroundPrimary">#FFE97F2F</item>
+        <item name="maneuverArrowColor">#FFFF0106</item>
+        <item name="maneuverArrowBorderColor">#FF70C35D</item>
+        <item name="routeWayNameBackGroundColor">#FFE97F2F</item>
+        <item name="routeWayNameTextColor">#FFFFFFFF</item>
+        <item name="navigationDissolvedRouteColor">#FFFFC0A8</item>
+        <item name="navigationDissolvedAnimatedRouteColor">#FF54E910</item>
+    </style>
+</resources>

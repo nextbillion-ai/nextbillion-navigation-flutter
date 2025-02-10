@@ -1,0 +1,1504 @@
+{
+    "geometry":"aegnAebu}dE~@iD~BwJz@sCxDkLxAaEzBqG|EeP~HoW|EePlAkEvGsOjEwMnBwHhAcDlByFbCaInF~AuCtImE~NqNb`@iC`I}AxEuCvI{HpU}CdKe@vDm@~Ck@xDwAfEoDpKwBpFkH|T_FhO_E~LeElMy@fC{FjQiD|JcAjCwApD{AhD?lEHxAj@jCd@xBRz@`@jAp@xBlFHrEFpHChNYxOgAzGq@zFo@lAMlMcBzDm@nBYjC]hAMpEm@~I_AxLgAfVwDb@G|IsAhQgCXuAzAkAxAq@n]_JdEq@zCWTQfAy@lCgApDo@xFiAjP}B~LkAtI}@pCc@pCw@bD_A`DsAnFgCxDuCvFqElGiGvFmFrFgG|CwD~A_B~@y@~AaAlC}AzDkBzIwMhIaMvJ{NfZ}j@tNiWlC}Epe@k|@R}FZmEf@wCxC_JpDgHpSmb@bHmMlA_C|HcNlH}KpHkLjV}VtCqD`DhC~AvAvCdCdC`CfHjGjC|BjB|ArAxArBhBlBhB\\`@pA`AzAx@nCp@tCrArFxAfAMrA?tBk@bD{@zB_@dBa@`AYhAa@`G}CfBUrA{AqCs@eHwDw@cAU}@Ck@",
+    "distance":2704.7,
+    "duration":443.4,
+    "start_location":{
+       "latitude":1.298529,
+       "longitude":103.787571
+    },
+    "end_location":{
+       "latitude":1.287848,
+       "longitude":103.792777
+    },
+    "legs":[
+       {
+          "distance":{
+             "value":2704
+          },
+          "duration":{
+             "value":443
+          },
+          "start_location":{
+             "latitude":1.298529,
+             "longitude":103.787571
+          },
+          "end_location":{
+             "latitude":1.287848,
+             "longitude":103.792777
+          },
+          "steps":[
+             {
+                "geometry":"aegnAebu}dE~@iD~BwJz@sCxDkLxAaEzBqG|EeP~HoW|EePlAkEvGsOjEwMnBwHhAcDlByF",
+                "start_location":{
+                   "latitude":1.298529,
+                   "longitude":103.787571
+                },
+                "end_location":{
+                   "latitude":1.297392,
+                   "longitude":103.790275
+                },
+                "distance":{
+                   "value":326
+                },
+                "duration":{
+                   "value":64
+                },
+                "maneuver":{
+                   "instruction":"Head southeast on Ayer Rajah Avenue",
+                   "voice_instruction":[
+                      
+                   ],
+                   "bearing_before":0,
+                   "bearing_after":111,
+                   "bearing":0,
+                   "coordinate":{
+                      "latitude":1.298529,
+                      "longitude":103.787571
+                   },
+                   "maneuver_type":"depart"
+                },
+                "name":"Ayer Rajah Avenue",
+                "intersections":[
+                   {
+                      "location":{
+                         "latitude":1.298529,
+                         "longitude":103.787571
+                      },
+                      "bearings":[
+                         111
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":0,
+                      "intersection_out":0,
+                      "lanes":[
+                         
+                      ]
+                   },
+                   {
+                      "location":{
+                         "latitude":1.298403,
+                         "longitude":103.787918
+                      },
+                      "bearings":[
+                         90,
+                         120,
+                         285
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":2,
+                      "intersection_out":1,
+                      "lanes":[
+                         
+                      ]
+                   },
+                   {
+                      "location":{
+                         "latitude":1.29831,
+                         "longitude":103.788132
+                      },
+                      "bearings":[
+                         30,
+                         120,
+                         210,
+                         300
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":3,
+                      "intersection_out":1,
+                      "lanes":[
+                         
+                      ]
+                   },
+                   {
+                      "location":{
+                         "latitude":1.298265,
+                         "longitude":103.788229
+                      },
+                      "bearings":[
+                         30,
+                         120,
+                         210,
+                         300
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":3,
+                      "intersection_out":1,
+                      "lanes":[
+                         
+                      ]
+                   },
+                   {
+                      "location":{
+                         "latitude":1.298203,
+                         "longitude":103.788366
+                      },
+                      "bearings":[
+                         105,
+                         300,
+                         330
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":1,
+                      "intersection_out":0,
+                      "lanes":[
+                         
+                      ]
+                   },
+                   {
+                      "location":{
+                         "latitude":1.298092,
+                         "longitude":103.788641
+                      },
+                      "bearings":[
+                         30,
+                         105,
+                         285
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":2,
+                      "intersection_out":1,
+                      "lanes":[
+                         
+                      ]
+                   },
+                   {
+                      "location":{
+                         "latitude":1.297932,
+                         "longitude":103.789033
+                      },
+                      "bearings":[
+                         15,
+                         105,
+                         285
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":2,
+                      "intersection_out":1,
+                      "lanes":[
+                         
+                      ]
+                   },
+                   {
+                      "location":{
+                         "latitude":1.297821,
+                         "longitude":103.789308
+                      },
+                      "bearings":[
+                         45,
+                         105,
+                         285
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":2,
+                      "intersection_out":1,
+                      "lanes":[
+                         
+                      ]
+                   },
+                   {
+                      "location":{
+                         "latitude":1.297782,
+                         "longitude":103.78941
+                      },
+                      "bearings":[
+                         30,
+                         120,
+                         285
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":2,
+                      "intersection_out":1,
+                      "lanes":[
+                         
+                      ]
+                   },
+                   {
+                      "location":{
+                         "latitude":1.297484,
+                         "longitude":103.790068
+                      },
+                      "bearings":[
+                         90,
+                         120,
+                         285
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":2,
+                      "intersection_out":1,
+                      "lanes":[
+                         
+                      ]
+                   }
+                ],
+                "road_shield_type":{
+                   
+                },
+                "driving_side":"left"
+             },
+             {
+                "geometry":"_~dnAekz}dEbCaInF~AuCtImE~NqNb`@iC`I}AxEuCvI{HpU}CdKe@vDm@~Ck@xDwAfEoDpKwBpFkH|T_FhO_E~LeElMy@fC{FjQiD|JcAjCwApD{AhD",
+                "start_location":{
+                   "latitude":1.297392,
+                   "longitude":103.790275
+                },
+                "end_location":{
+                   "latitude":1.299138,
+                   "longitude":103.785882
+                },
+                "distance":{
+                   "value":579
+                },
+                "duration":{
+                   "value":120
+                },
+                "maneuver":{
+                   "instruction":"Make a U-turn and continue on Ayer Rajah Avenue",
+                   "voice_instruction":[
+                      {
+                         "distance_along_geometry":320,
+                         "unit":"meters",
+                         "instruction":"In 320 meters, Make a U-turn and continue on Ayer Rajah Avenue"
+                      },
+                      {
+                         "distance_along_geometry":200,
+                         "unit":"meters",
+                         "instruction":"In 200 meters, Make a U-turn and continue on Ayer Rajah Avenue"
+                      },
+                      {
+                         "distance_along_geometry":50,
+                         "unit":"meters",
+                         "instruction":"Make a U-turn and continue on Ayer Rajah Avenue"
+                      }
+                   ],
+                   "bearing_before":112,
+                   "bearing_after":111,
+                   "bearing":0,
+                   "coordinate":{
+                      "latitude":1.297392,
+                      "longitude":103.790275
+                   },
+                   "maneuver_type":"continue",
+                   "modifier":"uturn"
+                },
+                "name":"Ayer Rajah Avenue",
+                "intersections":[
+                   {
+                      "location":{
+                         "latitude":1.297392,
+                         "longitude":103.790275
+                      },
+                      "bearings":[
+                         30,
+                         105,
+                         210,
+                         300
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":3,
+                      "intersection_out":1,
+                      "lanes":[
+                         
+                      ]
+                   },
+                   {
+                      "location":{
+                         "latitude":1.297326,
+                         "longitude":103.790436
+                      },
+                      "bearings":[
+                         30,
+                         120,
+                         195,
+                         285
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":3,
+                      "intersection_out":2,
+                      "lanes":[
+                         
+                      ]
+                   },
+                   {
+                      "location":{
+                         "latitude":1.297206,
+                         "longitude":103.790388
+                      },
+                      "bearings":[
+                         15,
+                         105,
+                         300
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":0,
+                      "intersection_out":2,
+                      "lanes":[
+                         
+                      ]
+                   },
+                   {
+                      "location":{
+                         "latitude":1.297281,
+                         "longitude":103.790217
+                      },
+                      "bearings":[
+                         30,
+                         120,
+                         285
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":1,
+                      "intersection_out":2,
+                      "lanes":[
+                         
+                      ]
+                   },
+                   {
+                      "location":{
+                         "latitude":1.298125,
+                         "longitude":103.788168
+                      },
+                      "bearings":[
+                         30,
+                         105,
+                         210,
+                         300
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":1,
+                      "intersection_out":3,
+                      "lanes":[
+                         
+                      ]
+                   },
+                   {
+                      "location":{
+                         "latitude":1.298169,
+                         "longitude":103.788068
+                      },
+                      "bearings":[
+                         30,
+                         120,
+                         210,
+                         300
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":1,
+                      "intersection_out":3,
+                      "lanes":[
+                         
+                      ]
+                   },
+                   {
+                      "location":{
+                         "latitude":1.298675,
+                         "longitude":103.78691
+                      },
+                      "bearings":[
+                         30,
+                         120,
+                         210,
+                         300
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":1,
+                      "intersection_out":3,
+                      "lanes":[
+                         
+                      ]
+                   }
+                ],
+                "road_shield_type":{
+                   
+                },
+                "driving_side":"left"
+             },
+             {
+                "geometry":"ckhnAsxq}dE?lEHxAj@jCd@xBRz@`@jAp@xB",
+                "start_location":{
+                   "latitude":1.299138,
+                   "longitude":103.785882
+                },
+                "end_location":{
+                   "latitude":1.29904,
+                   "longitude":103.785474
+                },
+                "distance":{
+                   "value":47
+                },
+                "duration":{
+                   "value":5
+                },
+                "maneuver":{
+                   "instruction":"Make a slight left onto North Buona Vista Road, then turn left to stay on North Buona Vista Road",
+                   "voice_instruction":[
+                      {
+                         "distance_along_geometry":570,
+                         "unit":"meters",
+                         "instruction":"In 570 meters, Make a slight left onto North Buona Vista Road"
+                      },
+                      {
+                         "distance_along_geometry":200,
+                         "unit":"meters",
+                         "instruction":"In 200 meters, Make a slight left onto North Buona Vista Road"
+                      },
+                      {
+                         "distance_along_geometry":50,
+                         "unit":"meters",
+                         "instruction":"Make a slight left onto North Buona Vista Road, then turn left to stay on North Buona Vista Road"
+                      }
+                   ],
+                   "bearing_before":295,
+                   "bearing_after":270,
+                   "bearing":0,
+                   "coordinate":{
+                      "latitude":1.299138,
+                      "longitude":103.785882
+                   },
+                   "maneuver_type":"turn",
+                   "modifier":"slight left"
+                },
+                "name":"North Buona Vista Road",
+                "intersections":[
+                   {
+                      "location":{
+                         "latitude":1.299138,
+                         "longitude":103.785882
+                      },
+                      "bearings":[
+                         120,
+                         270,
+                         300
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":0,
+                      "intersection_out":1,
+                      "lanes":[
+                         
+                      ]
+                   }
+                ],
+                "road_shield_type":{
+                   
+                },
+                "driving_side":"left"
+             },
+             {
+                "geometry":"_ehnAc_q}dElFHrEFpHChNYxOgAzGq@zFo@lAMlMcBzDm@nBYjC]hAMpEm@~I_AxLgAfVwDb@G|IsAhQgC",
+                "start_location":{
+                   "latitude":1.29904,
+                   "longitude":103.785474
+                },
+                "end_location":{
+                   "latitude":1.295993,
+                   "longitude":103.785977
+                },
+                "distance":{
+                   "value":342
+                },
+                "duration":{
+                   "value":24
+                },
+                "maneuver":{
+                   "instruction":"Turn left to stay on North Buona Vista Road",
+                   "voice_instruction":[
+                      
+                   ],
+                   "bearing_before":247,
+                   "bearing_after":178,
+                   "bearing":0,
+                   "coordinate":{
+                      "latitude":1.29904,
+                      "longitude":103.785474
+                   },
+                   "maneuver_type":"continue",
+                   "modifier":"left"
+                },
+                "name":"North Buona Vista Road",
+                "intersections":[
+                   {
+                      "location":{
+                         "latitude":1.29904,
+                         "longitude":103.785474
+                      },
+                      "bearings":[
+                         15,
+                         75,
+                         180
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":1,
+                      "intersection_out":2,
+                      "lanes":[
+                         
+                      ]
+                   }
+                ],
+                "road_shield_type":{
+                   
+                },
+                "driving_side":"left"
+             },
+             {
+                "geometry":"qfbnAq~q}dEXuAzAkAxAq@n]_JdEq@zCWTQfAy@lCgApDo@xFiAjP}B~LkAtI}@pCc@pCw@bD_A`DsAnFgCxDuCvFqElGiGvFmFrFgG|CwD~A_B~@y@~AaAlC}AzDkB",
+                "start_location":{
+                   "latitude":1.295993,
+                   "longitude":103.785977
+                },
+                "end_location":{
+                   "latitude":1.29282,
+                   "longitude":103.787618
+                },
+                "distance":{
+                   "value":407
+                },
+                "duration":{
+                   "value":41
+                },
+                "maneuver":{
+                   "instruction":"Use the left lane to make a slight left towards Keppel Road",
+                   "voice_instruction":[
+                      {
+                         "distance_along_geometry":340,
+                         "unit":"meters",
+                         "instruction":"In 340 meters, Use the left lane to make a slight left towards Keppel Road"
+                      },
+                      {
+                         "distance_along_geometry":200,
+                         "unit":"meters",
+                         "instruction":"In 200 meters, Use the left lane to make a slight left towards Keppel Road"
+                      },
+                      {
+                         "distance_along_geometry":50,
+                         "unit":"meters",
+                         "instruction":"Use the left lane to make a slight left towards Keppel Road"
+                      }
+                   ],
+                   "bearing_before":165,
+                   "bearing_after":137,
+                   "bearing":0,
+                   "coordinate":{
+                      "latitude":1.295993,
+                      "longitude":103.785977
+                   },
+                   "maneuver_type":"turn",
+                   "modifier":"slight left"
+                },
+                "name":"",
+                "intersections":[
+                   {
+                      "location":{
+                         "latitude":1.295993,
+                         "longitude":103.785977
+                      },
+                      "bearings":[
+                         135,
+                         165,
+                         345
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":2,
+                      "intersection_out":0,
+                      "lanes":[
+                         {
+                            "indications":[
+                               "left"
+                            ],
+                            "valid":true
+                         },
+                         {
+                            "indications":[
+                               "straight"
+                            ],
+                            "valid":false
+                         },
+                         {
+                            "indications":[
+                               "straight"
+                            ],
+                            "valid":false
+                         },
+                         {
+                            "indications":[
+                               "straight"
+                            ],
+                            "valid":false
+                         },
+                         {
+                            "indications":[
+                               "straight"
+                            ],
+                            "valid":false
+                         }
+                      ]
+                   },
+                   {
+                      "location":{
+                         "latitude":1.295224,
+                         "longitude":103.786296
+                      },
+                      "bearings":[
+                         150,
+                         300,
+                         345
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":2,
+                      "intersection_out":0,
+                      "lanes":[
+                         
+                      ]
+                   }
+                ],
+                "road_shield_type":{
+                   
+                },
+                "driving_side":"left"
+             },
+             {
+                "geometry":"g`|mAceu}dEzIwMhIaMvJ{NfZ}j@tNiWlC}Epe@k|@",
+                "start_location":{
+                   "latitude":1.29282,
+                   "longitude":103.787618
+                },
+                "end_location":{
+                   "latitude":1.290918,
+                   "longitude":103.790518
+                },
+                "distance":{
+                   "value":385
+                },
+                "duration":{
+                   "value":21
+                },
+                "maneuver":{
+                   "instruction":"Merge right onto Ayer Rajah Expressway (AYE)",
+                   "voice_instruction":[
+                      {
+                         "distance_along_geometry":400,
+                         "unit":"meters",
+                         "instruction":"In 400 meters, Merge right onto Ayer Rajah Expressway (AYE)"
+                      },
+                      {
+                         "distance_along_geometry":200,
+                         "unit":"meters",
+                         "instruction":"In 200 meters, Merge right onto Ayer Rajah Expressway (AYE)"
+                      },
+                      {
+                         "distance_along_geometry":50,
+                         "unit":"meters",
+                         "instruction":"Merge right onto Ayer Rajah Expressway (AYE)"
+                      }
+                   ],
+                   "bearing_before":149,
+                   "bearing_after":125,
+                   "bearing":0,
+                   "coordinate":{
+                      "latitude":1.29282,
+                      "longitude":103.787618
+                   },
+                   "maneuver_type":"merge",
+                   "modifier":"slight right"
+                },
+                "name":"Ayer Rajah Expressway",
+                "intersections":[
+                   {
+                      "location":{
+                         "latitude":1.29282,
+                         "longitude":103.787618
+                      },
+                      "bearings":[
+                         120,
+                         315,
+                         330
+                      ],
+                      "classes":[
+                         "motorway"
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":2,
+                      "intersection_out":0,
+                      "lanes":[
+                         
+                      ]
+                   }
+                ],
+                "reference":"AYE",
+                "road_shield_type":{
+                   "label":"AYE",
+                   "image_url":"https://static.nextbillion.io/navigating/highway-shield/target/SG/AYE.png"
+                },
+                "driving_side":"left"
+             },
+             {
+                "geometry":"kixmAkzz}dER}FZmEf@wCxC_JpDgHpSmb@bHmMlA_C|HcNlH}KpHkL",
+                "start_location":{
+                   "latitude":1.290918,
+                   "longitude":103.790518
+                },
+                "end_location":{
+                   "latitude":1.289731,
+                   "longitude":103.792673
+                },
+                "distance":{
+                   "value":276
+                },
+                "duration":{
+                   "value":20
+                },
+                "maneuver":{
+                   "instruction":"Take exit 7B towards Farrer Road",
+                   "display_instruction":"Take exit 7B towards Farrer Road",
+                   "voice_instruction":[
+                      {
+                         "distance_along_geometry":380,
+                         "unit":"meters",
+                         "instruction":"In 380 meters, Take exit 7B towards Farrer Road"
+                      },
+                      {
+                         "distance_along_geometry":200,
+                         "unit":"meters",
+                         "instruction":"In 200 meters, Take exit 7B towards Farrer Road"
+                      },
+                      {
+                         "distance_along_geometry":50,
+                         "unit":"meters",
+                         "instruction":"Take exit 7B towards Farrer Road"
+                      }
+                   ],
+                   "bearing_before":120,
+                   "bearing_after":94,
+                   "bearing":0,
+                   "coordinate":{
+                      "latitude":1.290918,
+                      "longitude":103.790518
+                   },
+                   "maneuver_type":"off ramp",
+                   "modifier":"slight left"
+                },
+                "name":"",
+                "intersections":[
+                   {
+                      "location":{
+                         "latitude":1.290918,
+                         "longitude":103.790518
+                      },
+                      "bearings":[
+                         90,
+                         120,
+                         300
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":2,
+                      "intersection_out":0,
+                      "lanes":[
+                         
+                      ]
+                   }
+                ],
+                "road_shield_type":{
+                   
+                },
+                "driving_side":"left"
+             },
+             {
+                "geometry":"e_vmAaa_~dEjV}V",
+                "start_location":{
+                   "latitude":1.289731,
+                   "longitude":103.792673
+                },
+                "end_location":{
+                   "latitude":1.289357,
+                   "longitude":103.793056
+                },
+                "distance":{
+                   "value":59
+                },
+                "duration":{
+                   "value":44
+                },
+                "maneuver":{
+                   "instruction":"Use the right lane to keep right at the fork, then turn right onto Portsdown Avenue",
+                   "voice_instruction":[
+                      {
+                         "distance_along_geometry":200,
+                         "unit":"meters",
+                         "instruction":"In 200 meters, Use the right lane to keep right at the fork"
+                      },
+                      {
+                         "distance_along_geometry":50,
+                         "unit":"meters",
+                         "instruction":"Use the right lane to keep right at the fork, then turn right onto Portsdown Avenue"
+                      }
+                   ],
+                   "bearing_before":125,
+                   "bearing_after":133,
+                   "bearing":0,
+                   "coordinate":{
+                      "latitude":1.289731,
+                      "longitude":103.792673
+                   },
+                   "maneuver_type":"fork",
+                   "modifier":"slight right"
+                },
+                "name":"",
+                "intersections":[
+                   {
+                      "location":{
+                         "latitude":1.289731,
+                         "longitude":103.792673
+                      },
+                      "bearings":[
+                         120,
+                         135,
+                         300
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":2,
+                      "intersection_out":1,
+                      "lanes":[
+                         {
+                            "indications":[
+                               "slight left"
+                            ],
+                            "valid":false
+                         },
+                         {
+                            "indications":[
+                               "none"
+                            ],
+                            "valid":true
+                         }
+                      ]
+                   }
+                ],
+                "road_shield_type":{
+                   
+                },
+                "driving_side":"left"
+             },
+             {
+                "geometry":"ygumA_y_~dEtCqD`DhC~AvAvCdCdC`CfHjGjC|BjB|ArAxArBhBlBhB\\`@pA`AzAx@nCp@tCrArFxA",
+                "start_location":{
+                   "latitude":1.289357,
+                   "longitude":103.793056
+                },
+                "end_location":{
+                   "latitude":1.288212,
+                   "longitude":103.792314
+                },
+                "distance":{
+                   "value":164
+                },
+                "duration":{
+                   "value":55
+                },
+                "maneuver":{
+                   "instruction":"Turn right onto Portsdown Avenue",
+                   "voice_instruction":[
+                      
+                   ],
+                   "bearing_before":133,
+                   "bearing_after":129,
+                   "bearing":0,
+                   "coordinate":{
+                      "latitude":1.289357,
+                      "longitude":103.793056
+                   },
+                   "maneuver_type":"turn",
+                   "modifier":"right"
+                },
+                "name":"Portsdown Avenue",
+                "intersections":[
+                   {
+                      "location":{
+                         "latitude":1.289357,
+                         "longitude":103.793056
+                      },
+                      "bearings":[
+                         45,
+                         135,
+                         225,
+                         315
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":3,
+                      "intersection_out":1,
+                      "lanes":[
+                         
+                      ]
+                   },
+                   {
+                      "location":{
+                         "latitude":1.289282,
+                         "longitude":103.793145
+                      },
+                      "bearings":[
+                         45,
+                         135,
+                         225,
+                         315
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":3,
+                      "intersection_out":2,
+                      "lanes":[
+                         
+                      ]
+                   },
+                   {
+                      "location":{
+                         "latitude":1.289153,
+                         "longitude":103.793032
+                      },
+                      "bearings":[
+                         45,
+                         225
+                      ],
+                      "classes":[
+                         "bridge"
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":0,
+                      "intersection_out":1,
+                      "lanes":[
+                         {
+                            "indications":[
+                               "straight"
+                            ],
+                            "valid":true
+                         },
+                         {
+                            "indications":[
+                               "right"
+                            ],
+                            "valid":false
+                         },
+                         {
+                            "indications":[
+                               "right"
+                            ],
+                            "valid":false
+                         }
+                      ]
+                   },
+                   {
+                      "location":{
+                         "latitude":1.28901,
+                         "longitude":103.7929
+                      },
+                      "bearings":[
+                         45,
+                         225
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":0,
+                      "intersection_out":1,
+                      "lanes":[
+                         {
+                            "indications":[
+                               "straight"
+                            ],
+                            "valid":true
+                         },
+                         {
+                            "indications":[
+                               "right"
+                            ],
+                            "valid":false
+                         },
+                         {
+                            "indications":[
+                               "right"
+                            ],
+                            "valid":false
+                         }
+                      ]
+                   },
+                   {
+                      "location":{
+                         "latitude":1.288792,
+                         "longitude":103.792703
+                      },
+                      "bearings":[
+                         45,
+                         120,
+                         225,
+                         315
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":0,
+                      "intersection_out":2,
+                      "lanes":[
+                         {
+                            "indications":[
+                               "straight"
+                            ],
+                            "valid":true
+                         },
+                         {
+                            "indications":[
+                               "right"
+                            ],
+                            "valid":false
+                         },
+                         {
+                            "indications":[
+                               "right"
+                            ],
+                            "valid":false
+                         }
+                      ]
+                   },
+                   {
+                      "location":{
+                         "latitude":1.288527,
+                         "longitude":103.792455
+                      },
+                      "bearings":[
+                         45,
+                         60,
+                         210
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":0,
+                      "intersection_out":2,
+                      "lanes":[
+                         
+                      ]
+                   }
+                ],
+                "road_shield_type":{
+                   
+                },
+                "driving_side":"left"
+             },
+             {
+                "geometry":"g`smAsj~}dEfAMrA?",
+                "start_location":{
+                   "latitude":1.288212,
+                   "longitude":103.792314
+                },
+                "end_location":{
+                   "latitude":1.288134,
+                   "longitude":103.792321
+                },
+                "distance":{
+                   "value":8
+                },
+                "duration":{
+                   "value":1
+                },
+                "maneuver":{
+                   "instruction":"Enter the roundabout and take the 1st exit onto Normanton Park",
+                   "voice_instruction":[
+                      {
+                         "distance_along_geometry":86,
+                         "unit":"meters",
+                         "instruction":"In 200 meters, You will arrive"
+                      },
+                      {
+                         "distance_along_geometry":50,
+                         "unit":"meters",
+                         "instruction":"Enter the roundabout and take the 1st exit onto Normanton Park"
+                      }
+                   ],
+                   "bearing_before":203,
+                   "bearing_after":170,
+                   "bearing":137,
+                   "coordinate":{
+                      "latitude":1.288212,
+                      "longitude":103.792314
+                   },
+                   "maneuver_type":"roundabout",
+                   "modifier":"slight left",
+                   "roundabout_count":1
+                },
+                "name":"Normanton Park",
+                "intersections":[
+                   {
+                      "location":{
+                         "latitude":1.288212,
+                         "longitude":103.792314
+                      },
+                      "bearings":[
+                         30,
+                         165,
+                         300
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":0,
+                      "intersection_out":1,
+                      "lanes":[
+                         
+                      ]
+                   }
+                ],
+                "road_shield_type":{
+                   
+                },
+                "driving_side":"left"
+             },
+             {
+                "geometry":"k{rmAak~}dEtBk@bD{@zB_@dBa@`AYhAa@`G}CfBUrA{AqCs@eHwD",
+                "start_location":{
+                   "latitude":1.288134,
+                   "longitude":103.792321
+                },
+                "end_location":{
+                   "latitude":1.287807,
+                   "longitude":103.79269
+                },
+                "distance":{
+                   "value":95
+                },
+                "duration":{
+                   "value":42
+                },
+                "maneuver":{
+                   "instruction":"Exit the roundabout onto Normanton Park, then make a slight right to stay on Normanton Park",
+                   "voice_instruction":[
+                      
+                   ],
+                   "bearing_before":180,
+                   "bearing_after":160,
+                   "bearing":137,
+                   "coordinate":{
+                      "latitude":1.288134,
+                      "longitude":103.792321
+                   },
+                   "maneuver_type":"exit roundabout",
+                   "modifier":"straight"
+                },
+                "name":"Normanton Park",
+                "intersections":[
+                   {
+                      "location":{
+                         "latitude":1.288134,
+                         "longitude":103.792321
+                      },
+                      "bearings":[
+                         0,
+                         165,
+                         225
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":0,
+                      "intersection_out":1,
+                      "lanes":[
+                         
+                      ]
+                   },
+                   {
+                      "location":{
+                         "latitude":1.287629,
+                         "longitude":103.792526
+                      },
+                      "bearings":[
+                         30,
+                         285,
+                         345
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":2,
+                      "intersection_out":0,
+                      "lanes":[
+                         
+                      ]
+                   }
+                ],
+                "road_shield_type":{
+                   
+                },
+                "driving_side":"left"
+             },
+             {
+                "geometry":"}frmAcb_~dEw@cAU}@Ck@",
+                "start_location":{
+                   "latitude":1.287807,
+                   "longitude":103.79269
+                },
+                "end_location":{
+                   "latitude":1.287848,
+                   "longitude":103.792777
+                },
+                "distance":{
+                   "value":11
+                },
+                "duration":{
+                   "value":2
+                },
+                "maneuver":{
+                   "instruction":"Make a slight right to stay on Normanton Park, then you will arrive",
+                   "voice_instruction":[
+                      {
+                         "distance_along_geometry":50,
+                         "unit":"meters",
+                         "instruction":"Make a slight right to stay on Normanton Park, then you will arrive"
+                      }
+                   ],
+                   "bearing_before":30,
+                   "bearing_after":61,
+                   "bearing":0,
+                   "coordinate":{
+                      "latitude":1.287807,
+                      "longitude":103.79269
+                   },
+                   "maneuver_type":"continue",
+                   "modifier":"slight right"
+                },
+                "name":"Normanton Park",
+                "intersections":[
+                   {
+                      "location":{
+                         "latitude":1.287807,
+                         "longitude":103.79269
+                      },
+                      "bearings":[
+                         60,
+                         210,
+                         345
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":1,
+                      "intersection_out":0,
+                      "lanes":[
+                         
+                      ]
+                   }
+                ],
+                "road_shield_type":{
+                   
+                },
+                "driving_side":"left"
+             },
+             {
+                "geometry":"oirmAqg_~dE",
+                "start_location":{
+                   "latitude":1.287848,
+                   "longitude":103.792777
+                },
+                "end_location":{
+                   "latitude":1.287848,
+                   "longitude":103.792777
+                },
+                "distance":{
+                   "value":0
+                },
+                "duration":{
+                   "value":0
+                },
+                "maneuver":{
+                   "instruction":"You have arrived at Normanton Park, on the right",
+                   "voice_instruction":[
+                      {
+                         "distance_along_geometry":50,
+                         "unit":"meters",
+                         "instruction":"You have arrived at Normanton Park, on the right"
+                      }
+                   ],
+                   "bearing_before":85,
+                   "bearing_after":0,
+                   "bearing":0,
+                   "coordinate":{
+                      "latitude":1.287848,
+                      "longitude":103.792777
+                   },
+                   "maneuver_type":"arrive",
+                   "modifier":"right"
+                },
+                "name":"Normanton Park",
+                "intersections":[
+                   {
+                      "location":{
+                         "latitude":1.287848,
+                         "longitude":103.792777
+                      },
+                      "bearings":[
+                         265
+                      ],
+                      "classes":[
+                         
+                      ],
+                      "entry":[
+                         
+                      ],
+                      "intersection_in":0,
+                      "intersection_out":0,
+                      "lanes":[
+                         
+                      ]
+                   }
+                ],
+                "road_shield_type":{
+                   
+                },
+                "driving_side":"left"
+             }
+          ]
+       }
+    ]
+ }

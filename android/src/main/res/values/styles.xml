@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomNavigationViewLight" parent="NavigationViewLight">
+
+    </style>
+
+    <style name="CustomNavigationViewDark" parent="NavigationViewDark">
+
+    </style>
+
+</resources>
