@@ -30,14 +30,14 @@ jobs:
         run: |
           flutter test --coverage          
 
-      # - name: Upload coverage to Codecov
-      #   uses: codecov/codecov-action@v2
-      #   with:
-      #     files: coverage/lcov.info
-      #     flags: unittests
-      #     name: codecov-report
-      #     fail_ci_if_error: true
-      #     token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          files: coverage/lcov.info
+          flags: unittests
+          name: codecov-report
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
 
 #  drive_android:
 #    runs-on: macos-latest
