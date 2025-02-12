@@ -1,17 +1,17 @@
 // ignore_for_file: unnecessary_getters_setters
 
-part of nb_navigation_flutter;
+part of '../nb_navigation_flutter.dart';
 
 typedef ProgressChangeCallback = void Function(NavigationProgress? progress);
 typedef OnNavigationCancellingCallback = void Function();
 typedef OnNavigationRunningCallback = void Function();
 typedef OnArriveAtWaypointCallback = void Function(Waypoint? atWaypoint);
-typedef OnRerouteFromLocationCallback = void Function(LatLng? rereouteFromLocation);
+typedef OnRerouteFromLocationCallback = void Function(
+    LatLng? rereouteFromLocation);
 typedef OnRerouteAlongCallback = void Function(DirectionsRoute? route);
 typedef OnRerouteFailureCallback = void Function(String? message);
 
 abstract class NBNavigationViewPlatform {
-
   static NBNavigationViewPlatform Function() createInstance =
       () => MethodChannelNavigationView();
 
@@ -23,18 +23,18 @@ abstract class NBNavigationViewPlatform {
   OnRerouteFailureCallback? _rerouteFailureCallback;
 
   Future<void> initPlatform(int id);
-  Widget buildView(
-      Map<String, dynamic> creationParams,
+  Widget buildView(Map<String, dynamic> creationParams,
       OnPlatformViewCreatedCallback onPlatformViewCreated);
 
-  void setOnNavigationCancellingCallback(OnNavigationCancellingCallback? callback);
+  void setOnNavigationCancellingCallback(
+      OnNavigationCancellingCallback? callback);
   void setOnNavigationRunningCallback(OnNavigationRunningCallback? callback);
   void setOnArriveAtWaypointCallback(OnArriveAtWaypointCallback? callback);
-  void setOnRerouteFromLocationCallback(OnRerouteFromLocationCallback? callback);
+  void setOnRerouteFromLocationCallback(
+      OnRerouteFromLocationCallback? callback);
   void setOnRerouteAlongCallback(OnRerouteAlongCallback? callback);
   void setOnRerouteFailureCallback(OnRerouteFailureCallback? callback);
   Stream<NavigationProgress?>? get navProgressListener;
   Future<void> stopNavigation();
   void dispose();
-
 }

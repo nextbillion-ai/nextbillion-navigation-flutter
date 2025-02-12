@@ -1,4 +1,4 @@
-part of nb_navigation_flutter;
+part of '../nb_navigation_flutter.dart';
 
 class MethodChannelNavigationView extends NBNavigationViewPlatform {
   MethodChannel? _channel;
@@ -64,7 +64,8 @@ class MethodChannelNavigationView extends NBNavigationViewPlatform {
   EventChannel? getEventChannel() => _eventChannel;
 
   @override
-  Widget buildView(Map<String, dynamic> creationParams, OnPlatformViewCreatedCallback onPlatformViewCreated) {
+  Widget buildView(Map<String, dynamic> creationParams,
+      OnPlatformViewCreatedCallback onPlatformViewCreated) {
     if (Platform.isAndroid) {
       return PlatformViewLink(
         viewType: viewType,
@@ -104,8 +105,9 @@ class MethodChannelNavigationView extends NBNavigationViewPlatform {
   }
 
   @override
-  Stream<NavigationProgress?>? get navProgressListener =>
-      _eventChannel?.receiveBroadcastStream().map((dynamic progressMap) => _parseProgress(progressMap));
+  Stream<NavigationProgress?>? get navProgressListener => _eventChannel
+      ?.receiveBroadcastStream()
+      .map((dynamic progressMap) => _parseProgress(progressMap));
 
   NavigationProgress? _parseProgress(Map<dynamic, dynamic>? progressMap) {
     var jsonMap = jsonDecode(jsonEncode(progressMap));
@@ -116,7 +118,8 @@ class MethodChannelNavigationView extends NBNavigationViewPlatform {
   }
 
   @override
-  void setOnNavigationCancellingCallback(OnNavigationCancellingCallback? callback) {
+  void setOnNavigationCancellingCallback(
+      OnNavigationCancellingCallback? callback) {
     _onNavigationCancellingCallback = callback;
   }
 
@@ -131,7 +134,8 @@ class MethodChannelNavigationView extends NBNavigationViewPlatform {
   }
 
   @override
-  void setOnRerouteFromLocationCallback(OnRerouteFromLocationCallback? callback) {
+  void setOnRerouteFromLocationCallback(
+      OnRerouteFromLocationCallback? callback) {
     _rerouteFromLocationCallback = callback;
   }
 

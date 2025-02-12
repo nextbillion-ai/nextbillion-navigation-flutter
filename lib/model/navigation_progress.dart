@@ -1,4 +1,4 @@
-part of nb_navigation_flutter;
+part of '../nb_navigation_flutter.dart';
 
 class NavigationProgress {
   LatLng? location;
@@ -29,9 +29,9 @@ class NavigationProgress {
     return NavigationProgress(
       location: json['location'] != null
           ? LatLng(
-        json['location']["latitude"],
-        json['location']["longitude"],
-      )
+              json['location']["latitude"],
+              json['location']["longitude"],
+            )
           : null,
       distanceRemaining: json['distanceRemaining'],
       durationRemaining: json['durationRemaining'],

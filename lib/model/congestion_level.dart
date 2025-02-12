@@ -1,4 +1,4 @@
-part of nb_navigation_flutter;
+part of '../nb_navigation_flutter.dart';
 
 /// A `CongestionLevel` indicates the level of traffic congestion along a road segment
 /// relative to the normal flow of traffic along that segment.

@@ -1,4 +1,4 @@
-part of nb_navigation_flutter;
+part of '../nb_navigation_flutter.dart';
 
 List<LatLng> decode(String encodedPath, int precision) {
   int len = encodedPath.length;

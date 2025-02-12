@@ -1,4 +1,4 @@
-part of nb_navigation_flutter;
+part of '../nb_navigation_flutter.dart';
 
 typedef OnRouteSelectedCallback = void Function(int selectedRouteIndex);
 
@@ -237,7 +237,7 @@ class NavNextBillionMap implements NavigationMap {
       bool isPrimary = i == _primaryRouteIndex;
 
       List<Map<String, dynamic>> geoJson =
-      _buildCongestionFeatureCollection(route, isPrimary);
+          _buildCongestionFeatureCollection(route, isPrimary);
 
       if (isPrimary) {
         primaryRouteFeatures.addAll(geoJson);
@@ -259,7 +259,6 @@ class NavNextBillionMap implements NavigationMap {
     await safeSetGeoJsonSource(routeSourceId, buildFeatureCollection(reversed));
   }
 
-
   List<Map<String, dynamic>> _buildCongestionFeatureCollection(
       DirectionsRoute route, bool isPrimary) {
     List<Map<String, dynamic>> routeCollectionFeatures = [];
@@ -272,7 +271,7 @@ class NavNextBillionMap implements NavigationMap {
 
     // geoJson["properties"][primaryRoutePropertyKey] = isPrimary ? "true" : "false";
     List<Map<String, dynamic>> congestionGeoJson =
-        _buildCongestionFeatureFromRoute(line, route.congestion,isPrimary);
+        _buildCongestionFeatureFromRoute(line, route.congestion, isPrimary);
     routeCollectionFeatures.addAll(congestionGeoJson);
     return routeCollectionFeatures;
   }
@@ -289,7 +288,8 @@ class NavNextBillionMap implements NavigationMap {
         congestion.length > coordinates.length - 1) {
       Map<String, dynamic> json =
           Line("routeLine", LineOptions(geometry: coordinates)).toGeoJson();
-      json["properties"][primaryRoutePropertyKey] = isPrimary ? "true" : "false";
+      json["properties"][primaryRoutePropertyKey] =
+          isPrimary ? "true" : "false";
       congestionFeatures.add(json);
       return congestionFeatures;
     }

@@ -1,4 +1,4 @@
-part of nb_navigation_flutter;
+part of '../nb_navigation_flutter.dart';
 
 class NavigationViewController {
   final NBNavigationViewPlatform _navViewPlatform;
@@ -19,19 +19,22 @@ class NavigationViewController {
     this.onRerouteAlongCallback,
     this.onRerouteFailureCallback,
   }) : _navViewPlatform = navViewPlatform {
-    _navProgressSubscription = _navViewPlatform.navProgressListener?.listen((navProgress) {
+    _navProgressSubscription =
+        _navViewPlatform.navProgressListener?.listen((navProgress) {
       if (onProgressChange != null) {
         onProgressChange!(navProgress);
       }
     });
     if (onNavigationCancelling != null) {
-      _navViewPlatform.setOnNavigationCancellingCallback(onNavigationCancelling);
+      _navViewPlatform
+          .setOnNavigationCancellingCallback(onNavigationCancelling);
     }
     if (arriveAtWaypointCallback != null) {
       _navViewPlatform.setOnArriveAtWaypointCallback(arriveAtWaypointCallback);
     }
     if (onRerouteFromLocationCallback != null) {
-      _navViewPlatform.setOnRerouteFromLocationCallback(onRerouteFromLocationCallback);
+      _navViewPlatform
+          .setOnRerouteFromLocationCallback(onRerouteFromLocationCallback);
     }
 
     if (onRerouteAlongCallback != null) {

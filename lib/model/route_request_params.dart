@@ -1,4 +1,4 @@
-part of nb_navigation_flutter;
+part of '../nb_navigation_flutter.dart';
 
 /// Represents the request parameters for a route.
 /// Refer to Navigation API https://docs.nextbillion.ai/docs/navigation/api/navigation

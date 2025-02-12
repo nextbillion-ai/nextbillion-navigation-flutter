@@ -1,5 +1,3 @@
-library nb_navigation_flutter;
-
 import 'dart:convert';
 import 'dart:io';
 import 'dart:async';

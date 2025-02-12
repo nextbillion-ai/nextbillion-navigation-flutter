@@ -1,6 +1,7 @@
-part of nb_navigation_flutter;
+part of '../nb_navigation_flutter.dart';
 
-typedef OnNavigationViewReadyCallBack = void Function(NavigationViewController controller);
+typedef OnNavigationViewReadyCallBack = void Function(
+    NavigationViewController controller);
 
 class NBNavigationView extends StatefulWidget {
   const NBNavigationView({
@@ -20,16 +21,22 @@ class NBNavigationView extends StatefulWidget {
 
   /// Callback to be invoked when the navigation view is ready.
   final OnNavigationViewReadyCallBack? onNavigationViewReady;
+
   /// Callback to be invoked when progress change if the user has set the callback when initializing the navigation view.
   final ProgressChangeCallback? onProgressChange;
+
   /// Callback to be invoked when navigation is cancelled if the user has set the callback when initializing the navigation view.
   final OnNavigationCancellingCallback? onNavigationCancelling;
+
   /// Callback to be invoked when arrive at waypoint if the user has set the callback when initializing the navigation view.
   final OnArriveAtWaypointCallback? onArriveAtWaypoint;
+
   /// Callback to be invoked when reroute from location if the user has set the callback when initializing the navigation view.
   final OnRerouteFromLocationCallback? onRerouteFromLocation;
+
   /// Callback to be invoked when reroute along the route if the user has set the callback when initializing the navigation view.
   final OnRerouteAlongCallback? onRerouteAlongCallback;
+
   /// Callback to be invoked when reroute fails if the user has set the callback when initializing the navigation view.
   final OnRerouteFailureCallback? onRerouteFailureCallback;
 
@@ -38,9 +45,11 @@ class NBNavigationView extends StatefulWidget {
 }
 
 class _NBNavigationViewState extends State<NBNavigationView> {
-  final Completer<NavigationViewController> _controller = Completer<NavigationViewController>();
+  final Completer<NavigationViewController> _controller =
+      Completer<NavigationViewController>();
 
-  final NBNavigationViewPlatform _nbNavViewPlatform = NBNavigationViewPlatform.createInstance();
+  final NBNavigationViewPlatform _nbNavViewPlatform =
+      NBNavigationViewPlatform.createInstance();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +57,8 @@ class _NBNavigationViewState extends State<NBNavigationView> {
     if (widget.navigationOptions != null) {
       creationParams['launcherConfig'] = widget.navigationOptions!.toJson();
       if (Platform.isIOS) {
-        creationParams["routeOptions"] = jsonEncode(widget.navigationOptions!.route.routeOptions);
+        creationParams["routeOptions"] =
+            jsonEncode(widget.navigationOptions!.route.routeOptions);
       }
     }
     return _nbNavViewPlatform.buildView(creationParams, _onPlatformViewCreated);

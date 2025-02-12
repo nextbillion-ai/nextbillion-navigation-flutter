@@ -1,4 +1,4 @@
-part of nb_navigation_flutter;
+part of '../nb_navigation_flutter.dart';
 
 /// Stateless facade of the nextbillion navigation platform
 class NBNavigation {
