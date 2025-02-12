@@ -1,4 +1,4 @@
-part of nb_navigation_flutter;
+part of '../nb_navigation_flutter.dart';
 
 const String primaryRoutePropertyKey = "primary-route";
 const String routeShieldLayerId = "nbmap-navigation-route-shield-layer";

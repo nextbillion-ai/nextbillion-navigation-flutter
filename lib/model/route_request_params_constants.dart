@@ -1,4 +1,4 @@
-part of nb_navigation_flutter;
+part of '../nb_navigation_flutter.dart';
 
 enum SupportedUnits {
   /// Imperial units (e.g., miles, feet).
@@ -155,8 +155,6 @@ enum RouteType {
 
   static RouteType fromValue(String? s) =>
       switch (s) { "fastest" => fastest, "shortest" => shortest, _ => fastest };
-
-
 
   String get description {
     if (this == RouteType.shortest) {

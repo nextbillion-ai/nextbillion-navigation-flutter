@@ -1,4 +1,4 @@
-part of nb_navigation_flutter;
+part of '../nb_navigation_flutter.dart';
 
 class DirectionsRoute {
   num? distance;
@@ -39,8 +39,9 @@ class DirectionsRoute {
       countryCode: map['countryCode'],
       weightName: map['weight_name'],
       voiceLanguage: map['voiceLocale'],
-      congestion: List<CongestionLevel>.from(
-          map['congestion']?.map((level) => CongestionLevelExtension.fromValue(level)) ?? []),
+      congestion: List<CongestionLevel>.from(map['congestion']
+              ?.map((level) => CongestionLevelExtension.fromValue(level)) ??
+          []),
     );
   }
 
@@ -56,7 +57,8 @@ class DirectionsRoute {
       'countryCode': countryCode,
       'weight_name': weightName,
       'voiceLocale': voiceLanguage,
-      "congestion": congestion?.map((congestion) => congestion.index).toList() ?? [],
+      "congestion":
+          congestion?.map((congestion) => congestion.index).toList() ?? [],
     };
   }
 }

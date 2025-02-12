@@ -1,4 +1,4 @@
-part of nb_navigation_flutter;
+part of '../nb_navigation_flutter.dart';
 
 typedef OnNavigationExitCallback = void Function(
     bool shouldRefreshRoute, int remainingWaypoints);

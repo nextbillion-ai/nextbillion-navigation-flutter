@@ -1,4 +1,4 @@
-part of nb_navigation_flutter;
+part of '../nb_navigation_flutter.dart';
 
 class NBNavigationMethodChannel extends NBNavigationPlatform {
   MethodChannel _channel =

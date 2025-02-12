@@ -1,4 +1,4 @@
-part of nb_navigation_flutter;
+part of '../nb_navigation_flutter.dart';
 
 class Waypoint {
   LatLng? arrivedWaypointLocation;
@@ -23,7 +23,10 @@ class Waypoint {
 
   Map<String, dynamic> toJson() {
     return {
-      'location': {"latitude": arrivedWaypointLocation?.latitude, "longitude": arrivedWaypointLocation?.longitude},
+      'location': {
+        "latitude": arrivedWaypointLocation?.latitude,
+        "longitude": arrivedWaypointLocation?.longitude
+      },
       'arrivedWaypointIndex': arrivedWaypointIndex,
     };
   }

@@ -1,4 +1,4 @@
-part of nb_navigation_flutter;
+part of '../nb_navigation_flutter.dart';
 
 class Maneuver {
   num? bearingAfter;
@@ -72,8 +72,8 @@ class Coordinate {
       throw ArgumentError('Invalid latitude or longitude value');
     }
     return Coordinate(
-        latitude: latitude,
-        longitude: longitude,
+      latitude: latitude,
+      longitude: longitude,
     );
   }
 
