@@ -1,6 +1,6 @@
 # Nextbillion Navigation Flutter
 
-[![codecov](https://codecov.io/github/nextbillion-ai/nb-navigation-flutter/graph/badge.svg?token=3N0AXW68J2)](https://codecov.io/github/nextbillion-ai/nb-navigation-flutter)
+[![codecov](https://codecov.io/github/nextbillion-ai/nextbillion-navigation-flutter/graph/badge.svg?token=70S2KSAQ8Q)](https://codecov.io/github/nextbillion-ai/nextbillion-navigation-flutter)
 
 ## Instroduction
 ![IMG_0378](https://github.com/nextbillion-ai/nb-navigation-flutter/assets/100656364/870d9039-cea0-453e-a06c-adaada65cc8e)
