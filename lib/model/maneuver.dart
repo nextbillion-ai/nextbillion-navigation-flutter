@@ -66,9 +66,14 @@ class Coordinate {
   Coordinate({required this.latitude, required this.longitude});
 
   factory Coordinate.fromJson(Map<String, dynamic> map) {
+    var latitude = num.tryParse(map['latitude'].toString())?.toDouble();
+    var longitude = num.tryParse(map['longitude'].toString())?.toDouble();
+    if (latitude == null || longitude == null) {
+      throw ArgumentError('Invalid latitude or longitude value');
+    }
     return Coordinate(
-      latitude: map['latitude'],
-      longitude: map['longitude'],
+        latitude: latitude,
+        longitude: longitude,
     );
   }
 
