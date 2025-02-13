@@ -232,7 +232,7 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
     NavigationLauncherConfig config =
         NavigationLauncherConfig(route: routes[primaryIndex], routes: routes);
     config.locationLayerRenderMode = LocationLayerRenderMode.gps;
-    config.shouldSimulateRoute = false;
+    config.shouldSimulateRoute = true;
     config.themeMode = NavigationThemeMode.system;
     config.useCustomNavigationStyle = false;
     NBNavigation.startNavigation(config);
