@@ -5,14 +5,16 @@ class WaypointDialog extends StatelessWidget {
   final String title;
   final Waypoint waypoint;
 
-  const WaypointDialog({Key? key,required this.title, required this.waypoint}) : super(key: key);
+  const WaypointDialog({Key? key, required this.title, required this.waypoint})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Text(title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        Text(title,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
         ListTile(
           title: const Text('Arrived Waypoint Location'),
           subtitle: Text(waypoint.arrivedWaypointLocation?.toString() ?? 'N/A'),

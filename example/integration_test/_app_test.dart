@@ -28,7 +28,7 @@ void main() {
       tester,
       mode: NBString.car,
       unit: NBString.imperial,
-      alternatives: true,  // By default, the alternatives are enabled.
+      alternatives: true, // By default, the alternatives are enabled.
     );
 
     await Future.delayed(const Duration(seconds: 2));
@@ -45,16 +45,16 @@ void main() {
     await Future.delayed(const Duration(seconds: 2));
     await tester.pumpAndSettle();
 
-    checkOverView(tester,binding);
+    checkOverView(tester, binding);
 
     await Future.delayed(const Duration(seconds: 1));
     await tester.pumpAndSettle();
 
-    await checkClickCenterToShowRecenterButton(tester,binding);
+    await checkClickCenterToShowRecenterButton(tester, binding);
     await Future.delayed(const Duration(seconds: 1));
     await tester.pumpAndSettle();
 
-    await checkDragBottomSheet(tester,binding);
+    await checkDragBottomSheet(tester, binding);
 
     await Future.delayed(const Duration(seconds: 10));
     await tester.pumpAndSettle();
@@ -71,7 +71,7 @@ void main() {
       tester,
       mode: NBString.truck,
       unit: NBString.metric,
-      alternatives: false,  // By default, the alternatives are enabled.
+      alternatives: false, // By default, the alternatives are enabled.
     );
 
     await Future.delayed(const Duration(seconds: 1));
@@ -133,6 +133,7 @@ Future checkStartNavigation(WidgetTester tester) async {
   final navigationView = find.byKey(const Key("NBNavigationView"));
   expect(navigationView, findsOneWidget);
 }
+
 Future exitNavigation(WidgetTester tester) async {
   final Size screenSize = tester.getSize(find.byType(MaterialApp));
 
@@ -144,7 +145,8 @@ Future exitNavigation(WidgetTester tester) async {
   await tester.pumpAndSettle();
 }
 
-Future checkOverView(WidgetTester tester,IntegrationTestWidgetsFlutterBinding binding) async {
+Future checkOverView(
+    WidgetTester tester, IntegrationTestWidgetsFlutterBinding binding) async {
   final Size screenSize = tester.getSize(find.byType(MaterialApp));
 
   final Offset tapPosition = Offset(
@@ -160,11 +162,11 @@ Future checkOverView(WidgetTester tester,IntegrationTestWidgetsFlutterBinding bi
   await tester.pumpAndSettle();
 }
 
-Future checkDragBottomSheet(WidgetTester tester,IntegrationTestWidgetsFlutterBinding binding) async {
-
+Future checkDragBottomSheet(
+    WidgetTester tester, IntegrationTestWidgetsFlutterBinding binding) async {
   final Size screenSize = tester.getSize(find.byType(MaterialApp));
   final Offset dragUpFrom = Offset(
-    screenSize.width/2,
+    screenSize.width / 2,
     screenSize.height - 50, // 距离底部 50px
   );
 
@@ -174,18 +176,19 @@ Future checkDragBottomSheet(WidgetTester tester,IntegrationTestWidgetsFlutterBin
   await Future.delayed(const Duration(seconds: 2));
 
   final Offset dragDownFrom = Offset(
-    screenSize.width/2,
+    screenSize.width / 2,
     screenSize.height - 350,
   );
   await tester.dragFrom(dragDownFrom, const Offset(0, 300));
   await tester.pumpAndSettle();
 }
 
-Future checkClickCenterToShowRecenterButton(WidgetTester tester,IntegrationTestWidgetsFlutterBinding binding) async {
+Future checkClickCenterToShowRecenterButton(
+    WidgetTester tester, IntegrationTestWidgetsFlutterBinding binding) async {
   final Size screenSize = tester.getSize(find.byType(MaterialApp));
   final Offset dragUpFrom = Offset(
-    screenSize.width/2,
-    screenSize.height/2,
+    screenSize.width / 2,
+    screenSize.height / 2,
   );
   await tester.dragFrom(dragUpFrom, const Offset(0, -20));
   await tester.pumpAndSettle();
@@ -204,7 +207,6 @@ Future configureRequestOptions(
   required String mode,
   required String unit,
   required bool alternatives,
-
 }) async {
   final modeSelector = find.text(mode);
   final unitSelector = find.text(unit);
@@ -222,7 +224,7 @@ Future configureRequestOptions(
   await tester.tap(unitSelector);
   await tester.pumpAndSettle();
 
-  if(!alternatives){
+  if (!alternatives) {
     // Tap on the alternative selector.
     await tester.tap(alternativeSelector);
     await tester.pumpAndSettle();

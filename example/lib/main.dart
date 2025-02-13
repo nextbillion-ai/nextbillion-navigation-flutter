@@ -27,13 +27,11 @@ final Map<String, Widget> _allPages = <String, Widget>{
   CustomNavigationStyle.title: const CustomNavigationStyle(),
   MapViewStyle.title: const MapViewStyle(),
   NavigationTheme.title: const NavigationTheme(),
-  EmbeddedNavigationViewIntegration.title: const EmbeddedNavigationViewIntegration(),
+  EmbeddedNavigationViewIntegration.title:
+      const EmbeddedNavigationViewIntegration(),
 };
 
-final Map<String,bool> _requiredPermission = <String,bool>{
-
-
-};
+final Map<String, bool> _requiredPermission = <String, bool>{};
 
 class NavigationDemo extends StatefulWidget {
   static const String accessKey = String.fromEnvironment("ACCESS_KEY");
@@ -54,22 +52,19 @@ class _NavigationDemoState extends State<NavigationDemo> {
     NBNavigation.setUserId("123344").then((value) {});
 
     // Check user ID If needed
-    NBNavigation.getUserId().then((value) {
-
-    });
+    NBNavigation.getUserId().then((value) {});
 
     // Get NB ID If needed
-    NBNavigation.getNBId().then((value) {
-
-    });
+    NBNavigation.getNBId().then((value) {});
   }
 
-  void _pushPage(BuildContext context, Widget page,bool isRequiredPermission) async {
+  void _pushPage(
+      BuildContext context, Widget page, bool isRequiredPermission) async {
     if (!mounted) {
       return;
     }
 
-    if(isRequiredPermission) {
+    if (isRequiredPermission) {
       var status = await Permission.location.status;
 
       if (!mounted) {
@@ -108,12 +103,10 @@ class _NavigationDemoState extends State<NavigationDemo> {
               separatorBuilder: (BuildContext context, int index) =>
                   const Divider(height: 1),
               itemBuilder: (_, int index) => ListTile(
-                title: Text(_allPages.keys.toList()[index]),
-                onTap: () {
-                  _pushPage(context, _allPages.values.toList()[index], true);
-                }
-
-              ),
+                  title: Text(_allPages.keys.toList()[index]),
+                  onTap: () {
+                    _pushPage(context, _allPages.values.toList()[index], true);
+                  }),
             ),
     );
   }

@@ -54,9 +54,9 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
   _onMapClick(Point<double> point, LatLng coordinates) {
     navNextBillionMap.addRouteSelectedListener(coordinates,
         (selectedRouteIndex) {
-          if (routes.isNotEmpty) {
-            primaryIndex = selectedRouteIndex;
-          }
+      if (routes.isNotEmpty) {
+        primaryIndex = selectedRouteIndex;
+      }
     });
   }
 
@@ -232,7 +232,7 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
     NavigationLauncherConfig config =
         NavigationLauncherConfig(route: routes[primaryIndex], routes: routes);
     config.locationLayerRenderMode = LocationLayerRenderMode.gps;
-    config.shouldSimulateRoute = false;
+    config.shouldSimulateRoute = true;
     config.themeMode = NavigationThemeMode.system;
     config.useCustomNavigationStyle = false;
     NBNavigation.startNavigation(config);

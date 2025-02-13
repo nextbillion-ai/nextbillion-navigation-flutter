@@ -4,23 +4,21 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:nb_navigation_flutter/nb_navigation_flutter.dart';
 
-class MockNBNavigationViewPlatform extends Mock implements NBNavigationViewPlatform {
+class MockNBNavigationViewPlatform extends Mock
+    implements NBNavigationViewPlatform {
   @override
   Future<void> stopNavigation() async {
     (super.noSuchMethod(
-      Invocation.method(
-        #stopNavigation,[]
-      ),
+      Invocation.method(#stopNavigation, []),
       returnValue: Future<void>.value(),
       returnValueForMissingStub: Future<void>.value(),
     ) as Future<void>);
   }
+
   @override
   void dispose() {
     (super.noSuchMethod(
-      Invocation.method(
-          #dispose,[]
-      ),
+      Invocation.method(#dispose, []),
       returnValue: Future<void>.value(),
       returnValueForMissingStub: Future<void>.value(),
     ) as Future<void>);
@@ -38,7 +36,8 @@ class MockNBNavigationViewPlatform extends Mock implements NBNavigationViewPlatf
   }
 
   @override
-  void setOnNavigationCancellingCallback(OnNavigationCancellingCallback? callback) {
+  void setOnNavigationCancellingCallback(
+      OnNavigationCancellingCallback? callback) {
     super.noSuchMethod(
       Invocation.method(
         #setOnNavigationCancellingCallback,
@@ -60,6 +59,7 @@ class MockNBNavigationViewPlatform extends Mock implements NBNavigationViewPlatf
       returnValueForMissingStub: null,
     );
   }
+
   @override
   void setOnArriveAtWaypointCallback(OnArriveAtWaypointCallback? callback) {
     super.noSuchMethod(
@@ -73,7 +73,8 @@ class MockNBNavigationViewPlatform extends Mock implements NBNavigationViewPlatf
   }
 
   @override
-  void setOnRerouteFromLocationCallback(OnRerouteFromLocationCallback? callback) {
+  void setOnRerouteFromLocationCallback(
+      OnRerouteFromLocationCallback? callback) {
     super.noSuchMethod(
       Invocation.method(
         #setOnRerouteFromLocationCallback,
@@ -107,6 +108,7 @@ class MockNBNavigationViewPlatform extends Mock implements NBNavigationViewPlatf
       returnValueForMissingStub: null,
     );
   }
+
   @override
   Future<void> initPlatform(int id) {
     return super.noSuchMethod(
@@ -118,8 +120,6 @@ class MockNBNavigationViewPlatform extends Mock implements NBNavigationViewPlatf
       returnValueForMissingStub: Future<void>.value(),
     ) as Future<void>;
   }
-
-
 }
 
 void main() {
@@ -128,7 +128,8 @@ void main() {
 
   setUp(() {
     mockNavViewPlatform = MockNBNavigationViewPlatform();
-    navigationController = NavigationViewController(navViewPlatform: mockNavViewPlatform);
+    navigationController =
+        NavigationViewController(navViewPlatform: mockNavViewPlatform);
   });
 
   tearDown(() {
@@ -150,7 +151,8 @@ void main() {
   });
 
   test('Check callback should be called', () {
-    MockNBNavigationViewPlatform mockNBNavigationViewPlatform = MockNBNavigationViewPlatform();
+    MockNBNavigationViewPlatform mockNBNavigationViewPlatform =
+        MockNBNavigationViewPlatform();
     NavigationViewController(
       navViewPlatform: mockNBNavigationViewPlatform,
       onProgressChange: (progress) {
@@ -173,11 +175,16 @@ void main() {
       },
     );
 
-    verify(mockNBNavigationViewPlatform.setOnNavigationCancellingCallback(any)).called(1);
-    verify(mockNBNavigationViewPlatform.setOnArriveAtWaypointCallback(any)).called(1);
-    verify(mockNBNavigationViewPlatform.setOnRerouteFromLocationCallback(any)).called(1);
-    verify(mockNBNavigationViewPlatform.setOnRerouteAlongCallback(any)).called(1);
-    verify(mockNBNavigationViewPlatform.setOnRerouteFailureCallback(any)).called(1);
+    verify(mockNBNavigationViewPlatform.setOnNavigationCancellingCallback(any))
+        .called(1);
+    verify(mockNBNavigationViewPlatform.setOnArriveAtWaypointCallback(any))
+        .called(1);
+    verify(mockNBNavigationViewPlatform.setOnRerouteFromLocationCallback(any))
+        .called(1);
+    verify(mockNBNavigationViewPlatform.setOnRerouteAlongCallback(any))
+        .called(1);
+    verify(mockNBNavigationViewPlatform.setOnRerouteFailureCallback(any))
+        .called(1);
     verify(mockNBNavigationViewPlatform.navProgressListener).called(1);
   });
 

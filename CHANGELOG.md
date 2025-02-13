@@ -1,3 +1,9 @@
+## v2.3.0-dev.1, Feb 13, 2025
+* bump the version to 2.3.0 to align with the nb_maps_flutter SDK
+* bump the minimum flutter version to 3.24.1
+* bump the minimum android version to 21
+
+
 ## v2.2.0, Feb 7, 2025
 * Support for the 'avoid' parameter in route request options
 * Add an [RouteRequestParams.routeType] field in the route request parameters,it will take effect when [RouteRequestParams.option] set as [SupportedOption.flexible]

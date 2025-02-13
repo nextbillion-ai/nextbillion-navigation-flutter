@@ -44,9 +44,9 @@ class DrawRouteLineState extends State<DrawRouteLine> {
   _onMapClick(Point<double> point, LatLng coordinates) {
     navNextBillionMap.addRouteSelectedListener(coordinates,
         (selectedRouteIndex) {
-          if (routes.isNotEmpty) {
-            primaryIndex = selectedRouteIndex;
-          }
+      if (routes.isNotEmpty) {
+        primaryIndex = selectedRouteIndex;
+      }
     });
   }
 
