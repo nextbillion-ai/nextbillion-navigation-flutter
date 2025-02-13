@@ -46,9 +46,9 @@ class DrawRouteLineState extends State<DrawRouteLineWithRawJson> {
   _onMapClick(Point<double> point, LatLng coordinates) {
     navNextBillionMap.addRouteSelectedListener(coordinates,
         (selectedRouteIndex) {
-          if (routes.isNotEmpty) {
-            primaryIndex = selectedRouteIndex;
-          }
+      if (routes.isNotEmpty) {
+        primaryIndex = selectedRouteIndex;
+      }
     });
   }
 
@@ -95,7 +95,7 @@ class DrawRouteLineState extends State<DrawRouteLineWithRawJson> {
       DirectionsRoute route3 = DirectionsRoute.fromJson(routeJson3);
 
       setState(() {
-        routes = [route1, route2,route3];
+        routes = [route1, route2, route3];
       });
       drawRoutes(routes);
     } catch (e) {

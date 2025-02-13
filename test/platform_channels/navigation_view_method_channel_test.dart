@@ -128,13 +128,14 @@ void main() {
       await navigationView.initPlatform(1);
 
       await navigationView.handleMethodCall(const MethodCall('onRerouteAlong'));
+      await navigationView.handleMethodCall(
+        MethodCall('onRerouteFailure', message),
+      );
       await navigationView
-          .handleMethodCall( MethodCall('onRerouteFailure',message),);
-      await navigationView.handleMethodCall( MethodCall('onRerouteAlong',routeString));
+          .handleMethodCall(MethodCall('onRerouteAlong', routeString));
 
       expect(failureMessage, message);
       expect(route, isNotNull);
-
     });
   });
 }

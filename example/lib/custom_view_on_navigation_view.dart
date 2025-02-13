@@ -78,12 +78,12 @@ class CustomViewOnNavigationViewState
   _onMapClick(Point<double> point, LatLng coordinates) {
     navNextBillionMap.addRouteSelectedListener(coordinates,
         (selectedRouteIndex) {
-          if (routes.isNotEmpty) {
-            primaryIndex = selectedRouteIndex;
-            DirectionsRoute selectedRoute = routes[selectedRouteIndex];
-            // You need to recalculate the speed limit for the new selected route
-            _calculateSpeedLimit(selectedRoute);
-          }
+      if (routes.isNotEmpty) {
+        primaryIndex = selectedRouteIndex;
+        DirectionsRoute selectedRoute = routes[selectedRouteIndex];
+        // You need to recalculate the speed limit for the new selected route
+        _calculateSpeedLimit(selectedRoute);
+      }
     });
   }
 
@@ -220,8 +220,7 @@ class CustomViewOnNavigationViewState
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text("Speed Limit\n$speedLimit",
-          textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 16)),
+          textAlign: TextAlign.center, style: const TextStyle(fontSize: 16)),
     );
   }
 

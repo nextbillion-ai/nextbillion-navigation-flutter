@@ -122,7 +122,7 @@ void main() {
     test('should return if routes are empty', () async {
       when(mockMapController.disposed).thenReturn(false);
       expect(
-            () async => await navNextBillionMap.drawRoute([]),
+        () async => await navNextBillionMap.drawRoute([]),
         flutter_test.throwsAssertionError,
       );
     });
@@ -154,7 +154,7 @@ void main() {
 
     test('should drawIndependentRoutes if routes are not empty', () async {
       NBNavigationPlatform mockNBNavigationPlatform =
-      MockNBNavigationPlatform();
+          MockNBNavigationPlatform();
       NBNavigation.setNBNavigationPlatform(mockNBNavigationPlatform);
 
       WidgetsFlutterBinding.ensureInitialized();
@@ -203,31 +203,32 @@ void main() {
           .called(2);
     });
 
-    test('should drawIndependentRoutes with full overview if routes is not empty',
-            () async {
-          NBNavigationPlatform mockNBNavigationPlatform =
+    test(
+        'should drawIndependentRoutes with full overview if routes is not empty',
+        () async {
+      NBNavigationPlatform mockNBNavigationPlatform =
           MockNBNavigationPlatform();
-          NBNavigation.setNBNavigationPlatform(mockNBNavigationPlatform);
+      NBNavigation.setNBNavigationPlatform(mockNBNavigationPlatform);
 
-          WidgetsFlutterBinding.ensureInitialized();
-          final file = File('test/navigation/route_full_overview.json');
-          final jsonString = await file.readAsString();
-          Map<String, dynamic> json = jsonDecode(jsonString);
-          DirectionsRoute route = DirectionsRoute.fromJson(json);
-          List<DirectionsRoute> routes = [route];
+      WidgetsFlutterBinding.ensureInitialized();
+      final file = File('test/navigation/route_full_overview.json');
+      final jsonString = await file.readAsString();
+      Map<String, dynamic> json = jsonDecode(jsonString);
+      DirectionsRoute route = DirectionsRoute.fromJson(json);
+      List<DirectionsRoute> routes = [route];
 
-          Uint8List expectedResponse = Uint8List(0);
+      Uint8List expectedResponse = Uint8List(0);
 
-          when(mockNBNavigationPlatform.captureRouteDurationSymbol(route, true))
-              .thenAnswer((_) async => expectedResponse);
+      when(mockNBNavigationPlatform.captureRouteDurationSymbol(route, true))
+          .thenAnswer((_) async => expectedResponse);
 
-          when(mockMapController.disposed).thenReturn(false);
-          await navNextBillionMap.drawIndependentRoutes(routes);
+      when(mockMapController.disposed).thenReturn(false);
+      await navNextBillionMap.drawIndependentRoutes(routes);
 
-          //1: buildFeatureCollection(reversed), 2:buildFeatureCollection([])
-          verify(mockMapController.setGeoJsonSource(routeShieldSourceId, any))
-              .called(2);
-        });
+      //1: buildFeatureCollection(reversed), 2:buildFeatureCollection([])
+      verify(mockMapController.setGeoJsonSource(routeShieldSourceId, any))
+          .called(2);
+    });
 
     test('should add route selected listener', () {
       LatLng clickedPoint = const LatLng(1.0, 2.0);

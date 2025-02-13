@@ -1,18 +1,18 @@
 name: nb_navigation_flutter
-description: Nextbillion.ai Navigation SDK for Flutter
-version: 2.2.0
-homepage: https://github.com/nextbillion-ai/nextbillion-navigation-flutter
+description: A Flutter plugin for Nextbillion.ai Navigation SDK, providing turn-by-turn navigation.
+version: 2.3.0-dev.1
+homepage: https://docs.nextbillion.ai/routing/flutter-navigation-sdk
 repository: https://github.com/nextbillion-ai/nextbillion-navigation-flutter
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
-  flutter: ">=3.3.0"
+  sdk: '>=3.5.1 <4.0.0'
+  flutter: ">=3.24.1"
 
 dependencies:
   flutter:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
-  nb_maps_flutter: 1.2.0
+  nb_maps_flutter: ^2.0.0-dev.2
 
 dev_dependencies:
   flutter_test:

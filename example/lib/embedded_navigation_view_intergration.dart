@@ -77,17 +77,17 @@ class EmbeddedNavigationViewExampleState
 
   _onMapClick(Point<double> point, LatLng coordinates) {
     navNextBillionMap.addRouteSelectedListener(coordinates,
-            (selectedRouteIndex) {
-          if (routes.isNotEmpty && selectedRouteIndex != 0) {
-            var selectedRoute = routes[selectedRouteIndex];
-            routes.removeAt(selectedRouteIndex);
-            routes.insert(0, selectedRoute);
-            setState(() {
-              routes = routes;
-            });
-            navNextBillionMap.drawRoute(routes);
-          }
+        (selectedRouteIndex) {
+      if (routes.isNotEmpty && selectedRouteIndex != 0) {
+        var selectedRoute = routes[selectedRouteIndex];
+        routes.removeAt(selectedRouteIndex);
+        routes.insert(0, selectedRoute);
+        setState(() {
+          routes = routes;
         });
+        navNextBillionMap.drawRoute(routes);
+      }
+    });
   }
 
   _onCameraTrackingChanged() {
@@ -154,7 +154,7 @@ class EmbeddedNavigationViewExampleState
             NBString.travelMode,
             travelModes,
             selectedTravelMode,
-                (index) {
+            (index) {
               setState(() {
                 selectedTravelMode = index;
               });
@@ -162,15 +162,15 @@ class EmbeddedNavigationViewExampleState
           ),
           const SizedBox(height: 4),
           _buildSegmentItem(NBString.distanceUnit, supportedUnits, selectedUnit,
-                  (index) {
-                setState(() {
-                  selectedUnit = index;
-                });
-              }),
+              (index) {
+            setState(() {
+              selectedUnit = index;
+            });
+          }),
           _buildSwitchItem(
             NBString.showAlternative,
             showAlternative,
-                (value) {
+            (value) {
               setState(() {
                 showAlternative = value;
               });
@@ -210,7 +210,7 @@ class EmbeddedNavigationViewExampleState
 
   NavigationLauncherConfig _buildNavigationViewConfig() {
     NavigationLauncherConfig config =
-    NavigationLauncherConfig(route: routes.first, routes: routes);
+        NavigationLauncherConfig(route: routes.first, routes: routes);
     config.locationLayerRenderMode = LocationLayerRenderMode.gps;
     config.shouldSimulateRoute = true;
     config.themeMode = NavigationThemeMode.system;
@@ -224,7 +224,7 @@ class EmbeddedNavigationViewExampleState
     }
 
     String title =
-    isArrivedDestination ? "Arrived Destination" : "Arrived Waypoint";
+        isArrivedDestination ? "Arrived Destination" : "Arrived Waypoint";
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -321,7 +321,7 @@ class EmbeddedNavigationViewExampleState
     );
 
     DirectionsRouteResponse routeResponse =
-    await NBNavigation.fetchRoute(requestParams);
+        await NBNavigation.fetchRoute(requestParams);
     if (routeResponse.directionsRoutes.isNotEmpty) {
       clearRouteResult();
       setState(() {
@@ -346,7 +346,7 @@ class EmbeddedNavigationViewExampleState
     List<LatLng> multiPoints = [];
     for (var route in routes) {
       var routePoints =
-      decode(route.geometry ?? '', _getDecodePrecision(route.routeOptions));
+          decode(route.geometry ?? '', _getDecodePrecision(route.routeOptions));
       multiPoints.addAll(routePoints);
     }
     if (multiPoints.isNotEmpty) {
