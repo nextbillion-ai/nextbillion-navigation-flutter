@@ -44,7 +44,7 @@ mixin EventSimulator {
 
   //Alphabet
   static Future<void> inputAlphabet(String alphabet) async {
-    if (alphabet != null && alphabet.length == 1) {
+    if (alphabet.length == 1) {
       await inputKeyEventWithName('KEYCODE_${alphabet.toUpperCase()}');
     }
   }

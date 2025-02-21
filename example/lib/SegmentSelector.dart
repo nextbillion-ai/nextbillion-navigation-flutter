@@ -5,16 +5,16 @@ class SegmentSelector extends StatefulWidget {
   final Function(int) onSegmentSelected;
   final int defaultIndex;
 
-  SegmentSelector(
-      {required this.segments,
+  const SegmentSelector(
+      {super.key, required this.segments,
       required this.defaultIndex,
       required this.onSegmentSelected});
 
   @override
-  _SegmentSelectorState createState() => _SegmentSelectorState();
+  SegmentSelectorState createState() => SegmentSelectorState();
 }
 
-class _SegmentSelectorState extends State<SegmentSelector> {
+class SegmentSelectorState extends State<SegmentSelector> {
   int _selectedIndex = 0;
 
   @override
