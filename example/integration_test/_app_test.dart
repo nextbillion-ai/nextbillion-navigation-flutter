@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:nb_navigation_flutter/nb_navigation_flutter.dart';
 import 'package:nb_navigation_flutter_example/constants.dart';
-import 'package:nb_navigation_flutter_example/embedded_navigation_view_intergration.dart';
+import 'package:nb_navigation_flutter_example/embedded_navigation_view_integration.dart';
 
 import 'package:nb_navigation_flutter_example/main.dart' as app;
 

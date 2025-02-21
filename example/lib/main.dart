@@ -12,7 +12,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import 'custom_view_on_navigation_view.dart';
 import 'draw_route_line_with_raw_json.dart';
-import 'embedded_navigation_view_intergration.dart';
+import 'embedded_navigation_view_integration.dart';
 import 'full_navigation_example.dart';
 
 final Map<String, Widget> _allPages = <String, Widget>{
@@ -31,7 +31,6 @@ final Map<String, Widget> _allPages = <String, Widget>{
       const EmbeddedNavigationViewIntegration(),
 };
 
-final Map<String, bool> _requiredPermission = <String, bool>{};
 
 class NavigationDemo extends StatefulWidget {
   static const String accessKey = String.fromEnvironment("ACCESS_KEY");

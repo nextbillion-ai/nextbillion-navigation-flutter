@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_navigation_flutter/nb_navigation_flutter.dart';
 import 'package:nb_navigation_flutter_example/route_json.dart';
@@ -99,7 +100,9 @@ class DrawRouteLineState extends State<DrawRouteLineWithRawJson> {
       });
       drawRoutes(routes);
     } catch (e) {
-      print("_fetchRoute : ${e.toString()}");
+      if (kDebugMode) {
+        print("_fetchRoute : ${e.toString()}");
+      }
     }
   }
 

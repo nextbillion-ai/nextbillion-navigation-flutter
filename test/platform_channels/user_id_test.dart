@@ -6,10 +6,8 @@ import 'nb_navigation_method_channels_test.mocks.dart';
 
 @GenerateMocks([MethodChannel])
 void main() {
-  late MockMethodChannel mockMethodChannel;
 
   setUp(() {
-    mockMethodChannel = MockMethodChannel();
     // NextBillion._nextBillionChannel = mockMethodChannel;
   });
 

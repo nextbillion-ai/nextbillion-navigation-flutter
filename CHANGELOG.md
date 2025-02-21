@@ -1,3 +1,6 @@
+## v2.3.0-dev.2, Feb 21, 2025
+* Fix issue where dissolved route style doesn't work on Android when using [NBNavigationView].
+
 ## v2.3.0-dev.1, Feb 13, 2025
 * bump the version to 2.3.0 to align with the nb_maps_flutter SDK
 * bump the minimum flutter version to 3.24.1

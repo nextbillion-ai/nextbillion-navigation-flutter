@@ -279,7 +279,7 @@ class EmbeddedNavigationViewExampleState
                 children: [
                   ElevatedButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
+                        backgroundColor: WidgetStateProperty.all(
                             routes.isEmpty ? Colors.grey : Colors.blueAccent),
                       ),
                       onPressed: () {
@@ -289,7 +289,7 @@ class EmbeddedNavigationViewExampleState
                   const Padding(padding: EdgeInsets.only(left: 8)),
                   ElevatedButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
+                        backgroundColor: WidgetStateProperty.all(
                             routes.isEmpty ? Colors.grey : Colors.blueAccent),
                       ),
                       onPressed: () {
