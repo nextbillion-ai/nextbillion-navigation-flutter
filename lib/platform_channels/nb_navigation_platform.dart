@@ -15,7 +15,8 @@ abstract class NBNavigationPlatform {
 
   Future<void> startNavigation(NavigationLauncherConfig launcherConfig);
 
-  Future<void> startPreviewNavigation(DirectionsRoute route);
+  Future<void> startPreviewNavigation(DirectionsRoute route,
+      {String? mapStyle});
 
   Future<String> getRoutingBaseUri();
 

@@ -66,8 +66,9 @@ class NBNavigation {
   }
 
   /// Start preview navigation screen with given route
-  static Future<void> startPreviewNavigation(DirectionsRoute route) async {
-    return await _nbNavigationPlatform.startPreviewNavigation(route);
+  static Future<void> startPreviewNavigation(DirectionsRoute route,
+      {String? mapStyle,NavigationThemeMode? themeMode}) async {
+    return await _nbNavigationPlatform.startPreviewNavigation(route,mapStyle: mapStyle);
   }
 
   /// Captures a symbol representing the duration of a route.

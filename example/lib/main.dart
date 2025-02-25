@@ -14,6 +14,7 @@ import 'custom_view_on_navigation_view.dart';
 import 'draw_route_line_with_raw_json.dart';
 import 'embedded_navigation_view_integration.dart';
 import 'full_navigation_example.dart';
+import 'launch_preview_screen.dart';
 
 final Map<String, Widget> _allPages = <String, Widget>{
   FullNavigationExample.title: const FullNavigationExample(),
@@ -29,6 +30,7 @@ final Map<String, Widget> _allPages = <String, Widget>{
   NavigationTheme.title: const NavigationTheme(),
   EmbeddedNavigationViewIntegration.title:
       const EmbeddedNavigationViewIntegration(),
+  LaunchPreviewScreen.title: const LaunchPreviewScreen(),
 };
 
 
