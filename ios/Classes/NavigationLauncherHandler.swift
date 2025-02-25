@@ -29,8 +29,8 @@ class NavigationLauncherHandler: MethodChannelHandler {
                 return
             }
 
-            let routes = Convert.convertNavigationOptions(arguments: args)
-            if routes.isEmpty {
+            let (routes, routeIndex)  = Convert.convertNavigationRoutes(arguments: args)
+            if routes.isEmpty || routeIndex == nil {
                 return
             }
             var enableDissolvedRoute = true
@@ -51,7 +51,7 @@ class NavigationLauncherHandler: MethodChannelHandler {
             
             let navigationOptions = Convert.convertNavigationOptions(args: args, routes: routes)
             let viewController = UIApplication.shared.keyWindow?.rootViewController
-            let navigationViewController = NavigationViewController(for: routes, navigationOptions: navigationOptions)
+            let navigationViewController = NavigationViewController(for: routes, routeIndex: routeIndex, navigationOptions: navigationOptions)
             navigationViewController.delegate = self
             navigationViewController.modalPresentationStyle = .fullScreen
             navigationViewController.routeLineTracksTraversal = enableDissolvedRoute

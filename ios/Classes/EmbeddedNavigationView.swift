@@ -47,8 +47,9 @@ public class EmbeddedNavigationView : NSObject, FlutterPlatformView, FlutterStre
             return
         }
         
-        let routes = Convert.convertNavigationOptions(arguments: args)
-        if routes.isEmpty {
+        let (routes, routeIndex)  =  Convert.convertNavigationRoutes(arguments: args)
+
+        if routes.isEmpty || routeIndex == nil {
             return
         }
         var enableDissolvedRoute = true
@@ -64,7 +65,7 @@ public class EmbeddedNavigationView : NSObject, FlutterPlatformView, FlutterStre
         }
         
         let navigationOptions = Convert.convertNavigationOptions(args: args, routes: routes)
-        navigationController = NavigationViewController(for: routes, navigationOptions: navigationOptions)
+        navigationController = NavigationViewController(for: routes, routeIndex: routeIndex, navigationOptions: navigationOptions)
         navigationController?.delegate = self
 //        navigationController?.navigationService?.delegate = self
         navigationController?.routeLineTracksTraversal = enableDissolvedRoute

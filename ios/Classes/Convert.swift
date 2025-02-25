@@ -195,31 +195,32 @@ class Convert {
         return [coordinate.longitude, coordinate.latitude]
     }
     
-    class func convertNavigationOptions(arguments: [String: Any]) -> [Route] {
+    class func convertNavigationRoutes(arguments: [String: Any]) -> ([Route], Int?) {
         if let options = arguments["routeOptions"] as? String, let launcherConfig = arguments["launcherConfig"] as? [String: Any] {
-            let routeOptions = convertRouteRequestParams(arguments: options)
-            guard let routeOptions = routeOptions else {
-                return []
-            }
-            if let singleRouteJson = launcherConfig["route"] as? String, !singleRouteJson.isEmpty {
-                let singleRoute = modifyRoute(routeOptions: routeOptions, routeJson: singleRouteJson)
-                var routes: [Route] = []
-                if let routeJosn = launcherConfig["routes"] as? [String], !routeJosn.isEmpty {
-                    routeJosn.forEach { jsonString in
-                        let route = modifyRoute(routeOptions: routeOptions, routeJson: jsonString)
-                        routes.append(route)
-                    }
-                    if let primaryIndex = routes.firstIndex(where: { $0.shape == singleRoute.shape } ), primaryIndex >= 0 {
-                        routes.remove(at: primaryIndex)
-                        routes.insert(singleRoute, at: 0)
-                    }
-                } else {
-                    routes.append(singleRoute)
+                let routeOptions = convertRouteRequestParams(arguments: options)
+                guard let routeOptions = routeOptions else {
+                    return ([], nil)
                 }
-                return routes
+                if let singleRouteJson = launcherConfig["route"] as? String, !singleRouteJson.isEmpty {
+                    let singleRoute = modifyRoute(routeOptions: routeOptions, routeJson: singleRouteJson)
+                    var routes: [Route] = []
+                    if let routeJsons = launcherConfig["routes"] as? [String], !routeJsons.isEmpty {
+                        routeJsons.forEach { jsonString in
+                            let route = modifyRoute(routeOptions: routeOptions, routeJson: jsonString)
+                            routes.append(route)
+                        }
+                    } else {
+                        routes.append(singleRoute)
+                    }
+                    
+                    // Find the index of the singleRoute in routes
+                    let routeIndex = routes.firstIndex(where: { $0.shape == singleRoute.shape })
+                    
+                    // Return the routes and the routeIndex
+                    return (routes, routeIndex)
+                }
             }
-        }
-        return []
+            return ([], nil)
         
     }
     
