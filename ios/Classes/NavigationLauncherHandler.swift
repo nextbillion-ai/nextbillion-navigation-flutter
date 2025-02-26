@@ -49,8 +49,9 @@ class NavigationLauncherHandler: MethodChannelHandler {
                 }
             }
             
-            let navigationOptions = Convert.convertNavigationOptions(args: args, routes: routes)
+            let navigationOptions = Convert.convertNavigationOptions(args: args, routes: routes,index: routeIndex ?? 0)
             let viewController = UIApplication.shared.keyWindow?.rootViewController
+            
             let navigationViewController = NavigationViewController(for: routes, routeIndex: routeIndex, navigationOptions: navigationOptions)
             navigationViewController.delegate = self
             navigationViewController.modalPresentationStyle = .fullScreen

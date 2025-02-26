@@ -30,6 +30,7 @@ class EmbeddedNavigationViewExampleState
 
   String locationTrackImage = "assets/location_on.png";
   bool showArrivalDialog = true;
+  int _selectedRouteIndex = 0;
 
   LatLng origin = const LatLng(
     17.457302037173775,
@@ -78,15 +79,7 @@ class EmbeddedNavigationViewExampleState
   _onMapClick(Point<double> point, LatLng coordinates) {
     navNextBillionMap.addRouteSelectedListener(coordinates,
         (selectedRouteIndex) {
-      if (routes.isNotEmpty && selectedRouteIndex != 0) {
-        var selectedRoute = routes[selectedRouteIndex];
-        routes.removeAt(selectedRouteIndex);
-        routes.insert(0, selectedRoute);
-        setState(() {
-          routes = routes;
-        });
-        navNextBillionMap.drawRoute(routes);
-      }
+          _selectedRouteIndex = selectedRouteIndex;
     });
   }
 
@@ -210,7 +203,7 @@ class EmbeddedNavigationViewExampleState
 
   NavigationLauncherConfig _buildNavigationViewConfig() {
     NavigationLauncherConfig config =
-        NavigationLauncherConfig(route: routes.first, routes: routes);
+        NavigationLauncherConfig(route: routes[_selectedRouteIndex], routes: routes);
     config.locationLayerRenderMode = LocationLayerRenderMode.gps;
     config.shouldSimulateRoute = true;
     config.themeMode = NavigationThemeMode.system;

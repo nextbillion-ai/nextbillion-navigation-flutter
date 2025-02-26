@@ -261,7 +261,7 @@ class Convert {
         }
     }
     
-    class func convertNavigationOptions(args: [String : Any], routes: [Route]) -> NavigationOptions {
+    class func convertNavigationOptions(args: [String : Any], routes: [Route], index: Int) -> NavigationOptions {
         var simulate = SimulationMode.onPoorGPS
         var navigationModeStyle: [NbmapNavigation.Style] = [NavStyleManager.customDayStyle, NavStyleManager.customNightStyle]
 
@@ -283,8 +283,8 @@ class Convert {
                 [navigationDayStyle, navigationNightStyle]
             }
         }
-        
-        let navigationService = NBNavigationService(routes: routes, routeIndex: 0, simulating: simulate)
+     
+        let navigationService = NBNavigationService(routes: routes, routeIndex: index, simulating: simulate)
         
         let navigationOptions = NavigationOptions(styles: navigationModeStyle, navigationService: navigationService)
         return navigationOptions
