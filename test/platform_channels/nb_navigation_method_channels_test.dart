@@ -121,13 +121,15 @@ void main() {
   test('startPreviewNavigation should invoke method on channel', () async {
     final arguments = {
       'route': jsonEncode(route),
+      'mapStyle': 'nbMapDefaultDarkStyle',
     };
 
     when(channel.invokeMethod<Map<String, dynamic>>(
             NBNavigationLauncherMethodID.nbPreviewNavigationMethod, arguments))
         .thenAnswer((_) async => {});
 
-    await nbNavMethodChannel.startPreviewNavigation(route);
+    await nbNavMethodChannel.startPreviewNavigation(route,
+        mapStyle: 'nbMapDefaultDarkStyle');
 
     verify(channel.invokeMethod(
         NBNavigationLauncherMethodID.nbPreviewNavigationMethod, arguments));

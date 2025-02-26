@@ -84,14 +84,14 @@ class NBNavigationMethodChannel extends NBNavigationPlatform {
   }
 
   @override
-  Future<void> startPreviewNavigation(DirectionsRoute route) async {
+  Future<void> startPreviewNavigation(DirectionsRoute route,{String? mapStyle}) async {
     try {
       Map<String, dynamic> arguments = {};
       if (Platform.isIOS) {
         arguments["routeOptions"] = jsonEncode(route.routeOptions);
       }
       arguments["route"] = jsonEncode(route);
-
+      arguments["mapStyle"] = mapStyle;
       await _channel.invokeMethod(
           NBNavigationLauncherMethodID.nbPreviewNavigationMethod, arguments);
     } on PlatformException catch (e) {

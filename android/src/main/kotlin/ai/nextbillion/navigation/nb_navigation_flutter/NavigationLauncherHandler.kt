@@ -36,10 +36,15 @@ class NavigationLauncherHandler(methodChannel: MethodChannel?) : MethodChannelHa
             }
             MethodID.NAVIGATION_PREVIEW_NAVIGATION -> {
                 val arguments = call.arguments as? Map<*, *>
+
+                val intent = Intent(activity, NextBillionPreviewActivity::class.java)
+                val mapStyle = arguments?.get("mapStyle") as? String
+                mapStyle?.let {
+                    intent.putExtra("preview_map_style_key", mapStyle)
+                }
                 val routeJson = arguments?.get("route") as? String
                 routeJson?.let {
                     val directionsRoute = DirectionsRoute.fromJson(routeJson)
-                    val intent = Intent(activity, NextBillionPreviewActivity::class.java)
                     intent.putExtra(
                         "directions_route_key",
                         directionsRoute

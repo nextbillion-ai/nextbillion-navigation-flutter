@@ -70,7 +70,13 @@ class NavigationLauncherHandler: MethodChannelHandler {
                 return
             }
 
-            let previewController = NavigationPreviewController(route: route)
+            var navigationModeStyle: NbmapNavigation.Style = NavStyleManager.customDayStyle
+            
+            if let mapStyleUrl = args["mapStyle"] as? String {
+                navigationModeStyle.mapStyleURL = URL(string: mapStyleUrl)!
+            }
+            
+            let previewController = NavigationPreviewController(route: route,style: navigationModeStyle)
             viewController?.pushViewController(previewController, animated: true)
             break
             
