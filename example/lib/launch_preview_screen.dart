@@ -230,7 +230,8 @@ class LaunchPreviewScreenState extends State<LaunchPreviewScreen> {
   void _startNavigation() {
     if (routes.isEmpty) return;
 
-    NBNavigation.startPreviewNavigation(routes[primaryIndex]);
+    NBNavigation.startPreviewNavigation(routes[primaryIndex],
+        mapStyle: NbNavigationStyles.nbMapDefaultDarkStyle);
   }
 
   Future<void> loadAssetImage() async {
