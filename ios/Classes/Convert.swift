@@ -225,8 +225,7 @@ class Convert {
     
     class func modifyRoute(routeOptions: NBNavRouteOptions, routeJson: String) -> Route {
         let json = jsonStringToDictionary(routeJson)
-        let countryCode = json["countryCode"] as? String ?? ""
-        let route = Route.init(json: json, waypoints: routeOptions.waypoints, options: routeOptions, countryCode: countryCode)
+        let route = Route.init(json: json, waypoints: routeOptions.waypoints, options: routeOptions)
         route.speechLocale = routeOptions.locale
         route.modifyRoute()
 
