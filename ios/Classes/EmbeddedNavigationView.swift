@@ -63,11 +63,9 @@ public class EmbeddedNavigationView : NSObject, FlutterPlatformView, FlutterStre
                 showSpeed = showSpeedometer
             }
         }
-        
-        let navigationOptions = Convert.convertNavigationOptions(args: args, routes: routes)
+        let navigationOptions = Convert.convertNavigationOptions(args: args, routes: routes, index: routeIndex ?? 0)
         navigationController = NavigationViewController(for: routes, routeIndex: routeIndex, navigationOptions: navigationOptions)
         navigationController?.delegate = self
-//        navigationController?.navigationService?.delegate = self
         navigationController?.routeLineTracksTraversal = enableDissolvedRoute
         
         navigationController?.showsArrivalWaypointSheet = false
