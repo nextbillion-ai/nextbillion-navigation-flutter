@@ -2,6 +2,7 @@ import 'package:nb_navigation_flutter/nb_navigation_flutter.dart';
 
 abstract class NavigationMap {
   Future<void> initGeoJsonSource();
+
   Future<void> initRouteLayers();
 
   /// Draws the route on the map based on the provided [routes].
@@ -26,5 +27,8 @@ abstract class NavigationMap {
 
   /// Adds a listener to the map to listen for route selection.
   void addRouteSelectedListener(
-      LatLng clickedPoint, OnRouteSelectedCallback onRouteSelectedCallback);
+      OnRouteSelectedCallback onRouteSelectedCallback);
+
+  /// Remove the listener of route selection.
+  void removeRouteSelectedListener();
 }

@@ -19,7 +19,7 @@ class FullNavigationExample extends StatefulWidget {
 class FullNavigationExampleState extends State<FullNavigationExample> {
   NextbillionMapController? controller;
   List<DirectionsRoute> routes = [];
-  late NavNextBillionMap navNextBillionMap;
+  NavNextBillionMap? navNextBillionMap;
   Symbol? mapMarkerSymbol;
 
   String locationTrackImage = "assets/location_on.png";
@@ -43,6 +43,10 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
               CameraUpdate.newLatLngZoom(currentLocation!.position, 14),
               duration: const Duration(milliseconds: 400));
         }
+
+        navNextBillionMap?.addRouteSelectedListener((selectedRouteIndex) {
+          primaryIndex = selectedRouteIndex;
+        });
       });
     }
   }
@@ -52,12 +56,7 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
   }
 
   _onMapClick(Point<double> point, LatLng coordinates) {
-    navNextBillionMap.addRouteSelectedListener(coordinates,
-        (selectedRouteIndex) {
-      if (routes.isNotEmpty) {
-        primaryIndex = selectedRouteIndex;
-      }
-    });
+
   }
 
   _onUserLocationUpdate(UserLocation location) {
@@ -195,7 +194,7 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
 
   Future<void> drawRoutes(List<DirectionsRoute> routes) async {
     // navNextBillionMap.toggleDurationSymbolVisibilityWith(false);
-    navNextBillionMap.drawRoute(routes);
+    navNextBillionMap?.drawRoute(routes);
   }
 
   void fitCameraToBounds(List<DirectionsRoute> routes) {
@@ -220,7 +219,7 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
 
   void clearRouteResult() async {
     primaryIndex = 0;
-    navNextBillionMap.clearRoute();
+    navNextBillionMap?.clearRoute();
     controller?.clearSymbols();
     setState(() {
       routes.clear();
@@ -261,7 +260,7 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    navNextBillionMap?.removeRouteSelectedListener();
     super.dispose();
   }
 

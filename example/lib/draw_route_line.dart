@@ -16,7 +16,7 @@ class DrawRouteLine extends StatefulWidget {
 class DrawRouteLineState extends State<DrawRouteLine> {
   NextbillionMapController? controller;
   List<DirectionsRoute> routes = [];
-  late NavNextBillionMap navNextBillionMap;
+  NavNextBillionMap? navNextBillionMap;
 
   LatLng origin = const LatLng(
     17.457302037173775,
@@ -38,17 +38,13 @@ class DrawRouteLineState extends State<DrawRouteLine> {
   void _onStyleLoaded() async {
     if (controller != null) {
       navNextBillionMap = await NavNextBillionMap.create(controller!);
+      navNextBillionMap?.addRouteSelectedListener((selectedRouteIndex) {
+        primaryIndex = selectedRouteIndex;
+      });
     }
   }
 
-  _onMapClick(Point<double> point, LatLng coordinates) {
-    navNextBillionMap.addRouteSelectedListener(coordinates,
-        (selectedRouteIndex) {
-      if (routes.isNotEmpty) {
-        primaryIndex = selectedRouteIndex;
-      }
-    });
-  }
+  _onMapClick(Point<double> point, LatLng coordinates) {}
 
   @override
   void initState() {
@@ -129,12 +125,13 @@ class DrawRouteLineState extends State<DrawRouteLine> {
 
   Future<void> drawRoutes(List<DirectionsRoute> routes) async {
     primaryIndex = 0;
-    navNextBillionMap.clearRoute();
-    navNextBillionMap.drawRoute(routes);
+    navNextBillionMap?.clearRoute();
+    navNextBillionMap?.drawRoute(routes);
   }
 
   @override
   void dispose() {
+    navNextBillionMap?.removeRouteSelectedListener();
     super.dispose();
   }
 
@@ -184,7 +181,7 @@ class DrawRouteLineState extends State<DrawRouteLine> {
                     setState(() {
                       enableAlternativeRoutes = value;
                     });
-                    navNextBillionMap.toggleAlternativeVisibilityWith(value);
+                    navNextBillionMap?.toggleAlternativeVisibilityWith(value);
                   })
             ],
           ),
@@ -197,7 +194,7 @@ class DrawRouteLineState extends State<DrawRouteLine> {
                     setState(() {
                       enableRouteDurationSymbol = value;
                     });
-                    navNextBillionMap.toggleDurationSymbolVisibilityWith(value);
+                    navNextBillionMap?.toggleDurationSymbolVisibilityWith(value);
                   })
             ],
           )
@@ -205,4 +202,5 @@ class DrawRouteLineState extends State<DrawRouteLine> {
       ),
     );
   }
+
 }

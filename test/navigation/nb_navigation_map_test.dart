@@ -33,27 +33,31 @@ void main() {
     });
 
     test('should add route selected listener', () {
-      LatLng origin = const LatLng(1.312533169133601, 103.75986708439264);
-      LatLng dest = const LatLng(1.310473772283314, 103.77982271935586);
-
-      navNextBillionMap.addRouteSelectedListener(origin, (selectedRouteIndex) {
+      navNextBillionMap.addRouteSelectedListener((selectedRouteIndex) {
         expect(selectedRouteIndex, equals(0));
       });
 
-      navNextBillionMap.addRouteSelectedListener(dest, (selectedRouteIndex) {
+      navNextBillionMap.addRouteSelectedListener((selectedRouteIndex) {
         expect(selectedRouteIndex, equals(0));
       });
+
+      expect(navNextBillionMap.onRerouteFailureCallback != null, true);
+      navNextBillionMap.onRerouteFailureCallback!(0);
+
+      navNextBillionMap.removeRouteSelectedListener();
+
+      expect(navNextBillionMap.onRerouteFailureCallback, null);
     });
 
     test('should add route selected listener', () {
-      LatLng origin = const LatLng(1.312533169133601, 103.75986708439264);
-      LatLng dest = const LatLng(1.310473772283314, 103.77982271935586);
+      // LatLng origin = const LatLng(1.312533169133601, 103.75986708439264);
+      // LatLng dest = const LatLng(1.310473772283314, 103.77982271935586);
 
-      navNextBillionMap.addRouteSelectedListener(origin, (selectedRouteIndex) {
+      navNextBillionMap.addRouteSelectedListener((selectedRouteIndex) {
         expect(selectedRouteIndex, equals(0));
       });
 
-      navNextBillionMap.addRouteSelectedListener(dest, (selectedRouteIndex) {
+      navNextBillionMap.addRouteSelectedListener((selectedRouteIndex) {
         expect(selectedRouteIndex, equals(0));
       });
     });
@@ -232,7 +236,7 @@ void main() {
 
     test('should add route selected listener', () {
       LatLng clickedPoint = const LatLng(1.0, 2.0);
-      navNextBillionMap.addRouteSelectedListener(clickedPoint,
+      navNextBillionMap.addRouteSelectedListener(
           (selectedRouteIndex) {
         //TODO: need to add two or more routes to test this
       });

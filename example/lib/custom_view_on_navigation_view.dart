@@ -21,7 +21,7 @@ class CustomViewOnNavigationViewState
     extends State<CustomViewOnNavigationView> {
   NextbillionMapController? controller;
   List<DirectionsRoute> routes = [];
-  late NavNextBillionMap navNextBillionMap;
+  NavNextBillionMap? navNextBillionMap;
   Symbol? mapMarkerSymbol;
 
   NavigationViewController? navigationViewController;
@@ -63,6 +63,15 @@ class CustomViewOnNavigationViewState
               CameraUpdate.newLatLngZoom(currentLocation!.position, 14),
               duration: const Duration(milliseconds: 400));
         }
+
+        navNextBillionMap?.addRouteSelectedListener((selectedRouteIndex) {
+          if (routes.isNotEmpty) {
+            primaryIndex = selectedRouteIndex;
+            DirectionsRoute selectedRoute = routes[selectedRouteIndex];
+            // You need to recalculate the speed limit for the new selected route
+            _calculateSpeedLimit(selectedRoute);
+          }
+        });
       });
     }
   }
@@ -75,17 +84,7 @@ class CustomViewOnNavigationViewState
     _fetchRoute(coordinates);
   }
 
-  _onMapClick(Point<double> point, LatLng coordinates) {
-    navNextBillionMap.addRouteSelectedListener(coordinates,
-        (selectedRouteIndex) {
-      if (routes.isNotEmpty) {
-        primaryIndex = selectedRouteIndex;
-        DirectionsRoute selectedRoute = routes[selectedRouteIndex];
-        // You need to recalculate the speed limit for the new selected route
-        _calculateSpeedLimit(selectedRoute);
-      }
-    });
-  }
+  _onMapClick(Point<double> point, LatLng coordinates) {}
 
   _onUserLocationUpdate(UserLocation location) {
     currentLocation = location;
@@ -390,7 +389,7 @@ class CustomViewOnNavigationViewState
   }
 
   Future<void> drawRoutes(List<DirectionsRoute> routes) async {
-    navNextBillionMap.drawRoute(routes);
+    navNextBillionMap?.drawRoute(routes);
   }
 
   void fitCameraToBounds(List<DirectionsRoute> routes) {
@@ -415,7 +414,7 @@ class CustomViewOnNavigationViewState
 
   void clearRouteResult() async {
     primaryIndex = 0;
-    navNextBillionMap.clearRoute();
+    navNextBillionMap?.clearRoute();
     controller?.clearSymbols();
     setState(() {
       routes.clear();
@@ -436,5 +435,11 @@ class CustomViewOnNavigationViewState
     );
     await controller?.addSymbol(symbolOptions);
     controller?.symbolManager?.setTextAllowOverlap(false);
+  }
+
+  @override
+  void dispose() {
+    navNextBillionMap?.removeRouteSelectedListener();
+    super.dispose();
   }
 }

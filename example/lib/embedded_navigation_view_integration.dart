@@ -21,7 +21,7 @@ class EmbeddedNavigationViewExampleState
     extends State<EmbeddedNavigationViewIntegration> {
   NextbillionMapController? controller;
   List<DirectionsRoute> routes = [];
-  late NavNextBillionMap navNextBillionMap;
+  NavNextBillionMap? navNextBillionMap;
   Symbol? mapMarkerSymbol;
 
   NavigationViewController? navigationViewController;
@@ -30,6 +30,7 @@ class EmbeddedNavigationViewExampleState
 
   String locationTrackImage = "assets/location_on.png";
   bool showArrivalDialog = true;
+  int _selectedRouteIndex = 0;
 
   LatLng origin = const LatLng(
     17.457302037173775,
@@ -63,6 +64,10 @@ class EmbeddedNavigationViewExampleState
     if (controller != null) {
       NavNextBillionMap.create(controller!).then((value) {
         navNextBillionMap = value;
+
+        navNextBillionMap?.addRouteSelectedListener((selectedRouteIndex) {
+          _selectedRouteIndex = selectedRouteIndex;
+        });
       });
     }
   }
@@ -75,20 +80,7 @@ class EmbeddedNavigationViewExampleState
     _fetchRoute(coordinates);
   }
 
-  _onMapClick(Point<double> point, LatLng coordinates) {
-    navNextBillionMap.addRouteSelectedListener(coordinates,
-        (selectedRouteIndex) {
-      if (routes.isNotEmpty && selectedRouteIndex != 0) {
-        var selectedRoute = routes[selectedRouteIndex];
-        routes.removeAt(selectedRouteIndex);
-        routes.insert(0, selectedRoute);
-        setState(() {
-          routes = routes;
-        });
-        navNextBillionMap.drawRoute(routes);
-      }
-    });
-  }
+  _onMapClick(Point<double> point, LatLng coordinates) {}
 
   _onCameraTrackingChanged() {
     setState(() {
@@ -209,8 +201,8 @@ class EmbeddedNavigationViewExampleState
   }
 
   NavigationLauncherConfig _buildNavigationViewConfig() {
-    NavigationLauncherConfig config =
-        NavigationLauncherConfig(route: routes.first, routes: routes);
+    NavigationLauncherConfig config = NavigationLauncherConfig(
+        route: routes[_selectedRouteIndex], routes: routes);
     config.locationLayerRenderMode = LocationLayerRenderMode.gps;
     config.shouldSimulateRoute = true;
     config.themeMode = NavigationThemeMode.system;
@@ -339,7 +331,7 @@ class EmbeddedNavigationViewExampleState
   }
 
   Future<void> drawRoutes(List<DirectionsRoute> routes) async {
-    navNextBillionMap.drawRoute(routes);
+    navNextBillionMap?.drawRoute(routes);
   }
 
   void fitCameraToBounds(List<DirectionsRoute> routes) {
@@ -363,7 +355,7 @@ class EmbeddedNavigationViewExampleState
   }
 
   void clearRouteResult() async {
-    navNextBillionMap.clearRoute();
+    navNextBillionMap?.clearRoute();
     controller?.clearSymbols();
     setState(() {
       routes.clear();
@@ -378,5 +370,11 @@ class EmbeddedNavigationViewExampleState
     );
     await controller?.addSymbol(symbolOptions);
     controller?.symbolManager?.setTextAllowOverlap(false);
+  }
+
+  @override
+  void dispose() {
+    navNextBillionMap?.removeRouteSelectedListener();
+    super.dispose();
   }
 }

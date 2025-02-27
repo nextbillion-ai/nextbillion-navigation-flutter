@@ -22,7 +22,7 @@ class LaunchEmbeddedNavigationViewState
     extends State<LaunchEmbeddedNavigationView> {
   NextbillionMapController? controller;
   List<DirectionsRoute> routes = [];
-  late NavNextBillionMap navNextBillionMap;
+  NavNextBillionMap? navNextBillionMap;
   Symbol? mapMarkerSymbol;
 
   NavigationViewController? navigationViewController;
@@ -52,6 +52,10 @@ class LaunchEmbeddedNavigationViewState
               CameraUpdate.newLatLngZoom(currentLocation!.position, 14),
               duration: const Duration(milliseconds: 400));
         }
+
+        navNextBillionMap?.addRouteSelectedListener((selectedRouteIndex) {
+          primaryIndex = selectedRouteIndex;
+        });
       });
     }
   }
@@ -64,14 +68,7 @@ class LaunchEmbeddedNavigationViewState
     _fetchRoute(coordinates);
   }
 
-  _onMapClick(Point<double> point, LatLng coordinates) {
-    navNextBillionMap.addRouteSelectedListener(coordinates,
-        (selectedRouteIndex) {
-      if (routes.isNotEmpty) {
-        primaryIndex = selectedRouteIndex;
-      }
-    });
-  }
+  _onMapClick(Point<double> point, LatLng coordinates) {}
 
   _onUserLocationUpdate(UserLocation location) {
     currentLocation = location;
@@ -311,8 +308,7 @@ class LaunchEmbeddedNavigationViewState
   }
 
   Future<void> drawRoutes(List<DirectionsRoute> routes) async {
-    // navNextBillionMap.toggleDurationSymbolVisibilityWith(false);
-    navNextBillionMap.drawRoute(routes);
+    navNextBillionMap?.drawRoute(routes);
   }
 
   void fitCameraToBounds(List<DirectionsRoute> routes) {
@@ -337,7 +333,7 @@ class LaunchEmbeddedNavigationViewState
 
   void clearRouteResult() async {
     primaryIndex = 0;
-    navNextBillionMap.clearRoute();
+    navNextBillionMap?.clearRoute();
     controller?.clearSymbols();
     setState(() {
       routes.clear();
@@ -367,7 +363,7 @@ class LaunchEmbeddedNavigationViewState
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    navNextBillionMap?.removeRouteSelectedListener();
     super.dispose();
   }
 
