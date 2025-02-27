@@ -65,6 +65,12 @@ object Convert {
                 configBuilder.shouldShowArriveDialog(showArriveDialog)
             }
 
+            val enableCustomStyle = arguments["useCustomNavigationStyle"] as? Boolean ?: true
+            if (enableCustomStyle) {
+                configBuilder?.lightThemeResId(R.style.CustomNavigationViewLight)
+                configBuilder?.darkThemeResId(R.style.CustomNavigationViewDark)
+            }
+
 //            val maxNavCameraTilt = arguments["maxNavCameraTilt"] as? Float
 //            if (maxNavCameraTilt != null) {
 //                configBuilder.maxNavCameraTilt(maxNavCameraTilt)

@@ -19,7 +19,7 @@ class LaunchPreviewScreen extends StatefulWidget {
 class LaunchPreviewScreenState extends State<LaunchPreviewScreen> {
   NextbillionMapController? controller;
   List<DirectionsRoute> routes = [];
-  late NavNextBillionMap navNextBillionMap;
+  NavNextBillionMap? navNextBillionMap;
   Symbol? mapMarkerSymbol;
 
   String locationTrackImage = "assets/location_on.png";
@@ -43,6 +43,10 @@ class LaunchPreviewScreenState extends State<LaunchPreviewScreen> {
               CameraUpdate.newLatLngZoom(currentLocation!.position, 14),
               duration: const Duration(milliseconds: 400));
         }
+
+        navNextBillionMap?.addRouteSelectedListener((selectedRouteIndex) {
+          primaryIndex = selectedRouteIndex;
+        });
       });
     }
   }
@@ -51,14 +55,7 @@ class LaunchPreviewScreenState extends State<LaunchPreviewScreen> {
     _fetchRoute(coordinates);
   }
 
-  _onMapClick(Point<double> point, LatLng coordinates) {
-    navNextBillionMap.addRouteSelectedListener(coordinates,
-        (selectedRouteIndex) {
-      if (routes.isNotEmpty) {
-        primaryIndex = selectedRouteIndex;
-      }
-    });
-  }
+  _onMapClick(Point<double> point, LatLng coordinates) {}
 
   _onUserLocationUpdate(UserLocation location) {
     currentLocation = location;
@@ -195,7 +192,7 @@ class LaunchPreviewScreenState extends State<LaunchPreviewScreen> {
 
   Future<void> drawRoutes(List<DirectionsRoute> routes) async {
     // navNextBillionMap.toggleDurationSymbolVisibilityWith(false);
-    navNextBillionMap.drawRoute(routes);
+    navNextBillionMap?.drawRoute(routes);
   }
 
   void fitCameraToBounds(List<DirectionsRoute> routes) {
@@ -220,7 +217,7 @@ class LaunchPreviewScreenState extends State<LaunchPreviewScreen> {
 
   void clearRouteResult() async {
     primaryIndex = 0;
-    navNextBillionMap.clearRoute();
+    navNextBillionMap?.clearRoute();
     controller?.clearSymbols();
     setState(() {
       routes.clear();
@@ -253,5 +250,11 @@ class LaunchPreviewScreenState extends State<LaunchPreviewScreen> {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    navNextBillionMap?.removeRouteSelectedListener();
+    super.dispose();
   }
 }

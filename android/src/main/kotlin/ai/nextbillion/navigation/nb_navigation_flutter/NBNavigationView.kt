@@ -95,7 +95,7 @@ class NBNavigationView(
     private fun extractRoute(configBuilder: NavLauncherConfig.Builder?) {
         configBuilder?.build()?.let {
             viewConfigBuilder.routes(it.routes())
-            viewConfigBuilder.route(it.routes().first())
+            viewConfigBuilder.route(it.route())
         }
     }
 
@@ -106,6 +106,16 @@ class NBNavigationView(
             viewConfigBuilder.shouldSimulateRoute(it.shouldSimulateRoute())
             viewConfigBuilder.showSpeedometer(it.showSpeedometer())
             viewConfigBuilder.dissolvedRouteEnabled(it.dissolvedRouteEnabled())
+            viewConfigBuilder.waynameChipEnabled(it.waynameChipEnabled())
+            viewConfigBuilder.shouldShowArriveDialog(it.shouldShowArriveDialog())
+            viewConfigBuilder.maxNavCameraTilt(it.maxNavCameraTilt())
+            viewConfigBuilder.maxNavCameraZoom(it.maxNavCameraZoom())
+            viewConfigBuilder.minNavCameraTilt(it.minNavCameraTilt())
+            viewConfigBuilder.minNavCameraZoom(it.minNavCameraZoom())
+            viewConfigBuilder.themeMode(it.themeMode())
+            viewConfigBuilder.darkThemeResId(it.darkThemeResId())
+            viewConfigBuilder.lightThemeResId(it.lightThemeResId())
+
         }
     }
 

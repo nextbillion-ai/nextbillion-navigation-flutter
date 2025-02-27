@@ -21,7 +21,7 @@ class EmbeddedNavigationViewExampleState
     extends State<EmbeddedNavigationViewIntegration> {
   NextbillionMapController? controller;
   List<DirectionsRoute> routes = [];
-  late NavNextBillionMap navNextBillionMap;
+  NavNextBillionMap? navNextBillionMap;
   Symbol? mapMarkerSymbol;
 
   NavigationViewController? navigationViewController;
@@ -64,6 +64,10 @@ class EmbeddedNavigationViewExampleState
     if (controller != null) {
       NavNextBillionMap.create(controller!).then((value) {
         navNextBillionMap = value;
+
+        navNextBillionMap?.addRouteSelectedListener((selectedRouteIndex) {
+          _selectedRouteIndex = selectedRouteIndex;
+        });
       });
     }
   }
@@ -76,12 +80,7 @@ class EmbeddedNavigationViewExampleState
     _fetchRoute(coordinates);
   }
 
-  _onMapClick(Point<double> point, LatLng coordinates) {
-    navNextBillionMap.addRouteSelectedListener(coordinates,
-        (selectedRouteIndex) {
-          _selectedRouteIndex = selectedRouteIndex;
-    });
-  }
+  _onMapClick(Point<double> point, LatLng coordinates) {}
 
   _onCameraTrackingChanged() {
     setState(() {
@@ -202,8 +201,8 @@ class EmbeddedNavigationViewExampleState
   }
 
   NavigationLauncherConfig _buildNavigationViewConfig() {
-    NavigationLauncherConfig config =
-        NavigationLauncherConfig(route: routes[_selectedRouteIndex], routes: routes);
+    NavigationLauncherConfig config = NavigationLauncherConfig(
+        route: routes[_selectedRouteIndex], routes: routes);
     config.locationLayerRenderMode = LocationLayerRenderMode.gps;
     config.shouldSimulateRoute = true;
     config.themeMode = NavigationThemeMode.system;
@@ -332,7 +331,7 @@ class EmbeddedNavigationViewExampleState
   }
 
   Future<void> drawRoutes(List<DirectionsRoute> routes) async {
-    navNextBillionMap.drawRoute(routes);
+    navNextBillionMap?.drawRoute(routes);
   }
 
   void fitCameraToBounds(List<DirectionsRoute> routes) {
@@ -356,7 +355,7 @@ class EmbeddedNavigationViewExampleState
   }
 
   void clearRouteResult() async {
-    navNextBillionMap.clearRoute();
+    navNextBillionMap?.clearRoute();
     controller?.clearSymbols();
     setState(() {
       routes.clear();
@@ -371,5 +370,11 @@ class EmbeddedNavigationViewExampleState
     );
     await controller?.addSymbol(symbolOptions);
     controller?.symbolManager?.setTextAllowOverlap(false);
+  }
+
+  @override
+  void dispose() {
+    navNextBillionMap?.removeRouteSelectedListener();
+    super.dispose();
   }
 }

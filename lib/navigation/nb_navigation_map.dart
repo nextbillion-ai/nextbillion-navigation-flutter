@@ -12,7 +12,9 @@ class NavNextBillionMap implements NavigationMap {
   RouteLineProperties routeLineProperties;
   List<List<LatLng>> routeLines = [];
 
-  OnRouteSelectedCallback? onRouteSelectedCallback;
+  OnRouteSelectedCallback? _onRouteSelectedCallback;
+  OnRouteSelectedCallback? get onRerouteFailureCallback => _onRouteSelectedCallback;
+
   bool _isIndependentRoute = false;
   int _primaryRouteIndex = 0;
   final List<DirectionsRoute> _routes = [];
@@ -501,12 +503,14 @@ class NavNextBillionMap implements NavigationMap {
   /// The [onRouteSelectedCallback] will be invoked when a route is selected.
   @override
   void addRouteSelectedListener(
-      LatLng clickedPoint, OnRouteSelectedCallback onRouteSelectedCallback) {
-    if (routeLines.length < 2) {
-      return;
-    }
-    this.onRouteSelectedCallback = onRouteSelectedCallback;
-    _findRouteSelectedIndex(clickedPoint);
+      OnRouteSelectedCallback onRouteSelectedCallback) {
+    _onRouteSelectedCallback = onRouteSelectedCallback;
+  }
+
+  /// Removes the listener for route selection.
+  @override
+  void removeRouteSelectedListener() {
+    _onRouteSelectedCallback = null;
   }
 
   /// Toggles the visibility of alternative routes on the map.
@@ -601,8 +605,8 @@ class NavNextBillionMap implements NavigationMap {
         }
       }
 
-      if (onRouteSelectedCallback != null) {
-        onRouteSelectedCallback!(routeIndex);
+      if (_onRouteSelectedCallback != null) {
+        _onRouteSelectedCallback!(routeIndex);
       }
     });
   }
@@ -642,4 +646,5 @@ class NavNextBillionMap implements NavigationMap {
   List<DirectionsRoute> retrieveRoutes() {
     return _routes;
   }
+
 }

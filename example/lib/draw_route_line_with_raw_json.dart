@@ -17,7 +17,7 @@ class DrawRouteLineWithRawJson extends StatefulWidget {
 class DrawRouteLineState extends State<DrawRouteLineWithRawJson> {
   NextbillionMapController? controller;
   List<DirectionsRoute> routes = [];
-  late NavNextBillionMap navNextBillionMap;
+  NavNextBillionMap? navNextBillionMap;
 
   LatLng origin = const LatLng(
     1.311273,
@@ -41,16 +41,14 @@ class DrawRouteLineState extends State<DrawRouteLineWithRawJson> {
           alternativeRouteShieldColor: Colors.lightBlue,
         ),
       );
+      navNextBillionMap?.addRouteSelectedListener((selectedRouteIndex) {
+        primaryIndex = selectedRouteIndex;
+      });
     }
   }
 
   _onMapClick(Point<double> point, LatLng coordinates) {
-    navNextBillionMap.addRouteSelectedListener(coordinates,
-        (selectedRouteIndex) {
-      if (routes.isNotEmpty) {
-        primaryIndex = selectedRouteIndex;
-      }
-    });
+
   }
 
   @override
@@ -118,12 +116,13 @@ class DrawRouteLineState extends State<DrawRouteLineWithRawJson> {
 
   Future<void> drawRoutes(List<DirectionsRoute> routes) async {
     primaryIndex = 0;
-    navNextBillionMap.clearRoute();
-    navNextBillionMap.drawIndependentRoutes(routes);
+    navNextBillionMap?.clearRoute();
+    navNextBillionMap?.drawIndependentRoutes(routes);
   }
 
   @override
   void dispose() {
+    navNextBillionMap?.removeRouteSelectedListener();
     super.dispose();
   }
 
@@ -173,7 +172,7 @@ class DrawRouteLineState extends State<DrawRouteLineWithRawJson> {
                     setState(() {
                       enableAlternativeRoutes = value;
                     });
-                    navNextBillionMap.toggleAlternativeVisibilityWith(value);
+                    navNextBillionMap?.toggleAlternativeVisibilityWith(value);
                   })
             ],
           ),
@@ -186,7 +185,7 @@ class DrawRouteLineState extends State<DrawRouteLineWithRawJson> {
                     setState(() {
                       enableRouteDurationSymbol = value;
                     });
-                    navNextBillionMap.toggleDurationSymbolVisibilityWith(value);
+                    navNextBillionMap?.toggleDurationSymbolVisibilityWith(value);
                   })
             ],
           )
