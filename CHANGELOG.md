@@ -1,3 +1,7 @@
+## v2.3.0-dev.4, Mar 10, 2025
+* Upgrade the iOS native SDK to 2.3.0-beta.2 to fix the following issues :
+  * Dissolved route progress not matching the primary route progress
+  * Support live traffic on the navigation screen
 ## v2.3.0-dev.3, Feb 27, 2025
 * Upgrade the android native SDK to 2.0.0 and iOS native SDK to 2.3.0 to fix the following issues : 
   * Support custom map style on preview screen
