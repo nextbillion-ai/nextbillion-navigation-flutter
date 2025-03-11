@@ -207,6 +207,8 @@ class EmbeddedNavigationViewExampleState
     config.shouldSimulateRoute = true;
     config.themeMode = NavigationThemeMode.system;
     config.useCustomNavigationStyle = false;
+    // Please set the custom map style url if you only have the OSM map style access
+    config.navigationMapStyleUrl = NbNavigationStyles.nbMapCustomMapLightStyle;
     return config;
   }
 
