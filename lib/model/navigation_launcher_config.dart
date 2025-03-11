@@ -76,10 +76,6 @@ class NavigationLauncherConfig {
     this.navigationMapStyleUrl,
     this.showArriveDialog = true,
     this.showSpeedometer = true,
-    // this.maxNavCameraTilt,
-    // this.minNavCameraTilt,
-    // this.maxNavCameraZoom,
-    // this.minNavCameraZoom,
   });
 
   Map<String, dynamic> toJson() {
