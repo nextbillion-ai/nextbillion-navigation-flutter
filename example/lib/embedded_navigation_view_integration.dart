@@ -32,14 +32,7 @@ class EmbeddedNavigationViewExampleState
   bool showArrivalDialog = true;
   int _selectedRouteIndex = 0;
 
-  LatLng origin = const LatLng(
-    17.457302037173775,
-    78.37463792413473,
-  );
-  LatLng destination = const LatLng(
-    17.466320809357967,
-    78.3726774987914,
-  );
+  UserLocation? currentLocation;
 
   List<String> travelModes = [
     NBString.car,
@@ -234,11 +227,12 @@ class EmbeddedNavigationViewExampleState
           onMapCreated: _onMapCreated,
           onStyleLoadedCallback: _onStyleLoadedCallback,
           initialCameraPosition: CameraPosition(
-            target: origin,
+            target: LatLng(0, 0),
             zoom: 14.0,
           ),
           trackCameraPosition: true,
           myLocationEnabled: true,
+          onUserLocationUpdated: _onUserLocationUpdate,
           myLocationTrackingMode: MyLocationTrackingMode.Tracking,
           onMapLongClick: _onMapLongClick,
           onCameraTrackingDismissed: _onCameraTrackingChanged,
@@ -277,9 +271,9 @@ class EmbeddedNavigationViewExampleState
                             routes.isEmpty ? Colors.grey : Colors.blueAccent),
                       ),
                       onPressed: () {
-                        _fetchRoute(destination);
+                        clearRouteResult();
                       },
-                      child: const Text(NBString.fetchRoutes)),
+                      child: const Text(NBString.clearRoutes)),
                   const Padding(padding: EdgeInsets.only(left: 8)),
                   ElevatedButton(
                       style: ButtonStyle(
@@ -302,9 +296,16 @@ class EmbeddedNavigationViewExampleState
     );
   }
 
+  _onUserLocationUpdate(UserLocation location) {
+    currentLocation = location;
+  }
+
   void _fetchRoute(LatLng destination) async {
+    if (currentLocation == null) {
+      return;
+    }
     RouteRequestParams requestParams = RouteRequestParams(
-      origin: origin,
+      origin: currentLocation!.position,
       destination: destination,
       truckSize: [300, 250, 600],
       truckWeight: 8000,

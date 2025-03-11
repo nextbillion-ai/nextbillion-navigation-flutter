@@ -13,6 +13,7 @@ class NbNavigationStyles {
 class NBString {
   static const String startNavigation = "Start Navigation";
   static const String fetchRoutes = "Fetch Routes";
+  static const String clearRoutes = "Clear Routes";
   static const String car = "car";
   static const String truck = "truck";
 
