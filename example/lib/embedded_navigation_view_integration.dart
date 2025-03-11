@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_navigation_flutter/nb_navigation_flutter.dart';
 import 'package:nb_navigation_flutter_example/waypoint_dialog.dart';
-import 'SegmentSelector.dart';
+import 'segment_selector.dart';
 import 'constants.dart';
 
 class EmbeddedNavigationViewIntegration extends StatefulWidget {
