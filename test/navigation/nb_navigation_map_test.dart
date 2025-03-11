@@ -235,7 +235,6 @@ void main() {
     });
 
     test('should add route selected listener', () {
-      LatLng clickedPoint = const LatLng(1.0, 2.0);
       navNextBillionMap.addRouteSelectedListener(
           (selectedRouteIndex) {
         //TODO: need to add two or more routes to test this

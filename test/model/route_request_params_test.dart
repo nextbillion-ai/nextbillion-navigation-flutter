@@ -14,7 +14,7 @@ void main() {
       final map = {
         'altCount': 2,
         'alternatives': true,
-        'avoid': ['toll'],
+        'avoidType': ['toll'],
         'destination': [-74.005974, 40.712776],
         'language': 'en',
         'mode': 'car',
@@ -38,7 +38,8 @@ void main() {
 
       expect(params.altCount, 2);
       expect(params.alternatives, true);
-      expect(params.avoid, [SupportedAvoid.fromValue('toll')]);
+      // expect(params.avoid, [SupportedAvoid.fromValue('toll')]);
+      expect(params.avoidType, ["toll"]);
       expect(params.destination, const LatLng(40.712776, -74.005974));
       expect(params.language, 'en');
       expect(params.mode, ValidModes.fromValue('car'));

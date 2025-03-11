@@ -9,6 +9,7 @@ import 'package:nb_navigation_flutter/nb_navigation_flutter.dart';
 
 import 'nb_navigation_method_channels_test.mocks.dart';
 
+// This file is used to generate mocks for testing
 @GenerateMocks([MethodChannel])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

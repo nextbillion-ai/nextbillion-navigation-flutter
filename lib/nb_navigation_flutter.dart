@@ -13,6 +13,7 @@ import 'package:nb_maps_flutter/nb_maps_flutter.dart';
 import 'package:nb_navigation_flutter/navigation/nb_map_controller_wrapper.dart';
 import 'package:nb_navigation_flutter/navigation/navigation_map.dart';
 import 'package:nb_navigation_flutter/util/asset_manager.dart';
+
 export 'package:nb_maps_flutter/nb_maps_flutter.dart';
 
 part 'model/banner_instructions.dart';
