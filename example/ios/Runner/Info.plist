@@ -4,8 +4,6 @@
 <dict>
 	<key>NBNavBaseUri</key>
 	<string>https://api.nextbillion.io</string>
-	<key>NBMapAccessKey</key>
-	<string>opensesame</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

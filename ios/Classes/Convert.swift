@@ -9,7 +9,7 @@ import Foundation
 import NbmapNavigation
 import NbmapCoreNavigation
 
-class Convert {
+public class Convert {
     static let navigationMode = [
         "car": NBNavigationMode.car,
         "truck": NBNavigationMode.truck

@@ -87,7 +87,7 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
           onUserLocationUpdated: _onUserLocationUpdate,
           onCameraTrackingDismissed: _onCameraTrackingChanged,
           onMapClick: _onMapClick,
-          styleString: NbNavigationStyles.nbMapDefaultLightStyle,
+          styleString: NbNavigationStyles.nbMapCustomMapLightStyle,
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -234,6 +234,8 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
     config.shouldSimulateRoute = true;
     config.themeMode = NavigationThemeMode.system;
     config.useCustomNavigationStyle = false;
+    // Please set the custom map style url if you only have the OSM map style access
+    config.navigationMapStyleUrl = NbNavigationStyles.nbMapCustomMapLightStyle;
     NBNavigation.startNavigation(config);
   }
 
