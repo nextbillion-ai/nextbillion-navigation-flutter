@@ -235,8 +235,7 @@ void main() {
     });
 
     test('should add route selected listener', () {
-      navNextBillionMap.addRouteSelectedListener(
-          (selectedRouteIndex) {
+      navNextBillionMap.addRouteSelectedListener((selectedRouteIndex) {
         //TODO: need to add two or more routes to test this
       });
     }, skip: true);

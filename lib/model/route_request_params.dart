@@ -185,7 +185,8 @@ class RouteRequestParams {
       avoid: List<SupportedAvoid>.from((map['avoid'] as List<dynamic>?)
               ?.map((x) => SupportedAvoid.fromValue(x)) ??
           []),
-      avoidType: List<String>.from(map['avoidType'] ?? List<String>.from(map['avoid']) ?? []),
+      avoidType: List<String>.from(
+          map['avoidType'] ?? List<String>.from(map['avoid']) ?? []),
       baseUrl: map['baseUrl'],
       departureTime: map['departureTime'],
       destination: LatLng(map['destination'][1], map['destination'][0]),

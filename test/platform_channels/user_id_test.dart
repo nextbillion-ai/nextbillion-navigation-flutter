@@ -30,11 +30,11 @@ void main() {
 
   group('NextBillion User ID Tests', () {
     test('getNbId returns correct value', () async {
-
       final result = await NextBillion.getNbId();
 
       expect(result, 'test_nb_id');
-      verify(mockMethodChannel.invokeMethod<String>('nextbillion/get_nb_id')).called(1);
+      verify(mockMethodChannel.invokeMethod<String>('nextbillion/get_nb_id'))
+          .called(1);
     });
 
     test('setUserId calls method with correct arguments', () async {
@@ -43,15 +43,17 @@ void main() {
 
       await NextBillion.setUserId(userId);
 
-      verify(mockMethodChannel.invokeMethod<void>('nextbillion/set_user_id', config)).called(1);
+      verify(mockMethodChannel.invokeMethod<void>(
+              'nextbillion/set_user_id', config))
+          .called(1);
     });
 
     test('getUserId returns correct value', () async {
-
       final result = await NextBillion.getUserId();
 
       expect(result, 'test_user_id');
-      verify(mockMethodChannel.invokeMethod<String>('nextbillion/get_user_id')).called(1);
+      verify(mockMethodChannel.invokeMethod<String>('nextbillion/get_user_id'))
+          .called(1);
     });
 
     test('setUserId handles empty string', () async {
@@ -60,7 +62,9 @@ void main() {
 
       await NextBillion.setUserId(userId);
 
-      verify(mockMethodChannel.invokeMethod<void>('nextbillion/set_user_id', config)).called(1);
+      verify(mockMethodChannel.invokeMethod<void>(
+              'nextbillion/set_user_id', config))
+          .called(1);
     });
 
     test('getNbId throws specific PlatformException', () async {
@@ -83,7 +87,8 @@ void main() {
       const userId = 'test_user_id';
       final config = {"userId": userId};
 
-      when(mockMethodChannel.invokeMethod<void>('nextbillion/set_user_id', config))
+      when(mockMethodChannel.invokeMethod<void>(
+              'nextbillion/set_user_id', config))
           .thenThrow(PlatformException(code: errorCode, message: errorMessage));
 
       expect(

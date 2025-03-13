@@ -5,7 +5,8 @@ class WaypointDialog extends StatelessWidget {
   final String title;
   final Waypoint waypoint;
 
-  const WaypointDialog({super.key, required this.title, required this.waypoint});
+  const WaypointDialog(
+      {super.key, required this.title, required this.waypoint});
 
   @override
   Widget build(BuildContext context) {

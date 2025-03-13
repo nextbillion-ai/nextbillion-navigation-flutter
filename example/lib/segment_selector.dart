@@ -6,7 +6,8 @@ class SegmentSelector extends StatefulWidget {
   final int defaultIndex;
 
   const SegmentSelector(
-      {super.key, required this.segments,
+      {super.key,
+      required this.segments,
       required this.defaultIndex,
       required this.onSegmentSelected});
 

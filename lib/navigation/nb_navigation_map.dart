@@ -13,7 +13,8 @@ class NavNextBillionMap implements NavigationMap {
   List<List<LatLng>> routeLines = [];
 
   OnRouteSelectedCallback? _onRouteSelectedCallback;
-  OnRouteSelectedCallback? get onRerouteFailureCallback => _onRouteSelectedCallback;
+  OnRouteSelectedCallback? get onRerouteFailureCallback =>
+      _onRouteSelectedCallback;
 
   bool _isIndependentRoute = false;
   int _primaryRouteIndex = 0;
@@ -646,5 +647,4 @@ class NavNextBillionMap implements NavigationMap {
   List<DirectionsRoute> retrieveRoutes() {
     return _routes;
   }
-
 }

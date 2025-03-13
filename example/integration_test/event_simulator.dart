@@ -2,9 +2,7 @@ import 'dart:io';
 
 // ignore: unnecessary_string_interpolations
 mixin EventSimulator {
-
   static Future<void> inputKeyEvent(int keyEvent) async {
-
     await Process.run('adb', ['shell', 'input', 'keyevent', '$keyEvent']);
     //sleep(const Duration(seconds: 1));
   }
@@ -12,7 +10,7 @@ mixin EventSimulator {
   //adb shell input keyevent KEYCODE_HOME
   static Future<void> inputKeyEventWithName(String keyEvent) async {
     await Process.run('adb', ['shell', 'input', 'keyevent', '$keyEvent']);
-  //    sleep(const Duration(seconds: 1));
+    //    sleep(const Duration(seconds: 1));
   }
 
   //adb shell input tap 1290 960

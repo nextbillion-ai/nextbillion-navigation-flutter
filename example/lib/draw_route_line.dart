@@ -194,7 +194,8 @@ class DrawRouteLineState extends State<DrawRouteLine> {
                     setState(() {
                       enableRouteDurationSymbol = value;
                     });
-                    navNextBillionMap?.toggleDurationSymbolVisibilityWith(value);
+                    navNextBillionMap
+                        ?.toggleDurationSymbolVisibilityWith(value);
                   })
             ],
           )
@@ -202,5 +203,4 @@ class DrawRouteLineState extends State<DrawRouteLine> {
       ),
     );
   }
-
 }
