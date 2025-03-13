@@ -58,13 +58,17 @@ Add the following permissions to the manifest:
 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION"/> 
+<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+<uses-permission android:name="android.permission.INTERNET" />
 ```
 #### iOS
 Add the following to the Runner/Info.plist to explain why you need access to the location data:
 ```
- <key>NSLocationWhenInUseUsageDescription</key>
-    <string>[Your explanation here]</string>
+<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>  
+  <string>[Your explanation here]</string>
+<key>NSLocationWhenInUseUsageDescription</key>  
+  <string>[Your explanation here]</string> 
 ```
 
 ## Usage
