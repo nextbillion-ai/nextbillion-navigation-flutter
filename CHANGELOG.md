@@ -1,33 +1,25 @@
-## v2.3.0-dev.6, Mar 10, 2025
-* Upgrade the iOS native SDK to 2.3.0-beta.3 to fix the following issues :
+## v2.3.0, Mar 13, 2025
+* Upgrade the iOS native SDK to 2.3.0 to fix the following issues :
   * Dissolved route progress not matching the primary route progress
   * Support live traffic on the navigation screen
+  * Fix crash issue in simulation mode on iOS
 * Refactor README
 * Update iOS PLATFORM_VERSION to 12.0
-
-## v2.3.0-dev.3, Feb 27, 2025
-* Upgrade the android native SDK to 2.0.0 and iOS native SDK to 2.3.0 to fix the following issues : 
+* Bump the version to 2.3.0 to align with the nb_maps_flutter SDK
+* Bump the minimum flutter version to 3.24.1
+* Bump the minimum android version to 21
+* Fix issue where dissolved route style doesn't work on Android when using [NBNavigationView].
   * Support custom map style on preview screen
-  * Fix crash issue in simulation mode on iOS 
+  * Fix crash issue in simulation mode on iOS
   * Optimize the off-route detector on iOS
   * Instrumentation enabled by default
-* Fix alternative route selection issue 
+* Fix alternative route selection issue
   * Refactor NavigationMap.addRouteSelectedListener:
     * Removed the LatLng parameter.
     * Changed the method to use an internal calculation mechanism instead.
-  * Add NavigationMap.removeRouteSelectedListener:
+  * Add `NavigationMap.removeRouteSelectedListener`:
     * Introduced a method to remove the route selection listener.
   * Resolved the issue where the wrong route was launched if the primary route was changed before starting navigation
-
- 
-## v2.3.0-dev.2, Feb 21, 2025
-* Fix issue where dissolved route style doesn't work on Android when using [NBNavigationView].
-
-## v2.3.0-dev.1, Feb 13, 2025
-* bump the version to 2.3.0 to align with the nb_maps_flutter SDK
-* bump the minimum flutter version to 3.24.1
-* bump the minimum android version to 21
-
 
 ## v2.2.0, Feb 7, 2025
 * Support for the 'avoid' parameter in route request options

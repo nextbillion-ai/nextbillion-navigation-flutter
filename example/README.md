@@ -3,21 +3,15 @@
 Demonstrates how to use the nb_navigation_flutter plugin.
 
 ## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
-## Run intergration test
+Run the example project to see how to use the plugin.
+* Option1 : Run with the following command:
 ```shell
-flutter drive \
---driver=test_driver/integration_test.dart \
---target=integration_test/app_test.dart
+flutter run --dart-define=ACCESS_KEY=your_access_key
 ```
+* Option2 : Run with the hardcoded access key in the code.
+  Replace the access key in the code with your access key.
+Codes in `main.dart` file:
+```dart
+  static const String accessKey = String.fromEnvironment("ACCESS_KEY");
+```
+
