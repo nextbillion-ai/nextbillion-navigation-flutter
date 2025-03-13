@@ -1,3 +1,12 @@
+## v2.3.0+1, Mar 13, 2025
+* Add the missing permission annotation for the Android platform in the README
+  ```
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION"/>
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  ```
+
 ## v2.3.0, Mar 13, 2025
 * Upgrade the iOS native SDK to 2.3.0 to fix the following issues :
   * Dissolved route progress not matching the primary route progress
