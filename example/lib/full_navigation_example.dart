@@ -55,9 +55,7 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
     _fetchRoute(coordinates);
   }
 
-  _onMapClick(Point<double> point, LatLng coordinates) {
-
-  }
+  _onMapClick(Point<double> point, LatLng coordinates) {}
 
   _onUserLocationUpdate(UserLocation location) {
     currentLocation = location;

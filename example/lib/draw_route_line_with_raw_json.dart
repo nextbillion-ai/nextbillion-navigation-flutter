@@ -47,9 +47,7 @@ class DrawRouteLineState extends State<DrawRouteLineWithRawJson> {
     }
   }
 
-  _onMapClick(Point<double> point, LatLng coordinates) {
-
-  }
+  _onMapClick(Point<double> point, LatLng coordinates) {}
 
   @override
   void initState() {
@@ -185,7 +183,8 @@ class DrawRouteLineState extends State<DrawRouteLineWithRawJson> {
                     setState(() {
                       enableRouteDurationSymbol = value;
                     });
-                    navNextBillionMap?.toggleDurationSymbolVisibilityWith(value);
+                    navNextBillionMap
+                        ?.toggleDurationSymbolVisibilityWith(value);
                   })
             ],
           )

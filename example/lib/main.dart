@@ -33,7 +33,6 @@ final Map<String, Widget> _allPages = <String, Widget>{
   LaunchPreviewScreen.title: const LaunchPreviewScreen(),
 };
 
-
 class NavigationDemo extends StatefulWidget {
   static const String accessKey = String.fromEnvironment("ACCESS_KEY");
 

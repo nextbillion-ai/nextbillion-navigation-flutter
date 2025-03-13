@@ -108,7 +108,8 @@ class MockNBNavigationPlatform extends _i1.Mock
       ) as _i4.Future<void>);
 
   @override
-  _i4.Future<void> startPreviewNavigation(_i2.DirectionsRoute? route,{String? mapStyle}) =>
+  _i4.Future<void> startPreviewNavigation(_i2.DirectionsRoute? route,
+          {String? mapStyle}) =>
       (super.noSuchMethod(
         Invocation.method(
           #startPreviewNavigation,
