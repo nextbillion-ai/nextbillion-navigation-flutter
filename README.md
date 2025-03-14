@@ -65,7 +65,7 @@ Add the following permissions to the manifest:
 
 ##### Requesting Location Runtime Permissions (Foreground and Background) in Android 6.0 and Above
 
-For Android 6.0 (API 23) and above, you need to dynamically request permissions. Below is how to request location permissions, including foreground and background permissions:
+For Android 6.0 (API 23) and above, you need to dynamically request permissions. Below is how to request location permissions using the `permission_handler` , including foreground and background permissions:
 ```
 import 'package:permission_handler/permission_handler.dart';
 
