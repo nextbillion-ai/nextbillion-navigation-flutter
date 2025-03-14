@@ -56,6 +56,38 @@ class _NavigationDemoState extends State<NavigationDemo> {
 
     // Get NB ID If needed
     NBNavigation.getNBId().then((value) {});
+
+    requestPermission();
+  }
+
+  Future requestPermission() async {
+    var status = await Permission.location.status;
+
+    if (!mounted) {
+      return;
+    }
+
+    if (status.isDenied) {
+      await [Permission.location].request();
+
+      if (!mounted) {
+        return;
+      }
+    } else {
+      var alwaysLocation = await Permission.locationAlways.status;
+      if (alwaysLocation.isDenied) {
+        await [Permission.locationAlways].request();
+      }
+    }
+
+    if (!mounted) {
+      return;
+    }
+
+    var notificationStatus = await Permission.notification.status;
+    if (notificationStatus.isDenied) {
+      await [Permission.notification].request();
+    }
   }
 
   void _pushPage(
