@@ -62,6 +62,56 @@ Add the following permissions to the manifest:
 <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 <uses-permission android:name="android.permission.INTERNET" />
 ```
+
+##### Requesting Location Runtime Permissions (Foreground and Background) in Android 6.0 and Above
+
+For Android 6.0 (API 23) and above, you need to dynamically request permissions. Below is how to request location permissions, including foreground and background permissions:
+```
+import 'package:permission_handler/permission_handler.dart';
+
+Future<void> checkAndRequestLocationPermissions() async {
+  // Request foreground location permission
+  PermissionStatus status = await Permission.location.request();
+  
+  if (status.isGranted) {
+    // If foreground location permission is granted, further request background location permission
+    // This permission is needed for Android 10 and above, if you need to continue updating navigation data when the app goes to the background
+    PermissionStatus backgroundStatus = await Permission.locationAlways.request();
+
+    if (!backgroundStatus.isGranted) {
+      // If background location permission is denied, notify the user and exit
+      print("Background location permission is required.");
+      return;
+    }
+  } else {
+    // If foreground location permission is denied, notify the user
+    print("Foreground location permission is required.");
+    return;
+  }
+}
+```
+##### Requesting Notification Runtime Permission in Android 13 and Above
+For Android 13 (API 33) and above, you need to dynamically request notification permissions if you want to show notifications while the app is in the background:
+
+```
+Future<void> checkAndRequestNotificationPermission() async {
+  // Check notification permission status
+  PermissionStatus status = await Permission.notification.status;
+
+  if (!status.isGranted) {
+    // Request notification permission
+    status = await Permission.notification.request();
+    if (status.isGranted) {
+      print("Notification permission granted.");
+    } else {
+      print("Notification permission denied.");
+    }
+  } else {
+    print("Notification permission already granted.");
+  }
+}
+```
+
 #### iOS
 Add the following to the Runner/Info.plist to explain why you need access to the location data:
 ```
