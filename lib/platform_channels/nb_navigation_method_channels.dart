@@ -53,9 +53,10 @@ class NBNavigationMethodChannel extends NBNavigationPlatform {
         List<String>.from(result["routeResult"] as List<dynamic>? ?? []);
     final int? errorCode = result["errorCode"] as int? ;
     final String? message = result["message"] as String?;
-    final Map<String, dynamic> routeRequest = result["routeOptions"] as Map<String, dynamic>?  ?? {};
-    RouteRequestParams? requestParams;
 
+    final Map<String, dynamic> routeRequest = result["routeOptions"] as Map<String, dynamic>?  ?? {};
+
+    RouteRequestParams? requestParams;
     if (routeRequest.isNotEmpty) {
       requestParams = RouteRequestParams.fromJson(
           Map<String, dynamic>.from(routeRequest));

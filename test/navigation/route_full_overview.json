@@ -2,6 +2,35 @@
     "geometry":"aegnAebu}dE~@iD~BwJz@sCxDkLxAaEzBqG|EeP~HoW|EePlAkEvGsOjEwMnBwHhAcDlByFbCaInF~AuCtImE~NqNb`@iC`I}AxEuCvI{HpU}CdKe@vDm@~Ck@xDwAfEoDpKwBpFkH|T_FhO_E~LeElMy@fC{FjQiD|JcAjCwApD{AhD?lEHxAj@jCd@xBRz@`@jAp@xBlFHrEFpHChNYxOgAzGq@zFo@lAMlMcBzDm@nBYjC]hAMpEm@~I_AxLgAfVwDb@G|IsAhQgCXuAzAkAxAq@n]_JdEq@zCWTQfAy@lCgApDo@xFiAjP}B~LkAtI}@pCc@pCw@bD_A`DsAnFgCxDuCvFqElGiGvFmFrFgG|CwD~A_B~@y@~AaAlC}AzDkBzIwMhIaMvJ{NfZ}j@tNiWlC}Epe@k|@R}FZmEf@wCxC_JpDgHpSmb@bHmMlA_C|HcNlH}KpHkLjV}VtCqD`DhC~AvAvCdCdC`CfHjGjC|BjB|ArAxArBhBlBhB\\`@pA`AzAx@nCp@tCrArFxAfAMrA?tBk@bD{@zB_@dBa@`AYhAa@`G}CfBUrA{AqCs@eHwDw@cAU}@Ck@",
     "distance":2704.7,
     "duration":443.4,
+      "routeOptions" : {
+         "avoid" : [
+
+         ],
+         "unit" : "metric",
+         "departureTime" : 1743144004,
+         "routeType" : "shortest",
+         "altCount" : 3,
+         "baseUrl" : "https:\/\/api.nextbillion.io",
+         "alternatives" : true,
+         "overview" : "full",
+         "key" : "opensesame",
+         "mode" : "car",
+         "geometry" : "polyline6",
+         "origin" : [
+            103.874531,
+            1.3200449999999999
+         ],
+         "language" : "en",
+         "destination" : [
+            103.87749119999999,
+            1.3135641
+         ],
+         "simulation" : false,
+         "truckWeight" : 0,
+         "option" : "flexible",
+         "crossBorder" : false,
+         "truckAxleLoad" : 0
+      },
     "start_location":{
        "latitude":1.298529,
        "longitude":103.787571

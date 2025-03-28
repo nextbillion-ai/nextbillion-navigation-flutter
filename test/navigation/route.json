@@ -2,6 +2,35 @@
     "geometry": "_{zmA_xk_eEnl@dFYtEqoH}eAut@kTeqA{GioBmd@kIrk@u@bt@",
     "distance": 1285.8,
     "duration": 250.9,
+    "routeOptions" : {
+        "avoid" : [
+
+        ],
+        "unit" : "metric",
+        "departureTime" : 1743144004,
+        "routeType" : "shortest",
+        "altCount" : 3,
+        "baseUrl" : "https:\/\/api.nextbillion.io",
+        "alternatives" : true,
+        "overview" : "full",
+        "key" : "opensesame",
+        "mode" : "car",
+        "geometry" : "polyline6",
+        "origin" : [
+            103.874531,
+            1.3200449999999999
+        ],
+        "language" : "en",
+        "destination" : [
+            103.87749119999999,
+            1.3135641
+        ],
+        "simulation" : false,
+        "truckWeight" : 0,
+        "option" : "flexible",
+        "crossBorder" : false,
+        "truckAxleLoad" : 0
+    },
     "start_location": {
         "latitude": 1.292224,
         "longitude": 103.815568

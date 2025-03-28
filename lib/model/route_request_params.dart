@@ -170,7 +170,20 @@ class RouteRequestParams {
     this.truckAxleLoad,
     this.allow,
     this.routeType,
-  });
+  }) : assert(
+  mode != ValidModes.truck ||
+      (truckWeight == null || (truckWeight >= 1 && truckWeight <= 100000)),
+  'truckWeight must be between 1 and 100000 kg when mode is truck',
+  ),
+        assert(
+        mode != ValidModes.truck ||
+            (truckSize == null ||
+                (truckSize.length == 3 &&
+                    truckSize[0] <= 1000 &&
+                    truckSize[1] <= 5000 &&
+                    truckSize[2] <= 5000)),
+        'truckSize must have exactly 3 values [height, width, length] and must not exceed: height=1000 cm, width=5000 cm, length=5000 cm when mode is truck',
+        );
 
   factory RouteRequestParams.fromJson(Map<String, dynamic> map) {
     if (map.isEmpty) {
@@ -179,8 +192,8 @@ class RouteRequestParams {
 
     LatLng parseLatLng(dynamic value) {
       if (value is List && value.length == 2) {
-        final lat = value[0];
-        final lng = value[1];
+        final lat = value[1];
+        final lng = value[0];
         if (lat is num && lng is num) {
           return LatLng(lat.toDouble(), lng.toDouble());
         }
@@ -205,7 +218,7 @@ class RouteRequestParams {
     return RouteRequestParams(
       altCount: map['altCount'] as int?,
       alternatives: map['alternatives'] as bool?,
-      avoid: (map['avoid'] as List<dynamic>).map((x) => SupportedAvoid.fromValue(x as String?)).toList(),
+      avoid: (map['avoid'] as List<dynamic>?)?.map((x) => SupportedAvoid.fromValue(x as String?)).toList(),
       avoidType: (map['avoidType'] as List?)?.map((x) => x.toString()).toList() ??
           (map['avoid'] as List?)?.map((x) => x.toString()).toList() ??
           [],
