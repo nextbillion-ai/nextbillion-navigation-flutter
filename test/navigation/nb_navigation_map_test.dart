@@ -140,7 +140,11 @@ void main() {
       final file = File('test/navigation/route.json');
       final jsonString = await file.readAsString();
       final Map<String, dynamic> json = jsonDecode(jsonString) as Map<String, dynamic>;
-      final DirectionsRoute route = DirectionsRoute.fromJson(json);
+      const origin = LatLng(1.312533169133601, 103.75986708439264);
+      const dest = LatLng(1.310473772283314, 103.77982271935586);
+      final routeRequestParams =
+      RouteRequestParams(origin: origin, destination: dest);
+      final DirectionsRoute route = DirectionsRoute.fromJsonWithOption(json,routeRequestParams);
       final List<DirectionsRoute> routes = [route];
 
       final Uint8List expectedResponse = Uint8List(0);
@@ -165,7 +169,11 @@ void main() {
       final file = File('test/navigation/route.json');
       final jsonString = await file.readAsString();
       final Map<String, dynamic> json = jsonDecode(jsonString) as Map<String, dynamic>;
-      final DirectionsRoute route = DirectionsRoute.fromJson(json);
+      const origin = LatLng(1.312533169133601, 103.75986708439264);
+      const dest = LatLng(1.310473772283314, 103.77982271935586);
+      final routeRequestParams =
+      RouteRequestParams(origin: origin, destination: dest);
+      final DirectionsRoute route = DirectionsRoute.fromJsonWithOption(json,routeRequestParams);
       final List<DirectionsRoute> routes = [route];
 
       final Uint8List expectedResponse = Uint8List(0);
@@ -191,7 +199,11 @@ void main() {
       final file = File('test/navigation/route_full_overview.json');
       final jsonString = await file.readAsString();
       final Map<String, dynamic> json = jsonDecode(jsonString) as Map<String, dynamic>;
-      final DirectionsRoute route = DirectionsRoute.fromJson(json);
+      const origin = LatLng(1.312533169133601, 103.75986708439264);
+      const dest = LatLng(1.310473772283314, 103.77982271935586);
+      final routeRequestParams =
+      RouteRequestParams(origin: origin, destination: dest);
+      final DirectionsRoute route = DirectionsRoute.fromJsonWithOption(json,routeRequestParams);
       final List<DirectionsRoute> routes = [route];
 
       final Uint8List expectedResponse = Uint8List(0);
@@ -218,7 +230,10 @@ void main() {
       final file = File('test/navigation/route_full_overview.json');
       final jsonString = await file.readAsString();
       final Map<String, dynamic> json = jsonDecode(jsonString) as Map<String, dynamic>;
-      final DirectionsRoute route = DirectionsRoute.fromJson(json);
+      const origin = LatLng(1.312533169133601, 103.75986708439264);
+      const dest = LatLng(1.310473772283314, 103.77982271935586);
+      final routeRequestParams = RouteRequestParams(origin: origin, destination: dest);
+      final DirectionsRoute route = DirectionsRoute.fromJsonWithOption(json,routeRequestParams);
       final List<DirectionsRoute> routes = [route];
 
       final Uint8List expectedResponse = Uint8List(0);

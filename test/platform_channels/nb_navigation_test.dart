@@ -46,8 +46,11 @@ void main() {
       'weight': 0,
       'weight_name': '',
     };
-
-    final List<DirectionsRoute> routes = [DirectionsRoute.fromJson(routeJson)];
+    const origin = LatLng(1.312533169133601, 103.75986708439264);
+    const dest = LatLng(1.310473772283314, 103.77982271935586);
+    final routeRequestParams =
+    RouteRequestParams(origin: origin, destination: dest);
+    final List<DirectionsRoute> routes = [DirectionsRoute.fromJsonWithOption(routeJson,routeRequestParams)];
     final launcherConfig =
         NavigationLauncherConfig(route: routes.first, routes: routes);
 
@@ -103,8 +106,11 @@ void main() {
       'weight': 0,
       'weight_name': '',
     };
-
-    final route = DirectionsRoute.fromJson(routeJson);
+    const origin = LatLng(1.312533169133601, 103.75986708439264);
+    const dest = LatLng(1.310473772283314, 103.77982271935586);
+    final routeRequestParams =
+    RouteRequestParams(origin: origin, destination: dest);
+    final route = DirectionsRoute.fromJsonWithOption(routeJson,routeRequestParams);
 
     await NBNavigation.startPreviewNavigation(route);
 
@@ -121,7 +127,10 @@ void main() {
       'weight_name': '',
     };
 
-    final route = DirectionsRoute.fromJson(routeJson);
+    const origin = LatLng(1.312533169133601, 103.75986708439264);
+    const dest = LatLng(1.310473772283314, 103.77982271935586);
+    final routeRequestParams = RouteRequestParams(origin: origin, destination: dest);
+    final DirectionsRoute route = DirectionsRoute.fromJsonWithOption(routeJson,routeRequestParams);
 
     final Uint8List expectedResponse = Uint8List(0);
 
