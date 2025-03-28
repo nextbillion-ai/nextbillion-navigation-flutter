@@ -219,6 +219,7 @@ class RouteRequestParams {
     return RouteRequestParams(
       altCount: map['altCount'] as int?,
       alternatives: map['alternatives'] as bool?,
+      // ignore: deprecated_member_use_from_same_package
       avoid: (map['avoid'] as List<dynamic>?)?.map((x) => SupportedAvoid.fromValue(x as String?)).toList(),
       avoidType: (map['avoidType'] as List?)?.map((x) => x.toString()).toList() ??
           (map['avoid'] as List?)?.map((x) => x.toString()).toList() ??
