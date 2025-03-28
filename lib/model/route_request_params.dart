@@ -149,6 +149,7 @@ class RouteRequestParams {
     required this.destination,
     this.altCount,
     this.alternatives,
+    @Deprecated('This property is deprecated. Use [avoidType] instead.')
     this.avoid,
     this.avoidType,
     this.baseUrl,
