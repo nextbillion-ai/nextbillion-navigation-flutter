@@ -34,7 +34,7 @@ void main() {
 
   test('onFeatureTapped should call onFeatureTapped on the controller',
       () async {
-    List<OnFeatureInteractionCallback> onFeatureInteractionCallbacks = [];
+    final List<OnFeatureInteractionCallback> onFeatureInteractionCallbacks = [];
 
     when(mockController.onFeatureTapped)
         .thenAnswer((_) => onFeatureInteractionCallbacks);
@@ -159,7 +159,6 @@ void main() {
     const layerId = 'layerId';
     const properties = FillLayerProperties();
     const belowLayerId = 'belowLayerId';
-    const enableInteraction = true;
     const sourceLayer = 'sourceLayer';
     const minzoom = 1.0;
     const maxzoom = 2.0;
@@ -170,7 +169,6 @@ void main() {
       layerId,
       properties,
       belowLayerId: belowLayerId,
-      enableInteraction: enableInteraction,
       sourceLayer: sourceLayer,
       minzoom: minzoom,
       maxzoom: maxzoom,
@@ -182,7 +180,6 @@ void main() {
       layerId,
       properties,
       belowLayerId: belowLayerId,
-      enableInteraction: enableInteraction,
       sourceLayer: sourceLayer,
       minzoom: minzoom,
       maxzoom: maxzoom,
@@ -344,7 +341,7 @@ void main() {
   test('addImageSource should call addImageSource on the controller', () async {
     const sourceId = 'sourceId';
 
-    Uint8List bytes = Uint8List(0);
+    final Uint8List bytes = Uint8List(0);
     const LatLngQuad coordinates = LatLngQuad(
         topLeft: LatLng(1.0, 2.0),
         topRight: LatLng(3.0, 4.0),
@@ -358,7 +355,7 @@ void main() {
   test('updateImageSource should call updateImageSource on the controller',
       () async {
     const sourceId = 'sourceId';
-    Uint8List bytes = Uint8List(0);
+    final Uint8List bytes = Uint8List(0);
     const LatLngQuad coordinates = LatLngQuad(
         topLeft: LatLng(1.0, 2.0),
         topRight: LatLng(3.0, 4.0),
@@ -442,17 +439,17 @@ void main() {
   });
 
   test('addSymbol should call addSymbol on the controller', () async {
-    const options = SymbolOptions();
+    const options = SymbolOptions.defaultOptions;
     final Symbol symbol = Symbol('symbolId', options);
     when(mockController.addSymbol(options)).thenAnswer((_) async => symbol);
 
-    Symbol? addedSymbol = await mapControllerWrapper.addSymbol(options);
+    final Symbol? addedSymbol = await mapControllerWrapper.addSymbol(options);
     verify(mockController.addSymbol(options)).called(1);
     expect(addedSymbol, equals(symbol));
   });
 
   test('addSymbols should call addSymbols on the controller', () async {
-    const option = SymbolOptions();
+    const option = SymbolOptions.defaultOptions;
     const options = [option];
     final expectedSymbols = [Symbol('symbolId', option)];
 
@@ -465,7 +462,7 @@ void main() {
   });
 
   test('updateSymbol should call updateSymbol on the controller', () async {
-    const changes = SymbolOptions();
+    const changes = SymbolOptions.defaultOptions;
     final symbol = Symbol('symbolId', changes);
     await mapControllerWrapper.updateSymbol(symbol, changes);
     verify(mockController.updateSymbol(symbol, changes)).called(1);
@@ -473,9 +470,9 @@ void main() {
 
   test('getSymbolLatLng should call getSymbolLatLng on the controller',
       () async {
-    const changes = SymbolOptions();
+    const changes = SymbolOptions.defaultOptions;
     final symbol = Symbol('symbolId', changes);
-    LatLng expectedLatLng = const LatLng(1.0, 2.0);
+    const LatLng expectedLatLng = LatLng(1.0, 2.0);
     when(mockController.getSymbolLatLng(symbol))
         .thenAnswer((_) async => expectedLatLng);
     await mapControllerWrapper.getSymbolLatLng(symbol);
@@ -483,14 +480,14 @@ void main() {
   });
 
   test('removeSymbol should call removeSymbol on the controller', () async {
-    const changes = SymbolOptions();
+    const changes = SymbolOptions.defaultOptions;
     final symbol = Symbol('symbolId', changes);
     await mapControllerWrapper.removeSymbol(symbol);
     verify(mockController.removeSymbol(symbol)).called(1);
   });
 
   test('removeSymbols should call removeSymbols on the controller', () async {
-    const changes = SymbolOptions();
+    const changes = SymbolOptions.defaultOptions;
     final symbol = Symbol('symbolId', changes);
     final symbols = [symbol];
     await mapControllerWrapper.removeSymbols(symbols);
@@ -503,16 +500,16 @@ void main() {
   });
 
   test('addLine should call addLine on the controller', () async {
-    const options = LineOptions();
-    Line expectedLine = Line('lineId', options);
+    const options = LineOptions.defaultOptions;
+    final Line expectedLine = Line('lineId', options);
     when(mockController.addLine(options)).thenAnswer((_) async => expectedLine);
     await mapControllerWrapper.addLine(options);
     verify(mockController.addLine(options)).called(1);
   });
 
   test('addLines should call addLines on the controller', () async {
-    const options = [LineOptions()];
-    List<Line> expectedLines = [];
+    const options = [LineOptions.defaultOptions];
+    final List<Line> expectedLines = [];
     when(mockController.addLines(options))
         .thenAnswer((_) async => expectedLines);
     await mapControllerWrapper.addLines(options);
@@ -520,7 +517,7 @@ void main() {
   });
 
   test('updateLine should call updateLine on the controller', () async {
-    const changes = LineOptions();
+    const changes = LineOptions.defaultOptions;
     final line = Line('lineId', changes);
 
     await mapControllerWrapper.updateLine(line, changes);
@@ -528,9 +525,9 @@ void main() {
   });
 
   test('getLineLatLngs should call getLineLatLngs on the controller', () async {
-    const changes = LineOptions();
+    const changes = LineOptions.defaultOptions;
     final line = Line('lineId', changes);
-    List<LatLng> expectedLatLngs = [];
+    final List<LatLng> expectedLatLngs = [];
     when(mockController.getLineLatLngs(line))
         .thenAnswer((_) async => expectedLatLngs);
 
@@ -539,14 +536,14 @@ void main() {
   });
 
   test('removeLine should call removeLine on the controller', () async {
-    const changes = LineOptions();
+    const changes = LineOptions.defaultOptions;
     final line = Line('lineId', changes);
     await mapControllerWrapper.removeLine(line);
     verify(mockController.removeLine(line)).called(1);
   });
 
   test('removeLines should call removeLines on the controller', () async {
-    const changes = LineOptions();
+    const changes = LineOptions.defaultOptions;
     final line = Line('lineId', changes);
     final lines = [line];
     await mapControllerWrapper.removeLines(lines);
@@ -559,8 +556,8 @@ void main() {
   });
 
   test('addCircle should call addCircle on the controller', () async {
-    const options = CircleOptions();
-    Circle expectedCircle = Circle('circleId', options);
+    const options = CircleOptions.defaultOptions;
+    final Circle expectedCircle = Circle('circleId', options);
     when(mockController.addCircle(options))
         .thenAnswer((_) async => expectedCircle);
 
@@ -569,8 +566,8 @@ void main() {
   });
 
   test('addCircles should call addCircles on the controller', () async {
-    const options = [CircleOptions()];
-    List<Circle> expectedCircles = [];
+    const options = [CircleOptions.defaultOptions];
+    final List<Circle> expectedCircles = [];
     when(mockController.addCircles(options))
         .thenAnswer((_) async => expectedCircles);
     await mapControllerWrapper.addCircles(options);
@@ -578,7 +575,7 @@ void main() {
   });
 
   test('updateCircle should call updateCircle on the controller', () async {
-    const changes = CircleOptions();
+    const changes = CircleOptions.defaultOptions;
     final circle = Circle('circleId', changes);
 
     await mapControllerWrapper.updateCircle(circle, changes);
@@ -587,9 +584,9 @@ void main() {
 
   test('getCircleLatLng should call getCircleLatLng on the controller',
       () async {
-    const changes = CircleOptions();
+    const changes = CircleOptions.defaultOptions;
     final circle = Circle('circleId', changes);
-    LatLng expectedLatLng = const LatLng(1.0, 2.0);
+    const LatLng expectedLatLng = LatLng(1.0, 2.0);
     when(mockController.getCircleLatLng(circle))
         .thenAnswer((_) async => expectedLatLng);
     await mapControllerWrapper.getCircleLatLng(circle);
@@ -597,14 +594,14 @@ void main() {
   });
 
   test('removeCircle should call removeCircle on the controller', () async {
-    const changes = CircleOptions();
+    const changes = CircleOptions.defaultOptions;
     final circle = Circle('circleId', changes);
     await mapControllerWrapper.removeCircle(circle);
     verify(mockController.removeCircle(circle)).called(1);
   });
 
   test('removeCircles should call removeCircles on the controller', () async {
-    const changes = CircleOptions();
+    const changes = CircleOptions.defaultOptions;
     final circle = Circle('circleId', changes);
     final circles = [circle];
     await mapControllerWrapper.removeCircles(circles);
@@ -617,16 +614,16 @@ void main() {
   });
 
   test('addFill should call addFill on the controller', () async {
-    const options = FillOptions();
-    Fill expectedFill = Fill('fillId', options);
+    const options = FillOptions.defaultOptions;
+    final Fill expectedFill = Fill('fillId', options);
     when(mockController.addFill(options)).thenAnswer((_) async => expectedFill);
     await mapControllerWrapper.addFill(options);
     verify(mockController.addFill(options)).called(1);
   });
 
   test('addFills should call addFills on the controller', () async {
-    const options = [FillOptions()];
-    List<Fill> expectedFills = [];
+    const options = [FillOptions.defaultOptions];
+    final List<Fill> expectedFills = [];
     when(mockController.addFills(options))
         .thenAnswer((_) async => expectedFills);
 
@@ -635,7 +632,7 @@ void main() {
   });
 
   test('updateFill should call updateFill on the controller', () async {
-    const changes = FillOptions();
+    const changes = FillOptions.defaultOptions;
     final fill = Fill('fillId', changes);
 
     await mapControllerWrapper.updateFill(fill, changes);
@@ -648,14 +645,14 @@ void main() {
   });
 
   test('removeFill should call removeFill on the controller', () async {
-    const changes = FillOptions();
+    const changes = FillOptions.defaultOptions;
     final fill = Fill('fillId', changes);
     await mapControllerWrapper.removeFill(fill);
     verify(mockController.removeFill(fill)).called(1);
   });
 
   test('removeFills should call removeFills on the controller', () async {
-    const changes = FillOptions();
+    const changes = FillOptions.defaultOptions;
     final fill = Fill('fillId', changes);
     final fills = [fill];
     await mapControllerWrapper.removeFills(fills);
@@ -666,8 +663,8 @@ void main() {
       'queryRenderedFeatures should call queryRenderedFeatures on the controller',
       () async {
     const Point<double> point = Point(1.0, 2.0);
-    List<String> layerIds = ['layerId'];
-    List<Object>? filter = ['==', 'name', 'value'];
+    final List<String> layerIds = ['layerId'];
+    final List<Object> filter = ['==', 'name', 'value'];
     final expectedList = [];
     when(mockController.queryRenderedFeatures(point, layerIds, filter))
         .thenAnswer((_) async => expectedList);
@@ -682,8 +679,8 @@ void main() {
       'queryRenderedFeaturesInRect should call queryRenderedFeaturesInRect on the controller',
       () async {
     const Rect rect = Rect.fromLTWH(1.0, 2.0, 3.0, 4.0);
-    List<String> layerIds = ['layerId'];
-    String? filter = 'filter';
+    final List<String> layerIds = ['layerId'];
+    const String filter = 'filter';
 
     final expectedList = [];
     when(mockController.queryRenderedFeaturesInRect(rect, layerIds, filter))

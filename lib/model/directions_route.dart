@@ -29,19 +29,60 @@ class DirectionsRoute {
 
   factory DirectionsRoute.fromJson(Map<String, dynamic> map) {
     return DirectionsRoute(
-      distance: map['distance'] ?? 0.0,
-      duration: map['duration'] ?? 0.0,
-      geometry: map['geometry'] ?? '',
-      legs: List<Leg>.from(map['legs']?.map((leg) => Leg.fromJson(leg)) ?? []),
-      routeIndex: map['routeIndex'] ?? '',
-      routeOptions: RouteRequestParams.fromJson(map['routeOptions'] ?? {}),
-      weight: map['weight'],
-      countryCode: map['countryCode'],
-      weightName: map['weight_name'],
-      voiceLanguage: map['voiceLocale'],
-      congestion: List<CongestionLevel>.from(map['congestion']
-              ?.map((level) => CongestionLevelExtension.fromValue(level)) ??
-          []),
+      distance: map['distance'] as num?,
+      duration: map['duration'] as num?,
+      geometry: map['geometry'] as String?,
+      legs: (map['legs'] as List?)
+          ?.whereType<Map<dynamic, dynamic>>() // Filter only valid maps
+          .map((leg) {
+        final Map<String, dynamic> convertedMap = leg.cast<String, dynamic>();
+        // final Map<String, dynamic> convertedMap = Map<String, dynamic>.from(leg);
+        return Leg.fromJson(convertedMap);
+      })
+          .toList() ??
+          [],
+      routeIndex: map['routeIndex'] as String?,
+      routeOptions: map['routeOptions'] != null
+          ? RouteRequestParams.fromJson(
+          map['routeOptions'] as Map<String, dynamic>)
+          :  throw ArgumentError('routeOptions cannot be null'),
+      weight: map['weight'] as num?,
+      countryCode: map['countryCode'] as String?,
+      weightName: map['weight_name'] as String?,
+      voiceLanguage: map['voiceLocale'] as String?,
+      congestion: (map['congestion'] as List<dynamic>?)
+          ?.map((level) =>
+          CongestionLevelExtension.fromValue(level as int))
+          .toList() ??
+          [],
+    );
+  }
+
+  factory DirectionsRoute.fromJsonWithOption(Map<String, dynamic> map,RouteRequestParams option) {
+    return DirectionsRoute(
+      distance: map['distance'] as num?,
+      duration: map['duration'] as num?,
+      geometry: map['geometry'] as String?,
+      legs: (map['legs'] as List?)
+          ?.whereType<Map<dynamic, dynamic>>() // Filter only valid maps
+          .map((leg) {
+        final Map<String, dynamic> convertedMap = leg.cast<String, dynamic>();
+        // final Map<String, dynamic> convertedMap = Map<String, dynamic>.from(leg);
+        return Leg.fromJson(convertedMap);
+      })
+          .toList() ??
+          [],
+      routeIndex: map['routeIndex'] as String?,
+      routeOptions: option,
+      weight: map['weight'] as num?,
+      countryCode: map['countryCode'] as String?,
+      weightName: map['weight_name'] as String?,
+      voiceLanguage: map['voiceLocale'] as String?,
+      congestion: (map['congestion'] as List<dynamic>?)
+          ?.map((level) =>
+          CongestionLevelExtension.fromValue(level as int))
+          .toList() ??
+          [],
     );
   }
 
@@ -73,13 +114,24 @@ class Leg {
 
   factory Leg.fromJson(Map<String, dynamic> map) {
     return Leg(
-      distance: Distance.fromJson(map['distance'] ?? {}),
-      duration: TimeDuration.fromJson(map['duration'] ?? {}),
-      steps: List<RouteStep>.from(
-          map['steps']?.map((step) => RouteStep.fromJson(step)) ?? []),
-      summary: map['summary'] ?? "",
+      distance: map['distance'] != null
+          ? Distance.fromJson(map['distance'] as Map<String, dynamic>)
+          : null,
+      duration: map['duration'] != null
+          ? TimeDuration.fromJson(map['duration'] as Map<String, dynamic>)
+          : null,
+      steps: (map['steps'] as List<dynamic>?)
+          ?.whereType<Map<dynamic, dynamic>>() // Fi
+          .map((step) {
+        final Map<String, dynamic> convertedMap = step.cast<String, dynamic>();
+        // final Map<String, dynamic> convertedMap = Map<String, dynamic>.from(step);
+            return RouteStep.fromJson(convertedMap);
+      }).toList() ??
+          [],
+      summary: map['summary'] as String?,
     );
   }
+
 
   Map<String, dynamic> toJson() {
     return {
@@ -100,7 +152,7 @@ class Distance {
 
   factory Distance.fromJson(Map<String, dynamic> map) {
     return Distance(
-      value: map['value'] ?? 0.0,
+      value: (map['value'] as num?) ?? 0.0,
     );
   }
 
@@ -120,7 +172,7 @@ class TimeDuration {
 
   factory TimeDuration.fromJson(Map<String, dynamic> map) {
     return TimeDuration(
-      value: map['value'] ?? 0.0,
+      value: (map['value'] as num?) ?? 0.0,
     );
   }
 

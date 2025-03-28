@@ -15,7 +15,7 @@ void main() {
     setUp(() {
       mockAssetBundle = MockAssetBundle();
       assetManager = AssetManager();
-      assetManager.setAssetBundle(mockAssetBundle);
+      assetManager.setLocalRootBundleForTesting(mockAssetBundle);
     });
 
     test('load should return Uint8List', () async {

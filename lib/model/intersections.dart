@@ -21,16 +21,17 @@ class Intersection {
 
   factory Intersection.fromJson(Map<String, dynamic> map) {
     return Intersection(
-      bearings: List<int>.from(map['bearings'] ?? []),
-      classes: List<String>.from(map['classes'] ?? []),
-      entry: List<dynamic>.from(map['entry'] ?? []),
-      inCount: map['intersection_in'],
-      lanes: List<Lane>.from(map['lanes']?.map(
-            (lane) => Lane.fromJson(lane),
-          ) ??
-          []),
-      outCount: map['intersection_out'] ?? 0,
-      location: Coordinate.fromJson(map['location'] ?? {}),
+      bearings: (map['bearings'] as List?)?.whereType<int>().toList() ?? [],
+      classes: (map['classes'] as List?)?.whereType<String>().toList() ?? [],
+      entry: (map['entry'] as List?)?.whereType<bool>().toList() ?? [],
+      inCount: map['intersection_in'] as int?,
+      lanes: (map['lanes'] as List?)
+          ?.map((lane) => Lane.fromJson(lane as Map<String, dynamic>))
+          .toList(),
+      outCount: map['intersection_out'] as int? ?? 0,
+      location: map['location'] != null
+          ? Coordinate.fromJson(map['location'] as Map<String, dynamic>)
+          : null,
     );
   }
 
@@ -62,10 +63,12 @@ class Lane {
 
   factory Lane.fromJson(Map<String, dynamic> map) {
     return Lane(
-      indications: List<String>.from(map['indications'] ?? []),
-      valid: map['valid'],
-      active: map['active'],
-      validIndication: map['valid_indication'],
+      indications: (map['indications'] as List?)
+          ?.whereType<String>()
+          .toList(), // Ensures only Strings are included
+      valid: map['valid'] as bool?,
+      active: map['active'] as bool?,
+      validIndication: map['valid_indication'] as String?,
     );
   }
 

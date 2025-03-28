@@ -8,20 +8,20 @@ class MockNBNavigationViewPlatform extends Mock
     implements NBNavigationViewPlatform {
   @override
   Future<void> stopNavigation() async {
-    (super.noSuchMethod(
+    super.noSuchMethod(
       Invocation.method(#stopNavigation, []),
       returnValue: Future<void>.value(),
       returnValueForMissingStub: Future<void>.value(),
-    ) as Future<void>);
+    ) as Future<void>;
   }
 
   @override
   void dispose() {
-    (super.noSuchMethod(
+    super.noSuchMethod(
       Invocation.method(#dispose, []),
       returnValue: Future<void>.value(),
       returnValueForMissingStub: Future<void>.value(),
-    ) as Future<void>);
+    ) as Future<void>;
   }
 
   @override
@@ -30,8 +30,8 @@ class MockNBNavigationViewPlatform extends Mock
       Invocation.getter(
         #navProgressListener,
       ),
-      returnValue: Stream<NavigationProgress?>.empty(),
-      returnValueForMissingStub: Stream<NavigationProgress?>.empty(),
+      returnValue: const Stream<NavigationProgress?>.empty(),
+      returnValueForMissingStub: const Stream<NavigationProgress?>.empty(),
     ) as Stream<NavigationProgress?>?;
   }
 
@@ -43,7 +43,6 @@ class MockNBNavigationViewPlatform extends Mock
         #setOnNavigationCancellingCallback,
         [callback],
       ),
-      returnValue: null,
       returnValueForMissingStub: null,
     );
   }
@@ -55,7 +54,6 @@ class MockNBNavigationViewPlatform extends Mock
         #setOnNavigationRunningCallback,
         [callback],
       ),
-      returnValue: null,
       returnValueForMissingStub: null,
     );
   }
@@ -67,7 +65,6 @@ class MockNBNavigationViewPlatform extends Mock
         #setOnArriveAtWaypointCallback,
         [callback],
       ),
-      returnValue: null,
       returnValueForMissingStub: null,
     );
   }
@@ -80,7 +77,6 @@ class MockNBNavigationViewPlatform extends Mock
         #setOnRerouteFromLocationCallback,
         [callback],
       ),
-      returnValue: null,
       returnValueForMissingStub: null,
     );
   }
@@ -92,7 +88,6 @@ class MockNBNavigationViewPlatform extends Mock
         #setOnRerouteAlongCallback,
         [callback],
       ),
-      returnValue: null,
       returnValueForMissingStub: null,
     );
   }
@@ -104,7 +99,6 @@ class MockNBNavigationViewPlatform extends Mock
         #setOnRerouteFailureCallback,
         [callback],
       ),
-      returnValue: null,
       returnValueForMissingStub: null,
     );
   }
@@ -151,7 +145,7 @@ void main() {
   });
 
   test('Check callback should be called', () {
-    MockNBNavigationViewPlatform mockNBNavigationViewPlatform =
+    final MockNBNavigationViewPlatform mockNBNavigationViewPlatform =
         MockNBNavigationViewPlatform();
     NavigationViewController(
       navViewPlatform: mockNBNavigationViewPlatform,

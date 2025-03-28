@@ -174,49 +174,73 @@ class RouteRequestParams {
 
   factory RouteRequestParams.fromJson(Map<String, dynamic> map) {
     if (map.isEmpty) {
-      return RouteRequestParams(
-        origin: const LatLng(0, 0),
-        destination: const LatLng(0, 0),
-      );
+      throw ArgumentError('RouteRequestParams cannot be empty. Received: $map');
     }
+
+    LatLng parseLatLng(dynamic value) {
+      if (value is List && value.length == 2) {
+        final lat = value[0];
+        final lng = value[1];
+        if (lat is num && lng is num) {
+          return LatLng(lat.toDouble(), lng.toDouble());
+        }
+      }
+      throw ArgumentError('LatLng is invalid. Received: $value');
+    }
+
+    List<int>? parseTruckSize(dynamic value) {
+      if (value is List) {
+        return value.map((item) {
+          if (item is String) {
+            return int.tryParse(item) ?? 0;
+          } else if (item is int) {
+            return item;
+          }
+          return 0;
+        }).toList();
+      }
+      return null;
+    }
+
     return RouteRequestParams(
-      altCount: map['altCount'],
-      alternatives: map['alternatives'],
-      avoid: List<SupportedAvoid>.from((map['avoid'] as List<dynamic>?)
-              ?.map((x) => SupportedAvoid.fromValue(x)) ??
-          []),
-      avoidType: List<String>.from(
-          map['avoidType'] ?? List<String>.from(map['avoid']) ?? []),
-      baseUrl: map['baseUrl'],
-      departureTime: map['departureTime'],
-      destination: LatLng(map['destination'][1], map['destination'][0]),
-      key: map['key'],
-      language: map['language'],
-      mode: ValidModes.fromValue(map['mode']),
-      origin: LatLng(map['origin'][1], map['origin'][0]),
-      overview: ValidOverview.fromValue(map['overview']),
-      simulation: map['simulation'],
-      truckWeight: map['truckWeight'],
-      truckSize: (map['truckSize'] as List<dynamic>?)
-          ?.map((item) => (item is String) ? int.parse(item) : (item as int))
-          .toList(),
-      unit: SupportedUnits.fromValue(map['unit']),
-      option: SupportedOption.fromValue(map['option']),
-      geometry: SupportedGeometry.fromValue(map["geometry"]),
-      waypoints: List<LatLng>.from(
-          map['waypoints']?.map((point) => LatLng(point[1], point[0])) ?? []),
-      hazmatType: (map['hazmatType'] as List<dynamic>?)
+      altCount: map['altCount'] as int?,
+      alternatives: map['alternatives'] as bool?,
+      avoid: (map['avoid'] as List<dynamic>).map((x) => SupportedAvoid.fromValue(x as String?)).toList(),
+      avoidType: (map['avoidType'] as List?)?.map((x) => x.toString()).toList() ??
+          (map['avoid'] as List?)?.map((x) => x.toString()).toList() ??
+          [],
+      baseUrl: map['baseUrl'] as String?,
+      departureTime: map['departureTime'] as int?,
+      destination: parseLatLng(map['destination']),
+      key: map['key'] as String?,
+      language: map['language'] as String?,
+      mode: ValidModes.fromValue(map['mode'] as String?),
+      origin: parseLatLng(map['origin']),
+      overview: ValidOverview.fromValue(map['overview'] as String?),
+      simulation: map['simulation'] as bool?,
+      truckWeight: map['truckWeight'] as int?,
+      truckSize: parseTruckSize(map['truckSize']),
+      unit: SupportedUnits.fromValue(map['unit'] as String?),
+      option: SupportedOption.fromValue(map['option'] as String?),
+      geometry: SupportedGeometry.fromValue(map["geometry"] as String?),
+      waypoints: (map['waypoints'] as List?)
+          ?.map((point) => parseLatLng(point))
+          .toList() ??
+          [],
+      hazmatType: (map['hazmatType'] as List<String>?)
           ?.map((x) => SupportedHazmatType.fromValue(x))
           .whereType<SupportedHazmatType>()
-          .toList(),
-      approaches: (map['approaches'] as List<dynamic>?)
+          .toList() ??
+          [],
+      approaches: (map['approaches'] as List<String>?)
           ?.map((x) => SupportedApproaches.fromValue(x))
           .whereType<SupportedApproaches>()
-          .toList(),
-      crossBorder: map['crossBorder'],
-      truckAxleLoad: map['truckAxleLoad'],
-      allow: map['allow'],
-      routeType: RouteType.fromValue(map['routeType']),
+          .toList() ??
+          [],
+      crossBorder: map['crossBorder'] as bool?,
+      truckAxleLoad: (map['truckAxleLoad'] as num?)?.toDouble(),
+      allow: map['allow'] as String?,
+      routeType: RouteType.fromValue(map['routeType'] as String?),
     );
   }
 

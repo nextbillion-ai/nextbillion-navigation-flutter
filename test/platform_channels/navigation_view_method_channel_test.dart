@@ -12,7 +12,7 @@ void main() {
     const EventChannel eventChannel =
         EventChannel('flutter_nb_navigation/1/events');
 
-    MethodChannelNavigationView navigationView = MethodChannelNavigationView();
+    final MethodChannelNavigationView navigationView = MethodChannelNavigationView();
 
     setUp(() {
       TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
@@ -110,7 +110,7 @@ void main() {
     });
 
     test('handleMethodCall result', () async {
-      String message = "Reroute failed";
+      const String message = "Reroute failed";
       final file = File('test/navigation/route_full_overview.json');
       final routeString = await file.readAsString();
 
@@ -128,7 +128,7 @@ void main() {
 
       await navigationView.handleMethodCall(const MethodCall('onRerouteAlong'));
       await navigationView.handleMethodCall(
-        MethodCall('onRerouteFailure', message),
+        const MethodCall('onRerouteFailure', message),
       );
       await navigationView
           .handleMethodCall(MethodCall('onRerouteAlong', routeString));

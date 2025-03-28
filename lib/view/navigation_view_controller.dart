@@ -21,9 +21,7 @@ class NavigationViewController {
   }) : _navViewPlatform = navViewPlatform {
     _navProgressSubscription =
         _navViewPlatform.navProgressListener?.listen((navProgress) {
-      if (onProgressChange != null) {
-        onProgressChange!(navProgress);
-      }
+          onProgressChange?.call(navProgress);
     });
     if (onNavigationCancelling != null) {
       _navViewPlatform

@@ -64,7 +64,7 @@ class _NBNavigationViewState extends State<NBNavigationView> {
     return _nbNavViewPlatform.buildView(creationParams, _onPlatformViewCreated);
   }
 
-  void _onPlatformViewCreated(int id) async {
+  Future<void> _onPlatformViewCreated(int id) async {
     await _nbNavViewPlatform.initPlatform(id);
     final NavigationViewController controller = NavigationViewController(
       navViewPlatform: _nbNavViewPlatform,
@@ -85,7 +85,7 @@ class _NBNavigationViewState extends State<NBNavigationView> {
   }
 
   @override
-  void dispose() async {
+  Future<void> dispose() async {
     super.dispose();
     if (_controller.isCompleted) {
       final controller = await _controller.future;

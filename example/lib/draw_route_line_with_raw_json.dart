@@ -87,9 +87,10 @@ class DrawRouteLineState extends State<DrawRouteLineWithRawJson> {
 
   void _fetchRoute() async {
     try {
-      DirectionsRoute route1 = DirectionsRoute.fromJson(routeJson);
-      DirectionsRoute route2 = DirectionsRoute.fromJson(routeJson2);
-      DirectionsRoute route3 = DirectionsRoute.fromJson(routeJson3);
+      RouteRequestParams option = RouteRequestParams(origin: LatLng(0.0,0.0), destination:  LatLng(0.0,0.0));
+      DirectionsRoute route1 = DirectionsRoute.fromJsonWithOption(routeJson,option);
+      DirectionsRoute route2 = DirectionsRoute.fromJsonWithOption(routeJson2,option);
+      DirectionsRoute route3 = DirectionsRoute.fromJsonWithOption(routeJson3,option);
 
       setState(() {
         routes = [route1, route2, route3];

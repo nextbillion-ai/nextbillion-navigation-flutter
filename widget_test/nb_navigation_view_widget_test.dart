@@ -7,7 +7,7 @@ import 'widget_route_test_json.dart';
 
 void main() {
   testWidgets('NBNavigationView Widget Test', (WidgetTester tester) async {
-    DirectionsRoute route = DirectionsRoute.fromJson(widgetTestRoute);
+    final DirectionsRoute route = DirectionsRoute.fromJson(widgetTestRoute);
     final mockNavigationLauncherConfig = NavigationLauncherConfig(
       route: route, // Fill with your mock data
       routes: [route], // Fill with your mock data

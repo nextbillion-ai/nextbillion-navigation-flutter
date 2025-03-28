@@ -57,8 +57,8 @@ void main() {
       final json = navigationProgress.toJson();
 
       // Assert
-      expect(json['location']['latitude'], 12.34);
-      expect(json['location']['longitude'], 56.78);
+      expect((json['location'] as Map<String,dynamic>)['latitude'], 12.34);
+      expect((json['location'] as Map<String,dynamic>)['longitude'], 56.78);
       expect(json['distanceRemaining'], 1000);
       expect(json['durationRemaining'], 300);
       expect(json['currentLegIndex'], 1);

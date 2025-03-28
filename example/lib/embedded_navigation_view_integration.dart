@@ -105,19 +105,37 @@ class EmbeddedNavigationViewExampleState
         setState(() {
           this.progress = progress;
         });
+        if (kDebugMode) {
+          print("onProgressChange : ${progress?.location}");
+        }
       },
       onNavigationCancelling: () {
         setState(() {
           startNavigation = false;
           clearRouteResult();
         });
+        if (kDebugMode) {
+          print("onNavigationCancelling ");
+        }
       },
       onArriveAtWaypoint: (waypoint) {
         if (showArrivalDialog) {
           _showArrivedDialog(waypoint, progress?.isFinalLeg ?? false);
         }
+        if (kDebugMode) {
+          print("onArriveAtWaypoint : $waypoint");
+        }
       },
-      onRerouteFromLocation: (location) {},
+      onRerouteFromLocation: (location) {
+        if (kDebugMode) {
+          print(" onRerouteFromLocation : $location");
+        }
+      },
+      onRerouteAlongCallback: (DirectionsRoute? route) {
+        if (kDebugMode) {
+          print("onRerouteAlongCallback : ${route?.geometry}");
+        }
+      },
     );
   }
 
@@ -197,7 +215,7 @@ class EmbeddedNavigationViewExampleState
     NavigationLauncherConfig config = NavigationLauncherConfig(
         route: routes[_selectedRouteIndex], routes: routes);
     config.locationLayerRenderMode = LocationLayerRenderMode.gps;
-    config.shouldSimulateRoute = true;
+    config.shouldSimulateRoute = false;
     config.themeMode = NavigationThemeMode.system;
     config.useCustomNavigationStyle = false;
     // Please set the custom map style url if you only have the OSM map style access

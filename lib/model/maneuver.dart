@@ -23,24 +23,29 @@ class Maneuver {
     this.muted,
   });
 
+
   factory Maneuver.fromJson(Map<String, dynamic> map) {
     return Maneuver(
-      bearingAfter: map['bearing_after']?.toDouble(),
-      bearingBefore: map['bearing_before']?.toDouble(),
-      coordinate: Coordinate.fromJson(map['coordinate'] ?? {}),
-      instruction: map['instruction'],
-      modifier: map['modifier'],
-      type: map['maneuver_type'],
-      bearing: map['bearing'],
-      muted: map['muted'],
-      voiceInstructions: List<VoiceInstruction>.from(map['voice_instruction']
-              ?.map((vi) => VoiceInstruction.fromJson(vi)) ??
-          []),
+      bearingAfter: (map['bearing_after'] as num?)?.toDouble(),
+      bearingBefore: (map['bearing_before'] as num?)?.toDouble(),
+      bearing: (map['bearing'] as num?)?.toDouble(),
+      coordinate: map['coordinate'] is Map<String, dynamic>
+          ? Coordinate.fromJson(map['coordinate'] as Map<String, dynamic>)
+          : null,
+      instruction: map['instruction'] as String?,
+      modifier: map['modifier'] as String?,
+      type: map['maneuver_type'] as String?,
+      muted: map['muted'] as bool?,
+      voiceInstructions: (map['voice_instruction'] is List)
+          ? (map['voice_instruction'] as List)
+          .map((vi) => VoiceInstruction.fromJson(vi as Map<String, dynamic>))
+          .toList()
+          : [],
     );
   }
 
   Map<String, dynamic> toJson() {
-    Map<String, dynamic> maps = {
+    final Map<String, dynamic> maps = {
       'bearing_after': bearingAfter,
       'bearing_before': bearingBefore,
       'coordinate': coordinate?.toJson(),
@@ -66,8 +71,8 @@ class Coordinate {
   Coordinate({required this.latitude, required this.longitude});
 
   factory Coordinate.fromJson(Map<String, dynamic> map) {
-    var latitude = num.tryParse(map['latitude'].toString())?.toDouble();
-    var longitude = num.tryParse(map['longitude'].toString())?.toDouble();
+    final latitude = num.tryParse(map['latitude'].toString())?.toDouble();
+    final longitude = num.tryParse(map['longitude'].toString())?.toDouble();
     if (latitude == null || longitude == null) {
       throw ArgumentError('Invalid latitude or longitude value');
     }
@@ -97,10 +102,10 @@ class VoiceInstruction {
 
   factory VoiceInstruction.fromJson(Map<String, dynamic> map) {
     return VoiceInstruction(
-      instruction: map['instruction'],
-      ssmlAnnouncement: map['ssmlAnnouncement'],
-      distanceAlongGeometry: map['distance_along_geometry']?.toDouble(),
-      unit: map['unit'],
+      instruction: map['instruction'] as String?,
+      ssmlAnnouncement: map['ssmlAnnouncement'] as String?,
+      distanceAlongGeometry: (map['distance_along_geometry'] as num?)?.toDouble(),
+      unit: map['unit'] as String?,
     );
   }
 

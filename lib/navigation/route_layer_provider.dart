@@ -101,9 +101,9 @@ class MapRouteLayerProvider {
 
   SymbolLayerProperties initializeWayPointLayer(
       String originMarkerName, String destinationMarkerName) {
-    var sizeAndroid = [0.8, 1.2, 1.6, 2.8];
-    var sizeIos = [0.6, 0.8, 1.0, 2.2];
-    var size = Platform.isAndroid ? sizeAndroid : sizeIos;
+    final sizeAndroid = [0.8, 1.2, 1.6, 2.8];
+    final sizeIos = [0.6, 0.8, 1.0, 2.2];
+    final size = Platform.isAndroid ? sizeAndroid : sizeIos;
     return SymbolLayerProperties(
         iconImage: [
           Expressions.get,
@@ -128,7 +128,7 @@ class MapRouteLayerProvider {
   }
 
   SymbolLayerProperties initializeDurationSymbolLayer() {
-    var size = [0.8, 0.9, 0.9, 1.1];
+    final size = [0.8, 0.9, 0.9, 1.1];
     return SymbolLayerProperties(
         iconImage: [Expressions.get, routeDurationSymbolIconKey],
         iconSize: [

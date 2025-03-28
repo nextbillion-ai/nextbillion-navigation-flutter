@@ -3,13 +3,13 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/widgets.dart';
+import 'package:flutter_test/flutter_test.dart' as flutter_test;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:nb_navigation_flutter/navigation/nb_map_controller_wrapper.dart';
+import 'package:nb_navigation_flutter/nb_navigation_flutter.dart';
 import 'package:nb_navigation_flutter/util/asset_manager.dart';
 import 'package:test/test.dart';
-import 'package:nb_navigation_flutter/nb_navigation_flutter.dart';
-import 'package:flutter_test/flutter_test.dart' as flutter_test;
 
 import 'nb_navigation_map_test.mocks.dart';
 
@@ -132,18 +132,18 @@ void main() {
     });
 
     test('should drawRoute if routes are not empty', () async {
-      NBNavigationPlatform mockNBNavigationPlatform =
+      final NBNavigationPlatform mockNBNavigationPlatform =
           MockNBNavigationPlatform();
       NBNavigation.setNBNavigationPlatform(mockNBNavigationPlatform);
 
       WidgetsFlutterBinding.ensureInitialized();
       final file = File('test/navigation/route.json');
       final jsonString = await file.readAsString();
-      Map<String, dynamic> json = jsonDecode(jsonString);
-      DirectionsRoute route = DirectionsRoute.fromJson(json);
-      List<DirectionsRoute> routes = [route];
+      final Map<String, dynamic> json = jsonDecode(jsonString) as Map<String, dynamic>;
+      final DirectionsRoute route = DirectionsRoute.fromJson(json);
+      final List<DirectionsRoute> routes = [route];
 
-      Uint8List expectedResponse = Uint8List(0);
+      final Uint8List expectedResponse = Uint8List(0);
 
       when(mockNBNavigationPlatform.captureRouteDurationSymbol(route, true))
           .thenAnswer((_) async => expectedResponse);
@@ -157,18 +157,18 @@ void main() {
     });
 
     test('should drawIndependentRoutes if routes are not empty', () async {
-      NBNavigationPlatform mockNBNavigationPlatform =
+      final NBNavigationPlatform mockNBNavigationPlatform =
           MockNBNavigationPlatform();
       NBNavigation.setNBNavigationPlatform(mockNBNavigationPlatform);
 
       WidgetsFlutterBinding.ensureInitialized();
       final file = File('test/navigation/route.json');
       final jsonString = await file.readAsString();
-      Map<String, dynamic> json = jsonDecode(jsonString);
-      DirectionsRoute route = DirectionsRoute.fromJson(json);
-      List<DirectionsRoute> routes = [route];
+      final Map<String, dynamic> json = jsonDecode(jsonString) as Map<String, dynamic>;
+      final DirectionsRoute route = DirectionsRoute.fromJson(json);
+      final List<DirectionsRoute> routes = [route];
 
-      Uint8List expectedResponse = Uint8List(0);
+      final Uint8List expectedResponse = Uint8List(0);
 
       when(mockNBNavigationPlatform.captureRouteDurationSymbol(route, true))
           .thenAnswer((_) async => expectedResponse);
@@ -183,18 +183,18 @@ void main() {
 
     test('should drawRoute with full overview if routes is not empty',
         () async {
-      NBNavigationPlatform mockNBNavigationPlatform =
+      final NBNavigationPlatform mockNBNavigationPlatform =
           MockNBNavigationPlatform();
       NBNavigation.setNBNavigationPlatform(mockNBNavigationPlatform);
 
       WidgetsFlutterBinding.ensureInitialized();
       final file = File('test/navigation/route_full_overview.json');
       final jsonString = await file.readAsString();
-      Map<String, dynamic> json = jsonDecode(jsonString);
-      DirectionsRoute route = DirectionsRoute.fromJson(json);
-      List<DirectionsRoute> routes = [route];
+      final Map<String, dynamic> json = jsonDecode(jsonString) as Map<String, dynamic>;
+      final DirectionsRoute route = DirectionsRoute.fromJson(json);
+      final List<DirectionsRoute> routes = [route];
 
-      Uint8List expectedResponse = Uint8List(0);
+      final Uint8List expectedResponse = Uint8List(0);
 
       when(mockNBNavigationPlatform.captureRouteDurationSymbol(route, true))
           .thenAnswer((_) async => expectedResponse);
@@ -210,18 +210,18 @@ void main() {
     test(
         'should drawIndependentRoutes with full overview if routes is not empty',
         () async {
-      NBNavigationPlatform mockNBNavigationPlatform =
+      final NBNavigationPlatform mockNBNavigationPlatform =
           MockNBNavigationPlatform();
       NBNavigation.setNBNavigationPlatform(mockNBNavigationPlatform);
 
       WidgetsFlutterBinding.ensureInitialized();
       final file = File('test/navigation/route_full_overview.json');
       final jsonString = await file.readAsString();
-      Map<String, dynamic> json = jsonDecode(jsonString);
-      DirectionsRoute route = DirectionsRoute.fromJson(json);
-      List<DirectionsRoute> routes = [route];
+      final Map<String, dynamic> json = jsonDecode(jsonString) as Map<String, dynamic>;
+      final DirectionsRoute route = DirectionsRoute.fromJson(json);
+      final List<DirectionsRoute> routes = [route];
 
-      Uint8List expectedResponse = Uint8List(0);
+      final Uint8List expectedResponse = Uint8List(0);
 
       when(mockNBNavigationPlatform.captureRouteDurationSymbol(route, true))
           .thenAnswer((_) async => expectedResponse);

@@ -20,19 +20,19 @@ void main() {
   setUp(() async {
     channel = MockMethodChannel();
     nbNavMethodChannel = NBNavigationMethodChannel();
-    nbNavMethodChannel.setMethodChanenl(channel);
+    nbNavMethodChannel.setMethodChannel(channel);
 
     final file = File('test/navigation/route.json');
     final jsonString = await file.readAsString();
-    Map<String, dynamic> json = jsonDecode(jsonString);
+    final Map<String, dynamic> json = jsonDecode(jsonString) as Map<String, dynamic>;
     route = DirectionsRoute.fromJson(json);
   });
 
   tearDown(() {});
 
   test('fetchRoute should return DirectionsRouteResponse', () async {
-    LatLng origin = const LatLng(1.312533169133601, 103.75986708439264);
-    LatLng dest = const LatLng(1.310473772283314, 103.77982271935586);
+    const LatLng origin = LatLng(1.312533169133601, 103.75986708439264);
+    const LatLng dest = LatLng(1.310473772283314, 103.77982271935586);
 
     final routeRequestParams =
         RouteRequestParams(origin: origin, destination: dest);
@@ -101,7 +101,7 @@ void main() {
 
   //Assume Platform.IOS == false;
   test('startNavigation should invoke method on channel', () async {
-    List<DirectionsRoute> routes = [route];
+    final List<DirectionsRoute> routes = [route];
     final launcherConfig =
         NavigationLauncherConfig(route: route, routes: routes);
     // final routeOptions = RouteRequestParams.fromJson({});
@@ -138,8 +138,8 @@ void main() {
 
   test('findSelectedRouteIndex should return index', () async {
     const expectedIndex = 0;
-    LatLng clickPoint = const LatLng(1.0, 2.0);
-    List<List<LatLng>> coordinates = [
+    const LatLng clickPoint = LatLng(1.0, 2.0);
+    final List<List<LatLng>> coordinates = [
       [const LatLng(1.0, 2.0), const LatLng(1.0, 2.0)]
     ];
 

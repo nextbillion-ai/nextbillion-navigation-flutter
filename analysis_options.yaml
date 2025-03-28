@@ -1,4 +1,15 @@
-include: package:flutter_lints/flutter.yaml
+#include: package:flutter_lints/flutter.yaml
+include: package:lint/analysis_options.yaml
 
-# Additional information about this file can be found at
-# https://dart.dev/guides/language/analysis-options
+analyzer:
+  strong-mode:
+    implicit-casts: false
+    implicit-dynamic: false
+  errors:
+    require_trailing_commas: ignore
+
+linter:
+  rules:
+    - avoid_returning_null
+    - always_require_non_null_named_parameters
+    - null_check_on_nullable_type_parameter

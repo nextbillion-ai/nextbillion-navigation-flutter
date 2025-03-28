@@ -18,14 +18,14 @@ abstract class NBNavigationPlatform {
   Future<void> startPreviewNavigation(DirectionsRoute route,
       {String? mapStyle});
 
-  Future<String> getRoutingBaseUri();
+  Future<String?> getRoutingBaseUri();
 
   Future<void> setRoutingBaseUri(String baseUri);
 
-  Future<int> findSelectedRouteIndex(
+  Future<int?> findSelectedRouteIndex(
       LatLng clickPoint, List<List<LatLng>> coordinates);
 
-  Future<String> getFormattedDuration(num durationSeconds);
+  Future<String?> getFormattedDuration(num durationSeconds);
 
   Future<void> setOnNavigationExitCallback(
       OnNavigationExitCallback navigationExitCallback);
