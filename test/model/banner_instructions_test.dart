@@ -1,8 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
 import 'package:nb_navigation_flutter/nb_navigation_flutter.dart';
 
-class MockComponent extends Mock implements Component {}
 
 void main() {
   group('BannerInstructions', () {
@@ -91,11 +89,12 @@ void main() {
 
       expect(json['distanceAlongGeometry'], equals(10.0));
       expect(json['primary'], isNotNull);
-      expect(json['primary']['components'], isNotEmpty);
+      expect((json['primary'] as Map<String, dynamic>)['components'], isNotEmpty);
+
       expect(json['sub'], isNotNull);
-      expect(json['sub']['components'], isNotEmpty);
+      expect((json['sub']as Map<String, dynamic>)['components'], isNotEmpty);
       expect(json['secondary'], isNotNull);
-      expect(json['secondary']['components'], isNotEmpty);
+      expect((json['secondary']as Map<String, dynamic>)['components'], isNotEmpty);
     });
   });
 

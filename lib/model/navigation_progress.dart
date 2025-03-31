@@ -26,24 +26,33 @@ class NavigationProgress {
   });
 
   factory NavigationProgress.fromJson(Map<String, dynamic> json) {
+    final locationData = json['location'];
+    LatLng? location;
+    if (locationData != null && locationData is Map<String, dynamic>) {
+      final latitude = (locationData['latitude'] as num?)?.toDouble();
+      final longitude = (locationData['longitude'] as num?)?.toDouble();
+      if (latitude != null && longitude != null) {
+        location = LatLng(
+          latitude,  // Safely convert to double
+          longitude, // Safely convert to double
+        );
+      }
+    }
+
     return NavigationProgress(
-      location: json['location'] != null
-          ? LatLng(
-              json['location']["latitude"],
-              json['location']["longitude"],
-            )
-          : null,
-      distanceRemaining: json['distanceRemaining'],
-      durationRemaining: json['durationRemaining'],
-      currentLegIndex: json['currentLegIndex'],
-      currentStepIndex: json['currentStepIndex'],
-      distanceTraveled: json['distanceTraveled'],
-      fractionTraveled: json['fractionTraveled'],
-      remainingWaypoints: json['remainingWaypoints'],
-      currentStepPointIndex: json['currentStepPointIndex'],
-      isFinalLeg: json['isFinalLeg'],
+      location: location,
+      distanceRemaining: (json['distanceRemaining'] as num?)?.toDouble(),
+      durationRemaining: (json['durationRemaining'] as num?)?.toDouble(),
+      currentLegIndex: json['currentLegIndex'] as int?,
+      currentStepIndex: json['currentStepIndex'] as int?,
+      distanceTraveled: (json['distanceTraveled'] as num?)?.toDouble(),
+      fractionTraveled: (json['fractionTraveled'] as num?)?.toDouble(),
+      remainingWaypoints: json['remainingWaypoints'] as int?,
+      currentStepPointIndex: json['currentStepPointIndex'] as int?,
+      isFinalLeg: json['isFinalLeg'] as bool? ?? false, // Defaults to false if null
     );
   }
+
 
   Map<String, dynamic> toJson() {
     return {

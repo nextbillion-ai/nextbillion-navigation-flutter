@@ -1,4 +1,5 @@
 // This class is used to load assets from the asset bundle
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 abstract class IAssetManager {
@@ -7,11 +8,18 @@ abstract class IAssetManager {
 }
 
 class AssetManager implements IAssetManager {
-  AssetBundle localRootBundle = rootBundle;
+  AssetBundle _localRootBundle = rootBundle;
 
-  setAssetBundle(AssetBundle assetBundle) {
-    localRootBundle = assetBundle;
+  AssetBundle get localRootBundle => _localRootBundle;
+
+  @visibleForTesting
+  void setLocalRootBundleForTesting(AssetBundle rootBundle) {
+    assert(() {
+      _localRootBundle = rootBundle;
+      return true;
+    }(), 'setLocalRootBundleForTesting should only be used in tests.');
   }
+
 
   @override
   Future<Uint8List> load(String key) {
@@ -19,7 +27,7 @@ class AssetManager implements IAssetManager {
   }
 
   Future<Uint8List> transferAssetImage(String assetName) async {
-    final ByteData bytes = await localRootBundle.load(assetName);
+    final ByteData bytes = await _localRootBundle.load(assetName);
     final Uint8List list = bytes.buffer.asUint8List();
     return list;
   }

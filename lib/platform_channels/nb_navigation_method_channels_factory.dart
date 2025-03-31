@@ -1,6 +1,6 @@
 part of '../nb_navigation_flutter.dart';
 
-class NBNavigationMethodChannelsFactory {
+mixin NBNavigationMethodChannelsFactory {
   static const MethodChannel _nbNavigationChannel =
       MethodChannel(NBNavMethodChannelsConstants.nbNavigationChannelName);
 

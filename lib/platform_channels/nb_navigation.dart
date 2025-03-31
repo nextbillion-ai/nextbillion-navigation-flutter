@@ -1,19 +1,22 @@
 part of '../nb_navigation_flutter.dart';
 
 /// Stateless facade of the nextbillion navigation platform
-class NBNavigation {
+mixin NBNavigation {
   static NBNavigationPlatform _nbNavigationPlatform =
       NBNavigationPlatform.instance;
 
   /// Initializes the NextBillion SDK with the provided [accessKey].
-  static initNextBillion(String accessKey) async {
+  static Future<void> initNextBillion(String accessKey) async {
     await NextBillion.initNextBillion(accessKey);
   }
 
   /// allow to set the [NBNavigationPlatform] for testing
   @visibleForTesting
-  static setNBNavigationPlatform(NBNavigationPlatform nbNavigationPlatform) {
-    _nbNavigationPlatform = nbNavigationPlatform;
+  static void setNBNavigationPlatform(NBNavigationPlatform nbNavigationPlatform) {
+    assert(() {
+      _nbNavigationPlatform = nbNavigationPlatform;
+      return true;
+    }(), 'setLocalRootBundleForTesting should only be used in tests.');
   }
 
   /// Fetches a route based on the provided [routeRequestParams].
@@ -30,21 +33,13 @@ class NBNavigation {
   }
 
   /// get the base url for navigation related api
-  static Future<String> getRoutingBaseUri() async {
+  static Future<String?> getRoutingBaseUri() async {
     return await _nbNavigationPlatform.getRoutingBaseUri();
   }
 
   /// set the base url for navigation related api with the provided [baseUri]
   static Future<void> setRoutingBaseUri(String baseUri) async {
     await _nbNavigationPlatform.setRoutingBaseUri(baseUri);
-  }
-
-  /// Finds the index of the selected route based on the [clickPoint] and [coordinates] of route line.
-  /// Returns the index of the selected route.
-  static Future<int> findSelectedRouteIndex(
-      LatLng clickPoint, List<List<LatLng>> coordinates) async {
-    return await _nbNavigationPlatform.findSelectedRouteIndex(
-        clickPoint, coordinates);
   }
 
   /// Returns a formatted string representing a duration.
@@ -55,7 +50,7 @@ class NBNavigation {
   ///
   /// @param durationSeconds The duration in seconds to format.
   /// @return A Future that completes with the formatted duration string.
-  static Future<String> getFormattedDuration(num durationSeconds) async {
+  static Future<String?> getFormattedDuration(num durationSeconds) async {
     return await _nbNavigationPlatform.getFormattedDuration(durationSeconds);
   }
 

@@ -15,16 +15,20 @@ class BannerInstructions {
 
   factory BannerInstructions.fromJson(Map<String, dynamic> map) {
     return BannerInstructions(
-      distanceAlongGeometry: map['distanceAlongGeometry'],
-      primary: map['primary'] != null
-          ? Primary.fromJson(map['primary'] ?? {})
+      distanceAlongGeometry: (map['distanceAlongGeometry'] as num?)?.toDouble(),
+      primary: map['primary'] is Map<String, dynamic>
+          ? Primary.fromJson(map['primary'] as Map<String, dynamic>)
           : null,
-      sub: map['sub'] != null ? Primary.fromJson(map['sub'] ?? {}) : null,
-      secondary: map['secondary'] != null
-          ? Primary.fromJson(map['secondary'] ?? {})
+      sub: map['sub'] is Map<String, dynamic>
+          ? Primary.fromJson(map['sub'] as Map<String, dynamic>)
+          : null,
+      secondary: map['secondary'] is Map<String, dynamic>
+          ? Primary.fromJson(map['secondary'] as Map<String, dynamic>)
           : null,
     );
   }
+
+
 
   Map<String, dynamic> toJson() {
     return {
@@ -57,16 +61,19 @@ class Primary {
 
   factory Primary.fromJson(Map<String, dynamic> map) {
     return Primary(
-      components: List<Component>.from(
-          map['components']?.map((x) => Component.fromJson(x)) ?? []),
-      degrees: map['degrees'],
-      instruction: map['instruction'] ?? "",
-      modifier: map['modifier'],
-      text: map['text'] ?? "",
-      type: map['type'] ?? "",
-      drivingSide: map['driving_side'],
+      components: (map['components'] as List<dynamic>?)
+          ?.map((x) => Component.fromJson(x as Map<String, dynamic>))
+          .toList() ??
+          [],
+      degrees: map['degrees'] as num?,
+      instruction: map['instruction'] as String? ?? "",
+      modifier: map['modifier'] as String?,
+      text: map['text'] as String? ?? "",
+      type: map['type'] as String? ?? "",
+      drivingSide: map['driving_side'] as String?,
     );
   }
+
 
   Map<String, dynamic> toJson() {
     return {
@@ -110,17 +117,17 @@ class Component {
 
   factory Component.fromJson(Map<String, dynamic> map) {
     return Component(
-      countryCode: map['countryCode'] ?? "",
-      text: map['text'] ?? "",
-      type: map['type'] ?? "",
-      subType: map['subType'] ?? "",
-      abbreviation: map['abbr'] ?? "",
-      abbreviationPriority: map['abbr_priority'],
-      imageBaseUrl: map['imageBaseURL'],
-      imageUrl: map['imageURL'],
-      directions: map['directions'],
-      active: map['active'],
-      reference: map['reference'],
+      countryCode: map['countryCode'] as String? ?? "",
+      text: map['text'] as String? ?? "",
+      type: map['type'] as String? ?? "",
+      subType: map['subType'] as String? ?? "",
+      abbreviation: map['abbr'] as String? ?? "",
+      abbreviationPriority: map['abbr_priority'] as int?,
+      imageBaseUrl: map['imageBaseURL'] as String?,
+      imageUrl: map['imageURL'] as String?,
+      directions: map['directions'] as List<String>?,
+      active: map['active'] as bool?,
+      reference: map['reference'] as String?,
     );
   }
 

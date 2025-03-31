@@ -29,25 +29,47 @@ class RouteStep {
 
   factory RouteStep.fromJson(Map<String, dynamic> json) {
     return RouteStep(
-        bannerInstructions: List<BannerInstructions>.from(
-            json['bannerInstructions']
-                    ?.map((e) => BannerInstructions.fromJson(e)) ??
-                []),
-        drivingSide: json['driving_side'] ?? '',
-        geometry: json['geometry'] ?? '',
-        intersections: List<Intersection>.from(json['intersections']
-                ?.map((intersection) => Intersection.fromJson(intersection)) ??
-            []),
-        maneuver: Maneuver.fromJson(json['maneuver'] ?? {}),
-        name: json['name'] ?? '',
-        distance: Distance.fromJson(json['distance'] ?? {}),
-        duration: TimeDuration.fromJson(json['duration'] ?? {}),
-        roadShield: RoadShield.fromJson(json['road_shield_type'] ?? {}),
-        reference: json['reference'] ?? "",
-        voiceInstructions: List<VoiceInstruction>.from(json['voiceInstructions']
-                ?.map((vi) => VoiceInstruction.fromJson(vi)) ??
-            []));
+      bannerInstructions: json['bannerInstructions'] != null
+          ? (json['bannerInstructions'] as List)
+          .map((e) => BannerInstructions.fromJson(
+          (e as Map<dynamic, dynamic>).cast<String, dynamic>()))
+          .toList()
+          : null,
+      drivingSide: json['driving_side'] as String?,
+      geometry: json['geometry'] as String?,
+      intersections: json['intersections'] != null
+          ? (json['intersections'] as List)
+          .map((intersection) => Intersection.fromJson(
+          (intersection as Map<dynamic, dynamic>).cast<String, dynamic>()))
+          .toList()
+          : null,
+      maneuver: json['maneuver'] != null
+          ? Maneuver.fromJson(
+          (json['maneuver'] as Map<dynamic, dynamic>).cast<String, dynamic>())
+          : null,
+      name: json['name'] as String?,
+      distance: json['distance'] != null
+          ? Distance.fromJson(
+          (json['distance'] as Map<dynamic, dynamic>).cast<String, dynamic>())
+          : null,
+      duration: json['duration'] != null
+          ? TimeDuration.fromJson(
+          (json['duration'] as Map<dynamic, dynamic>).cast<String, dynamic>())
+          : null,
+      roadShield: json['road_shield_type'] != null
+          ? RoadShield.fromJson(
+          (json['road_shield_type'] as Map<dynamic, dynamic>).cast<String, dynamic>())
+          : null,
+      reference: json['reference'] as String?,
+      voiceInstructions: json['voiceInstructions'] != null
+          ? (json['voiceInstructions'] as List)
+          .map((vi) => VoiceInstruction.fromJson(
+          (vi as Map<dynamic, dynamic>).cast<String, dynamic>()))
+          .toList()
+          : null,
+    );
   }
+
 
   Map<String, dynamic> toJson() {
     return {
@@ -77,10 +99,10 @@ class RoadShield {
     this.label,
   });
 
-  factory RoadShield.fromJson(Map<dynamic, dynamic> map) {
+  factory RoadShield.fromJson(Map<String, dynamic> map) {
     return RoadShield(
-      imageUrl: map['image_url'],
-      label: map['label'],
+      imageUrl: map['image_url'] as String?,
+      label: map['label'] as String?,
     );
   }
 

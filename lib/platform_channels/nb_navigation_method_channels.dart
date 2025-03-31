@@ -9,7 +9,7 @@ class NBNavigationMethodChannel extends NBNavigationPlatform {
   }
 
   @visibleForTesting
-  void setMethodChanenl(MethodChannel channel) {
+  void setMethodChannel(MethodChannel channel) {
     _channel = channel;
     _channel.setMethodCallHandler(handleMethodCall);
   }
@@ -18,14 +18,15 @@ class NBNavigationMethodChannel extends NBNavigationPlatform {
   Future<dynamic> handleMethodCall(MethodCall call) async {
     switch (call.method) {
       case NBNavigationLauncherMethodID.nbOnNavigationExit:
-        var arguments = call.arguments;
-        bool? shouldRefreshRoute = arguments["shouldRefreshRoute"];
-        int? remainingWaypoints = arguments["remainingWaypoints"];
-        if (shouldRefreshRoute != null && remainingWaypoints != null) {
-          navigationExitCallback?.call(
-              arguments["shouldRefreshRoute"], arguments["remainingWaypoints"]);
+        final arguments = call.arguments;
+        if (arguments is Map<String,dynamic>) {
+          final bool? shouldRefreshRoute = arguments["shouldRefreshRoute"] as bool?;
+          final int? remainingWaypoints = arguments["remainingWaypoints"] as int?;
+          if (shouldRefreshRoute != null && remainingWaypoints != null) {
+            navigationExitCallback?.call(
+                arguments["shouldRefreshRoute"] as bool, arguments["remainingWaypoints"] as int);
+          }
         }
-        break;
       default:
         throw MissingPluginException();
     }
@@ -34,27 +35,39 @@ class NBNavigationMethodChannel extends NBNavigationPlatform {
   @override
   Future<DirectionsRouteResponse> fetchRoute(
       RouteRequestParams routeRequestParams) async {
-    Map<dynamic, dynamic> result = await _channel.invokeMethod(
+    final dynamic result = await _channel.invokeMethod(
         NBRouteMethodID.nbFetchRouteMethod, jsonEncode(routeRequestParams));
-    return _handleRouteResult(result);
+    if (result is String) {
+       final json = jsonDecode(result) as Map<String, dynamic>;
+       return _handleRouteResult(json);
+    } else if (result is Map) {
+      final Map<String, dynamic> resultMap = Map<String, dynamic>.from(result);
+      return _handleRouteResult(resultMap);
+    } else {
+      throw Exception("Unexpected result type: ${result.runtimeType}");
+    }
   }
 
   DirectionsRouteResponse _handleRouteResult(Map<dynamic, dynamic> result) {
-    List<String> routeJson = List<String>.from(result["routeResult"] ?? []);
-    int? errorCode = result["errorCode"];
-    String? message = result["message"];
-    Map<dynamic, dynamic> routeRequest = result["routeOptions"] ?? {};
-    RouteRequestParams? requestParams;
+    final List<String> routeJson =
+        List<String>.from(result["routeResult"] as List<dynamic>? ?? []);
+    final int? errorCode = result["errorCode"] as int? ;
+    final String? message = result["message"] as String?;
 
+    final Map<String, dynamic> routeRequest = result["routeOptions"] as Map<String, dynamic>?  ?? {};
+
+    RouteRequestParams? requestParams;
     if (routeRequest.isNotEmpty) {
-      requestParams =
-          RouteRequestParams.fromJson(json.decode(json.encode(routeRequest)));
+      requestParams = RouteRequestParams.fromJson(
+          Map<String, dynamic>.from(routeRequest));
     }
 
-    List<DirectionsRoute> routes = [];
+    final List<DirectionsRoute> routes = [];
     if (routeJson.isNotEmpty) {
-      for (var json in routeJson) {
-        DirectionsRoute route = DirectionsRoute.fromJson(jsonDecode(json));
+      for (final json in routeJson) {
+        final Map<String, dynamic> routeMap =
+        jsonDecode(json) as Map<String, dynamic>;
+        final DirectionsRoute route = DirectionsRoute.fromJson(routeMap);
         if (requestParams != null) {
           route.routeOptions = requestParams;
         }
@@ -68,7 +81,7 @@ class NBNavigationMethodChannel extends NBNavigationPlatform {
   @override
   Future<void> startNavigation(NavigationLauncherConfig launcherConfig) async {
     try {
-      Map<String, dynamic> arguments = {};
+      final Map<String, dynamic> arguments = {};
       if (Platform.isIOS) {
         arguments["routeOptions"] =
             jsonEncode(launcherConfig.route.routeOptions);
@@ -78,7 +91,7 @@ class NBNavigationMethodChannel extends NBNavigationPlatform {
           NBNavigationLauncherMethodID.nbNavigationLauncherMethod, arguments);
     } on PlatformException catch (e) {
       if (kDebugMode) {
-        print(e.toString());
+        print(e);
       }
     }
   }
@@ -87,7 +100,7 @@ class NBNavigationMethodChannel extends NBNavigationPlatform {
   Future<void> startPreviewNavigation(DirectionsRoute route,
       {String? mapStyle}) async {
     try {
-      Map<String, dynamic> arguments = {};
+      final Map<String, dynamic> arguments = {};
       if (Platform.isIOS) {
         arguments["routeOptions"] = jsonEncode(route.routeOptions);
       }
@@ -97,15 +110,15 @@ class NBNavigationMethodChannel extends NBNavigationPlatform {
           NBNavigationLauncherMethodID.nbPreviewNavigationMethod, arguments);
     } on PlatformException catch (e) {
       if (kDebugMode) {
-        print(e.toString());
+        print(e);
       }
     }
   }
 
   @override
-  Future<int> findSelectedRouteIndex(
+  Future<int?> findSelectedRouteIndex(
       LatLng clickPoint, List<List<LatLng>> coordinates) async {
-    Map<String, dynamic> arguments = {};
+    final Map<String, dynamic> arguments = {};
     arguments["clickPoint"] = clickPoint.toJson();
     arguments["coordinates"] = coordinates
         .map((coordinate) => coordinate.map((point) => point.toJson()).toList())
@@ -115,33 +128,33 @@ class NBNavigationMethodChannel extends NBNavigationPlatform {
   }
 
   @override
-  Future<String> getRoutingBaseUri() async {
+  Future<String?> getRoutingBaseUri() async {
     return await _channel
         .invokeMethod(NBNavigationLauncherMethodID.nbGetNavigationUriMethod);
   }
 
   @override
   Future<void> setRoutingBaseUri(String baseUri) async {
-    Map<String, dynamic> arguments = {};
+    final Map<String, dynamic> arguments = {};
     arguments["navigationBaseUri"] = baseUri;
     try {
       await _channel.invokeMethod(
           NBNavigationLauncherMethodID.nbSetNavigationUriMethod, arguments);
     } on PlatformException catch (e) {
       if (kDebugMode) {
-        print(e.toString());
+        print(e);
       }
     }
   }
 
   @override
-  Future<String> getFormattedDuration(num durationSeconds) async {
+  Future<String?> getFormattedDuration(num durationSeconds) async {
     try {
       return await _channel.invokeMethod(NBRouteMethodID.routeFormattedDuration,
           {"duration": durationSeconds.toDouble()});
     } on PlatformException catch (e) {
       if (kDebugMode) {
-        print(e.toString());
+        print(e);
       }
     }
     return "";
@@ -154,7 +167,7 @@ class NBNavigationMethodChannel extends NBNavigationPlatform {
       this.navigationExitCallback = navigationExitCallback;
     } on PlatformException catch (e) {
       if (kDebugMode) {
-        print(e.toString());
+        print(e);
       }
     }
   }
@@ -170,7 +183,7 @@ class NBNavigationMethodChannel extends NBNavigationPlatform {
       });
     } on PlatformException catch (e) {
       if (kDebugMode) {
-        print(e.toString());
+        print(e);
       }
     }
     return null;
@@ -184,7 +197,7 @@ class NBNavigationMethodChannel extends NBNavigationPlatform {
           {"waypointIndex": waypointIndex});
     } on PlatformException catch (e) {
       if (kDebugMode) {
-        print(e.toString());
+        print(e);
       }
     }
     return null;

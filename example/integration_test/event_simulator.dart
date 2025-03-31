@@ -1,6 +1,6 @@
 import 'dart:io';
 
-// ignore: unnecessary_string_interpolations
+// ignore_for_file: unnecessary_string_interpolations
 mixin EventSimulator {
   static Future<void> inputKeyEvent(int keyEvent) async {
     await Process.run('adb', ['shell', 'input', 'keyevent', '$keyEvent']);

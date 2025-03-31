@@ -6,6 +6,7 @@ import 'package:nb_navigation_flutter/nb_navigation_flutter.dart';
 
 import 'nb_navigation_test.mocks.dart';
 
+// ignore_for_file: unnecessary_string_interpolations
 @GenerateMocks([NBNavigationPlatform, MethodChannel])
 void main() {
   late NBNavigationPlatform mockNBNavigationPlatform;
@@ -38,15 +39,18 @@ void main() {
   });
 
   test('startNavigation should invoke method on platform', () async {
-    Map<String, dynamic> routeJson = <String, dynamic>{
+    final Map<String, dynamic> routeJson = <String, dynamic>{
       'distance': 0,
       'duration': 0,
       'geometry': '',
       'weight': 0,
       'weight_name': '',
     };
-
-    List<DirectionsRoute> routes = [DirectionsRoute.fromJson(routeJson)];
+    const origin = LatLng(1.312533169133601, 103.75986708439264);
+    const dest = LatLng(1.310473772283314, 103.77982271935586);
+    final routeRequestParams =
+    RouteRequestParams(origin: origin, destination: dest);
+    final List<DirectionsRoute> routes = [DirectionsRoute.fromJsonWithOption(routeJson,routeRequestParams)];
     final launcherConfig =
         NavigationLauncherConfig(route: routes.first, routes: routes);
 
@@ -74,23 +78,6 @@ void main() {
     verify(mockNBNavigationPlatform.setRoutingBaseUri(baseUri)).called(1);
   });
 
-  test('findSelectedRouteIndex should return selected route index', () async {
-    const clickPoint = LatLng(1.312533169133601, 103.75986708439264);
-    const coordinates = [
-      [LatLng(1.312533169133601, 103.75986708439264)],
-      [LatLng(1.312533169133601, 103.75986708439264)]
-    ];
-
-    when(mockNBNavigationPlatform.findSelectedRouteIndex(
-            clickPoint, coordinates))
-        .thenAnswer((_) async => 0);
-
-    final response =
-        await NBNavigation.findSelectedRouteIndex(clickPoint, coordinates);
-
-    expect(response, equals(0));
-  });
-
   test('getFormattedDuration should return formatted duration', () async {
     const durationSeconds = 0;
 
@@ -103,7 +90,7 @@ void main() {
   });
 
   test('setOnNavigationExitCallback should set callback', () async {
-    callback(bool shouldRefreshRoute, int remainingWaypoints) {}
+    void callback(bool shouldRefreshRoute, int remainingWaypoints) {}
 
     await NBNavigation.setOnNavigationExitCallback(callback);
 
@@ -112,15 +99,18 @@ void main() {
   });
 
   test('startPreviewNavigation should start preview navigation', () async {
-    Map<String, dynamic> routeJson = <String, dynamic>{
+    final  Map<String, dynamic> routeJson = <String, dynamic>{
       'distance': 0,
       'duration': 0,
       'geometry': '',
       'weight': 0,
       'weight_name': '',
     };
-
-    final route = DirectionsRoute.fromJson(routeJson);
+    const origin = LatLng(1.312533169133601, 103.75986708439264);
+    const dest = LatLng(1.310473772283314, 103.77982271935586);
+    final routeRequestParams =
+    RouteRequestParams(origin: origin, destination: dest);
+    final route = DirectionsRoute.fromJsonWithOption(routeJson,routeRequestParams);
 
     await NBNavigation.startPreviewNavigation(route);
 
@@ -129,7 +119,7 @@ void main() {
 
   test('captureRouteDurationSymbol should return route duration symbol',
       () async {
-    Map<String, dynamic> routeJson = <String, dynamic>{
+    final Map<String, dynamic> routeJson = <String, dynamic>{
       'distance': 0,
       'duration': 0,
       'geometry': '',
@@ -137,9 +127,12 @@ void main() {
       'weight_name': '',
     };
 
-    final route = DirectionsRoute.fromJson(routeJson);
+    const origin = LatLng(1.312533169133601, 103.75986708439264);
+    const dest = LatLng(1.310473772283314, 103.77982271935586);
+    final routeRequestParams = RouteRequestParams(origin: origin, destination: dest);
+    final DirectionsRoute route = DirectionsRoute.fromJsonWithOption(routeJson,routeRequestParams);
 
-    Uint8List expectedResponse = Uint8List(0);
+    final Uint8List expectedResponse = Uint8List(0);
 
     when(mockNBNavigationPlatform.captureRouteDurationSymbol(route, true))
         .thenAnswer((_) async => expectedResponse);
@@ -152,7 +145,7 @@ void main() {
   test('captureRouteWaypoints should return route waypoints', () async {
     const waypointIndex = 0;
 
-    Uint8List expectedResponse = Uint8List(0);
+    final Uint8List expectedResponse = Uint8List(0);
 
     when(mockNBNavigationPlatform.captureRouteWaypoints(waypointIndex))
         .thenAnswer((_) async => expectedResponse);
@@ -162,7 +155,7 @@ void main() {
     expect(response, equals(expectedResponse));
   });
 
-  group('Test Nextillion', () {
+  group('Test NextBillion', () {
     late MethodChannel mockChannel;
 
     setUp(() {
@@ -171,7 +164,6 @@ void main() {
     });
 
     test('Verify setUserId', () async {
-      //nextbillion/set_user_id
       const String userId = 'userId';
       when(mockChannel.invokeMethod('nextbillion/set_user_id', any))
           .thenAnswer((_) async {
@@ -191,8 +183,8 @@ void main() {
         return userId;
       });
       //nextbillion/get_user_id
-      String? returnedUserId = await NBNavigation.getUserId();
-      expect(returnedUserId!, userId);
+      final String? returnedUserId = await NBNavigation.getUserId();
+      expect(returnedUserId, userId);
     });
 
     test('Verify Init nextbillion', () async {
@@ -214,8 +206,8 @@ void main() {
         return nbid;
       });
 
-      String? returnedNbId = await NBNavigation.getNBId();
-      expect(returnedNbId!, nbid);
+      final String? returnedNbId = await NBNavigation.getNBId();
+      expect(returnedNbId, nbid);
     });
   });
 }

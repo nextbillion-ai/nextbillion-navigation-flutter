@@ -1,8 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
 import 'package:nb_navigation_flutter/nb_navigation_flutter.dart';
-
-class MockTimeFormatter extends Mock implements TimeFormatter {}
 
 void main() {
   test('formatSeconds should return formatted time', () {

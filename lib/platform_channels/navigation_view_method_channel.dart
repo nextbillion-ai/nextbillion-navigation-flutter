@@ -11,40 +11,30 @@ class MethodChannelNavigationView extends NBNavigationViewPlatform {
   Future<dynamic> handleMethodCall(MethodCall call) async {
     switch (call.method) {
       case 'onNavigationCancelling':
-        if (_onNavigationCancellingCallback != null) {
-          _onNavigationCancellingCallback!();
-        }
-        break;
+        _onNavigationCancellingCallback?.call();
       case 'onNavigationReady':
-        if (_onNavigationRunningCallback != null) {
-          _onNavigationRunningCallback!();
-        }
-        break;
+        _onNavigationRunningCallback?.call();
       case 'onArriveAtWaypoint':
-        if (_arriveAtWaypointCallback != null) {
-          _arriveAtWaypointCallback!(_parseWaypoint(call.arguments));
-        }
-        break;
+        _arriveAtWaypointCallback?.call(_parseWaypoint(call.arguments));
       case 'willRerouteFromLocation':
-        if (_rerouteFromLocationCallback != null) {
-          _rerouteFromLocationCallback!(_parseLocation(call.arguments));
-        }
-        break;
+        _rerouteFromLocationCallback?.call(_parseLocation(call.arguments));
       case 'onRerouteAlong':
         if (_rerouteAlongCallback != null) {
           if (call.arguments == null) {
             _rerouteAlongCallback!(null);
             return;
           }
-          Map<String, dynamic> json = jsonDecode(call.arguments);
-          _rerouteAlongCallback!(DirectionsRoute.fromJson(json));
+          if (call.arguments is String) {
+            final Map<String, dynamic>? json = jsonDecode(call.arguments as String) as Map<String, dynamic>?;
+            if (json != null) {
+              _rerouteAlongCallback?.call(DirectionsRoute.fromJson(json));
+            }
+
+          }
+          return;
         }
-        break;
       case 'onRerouteFailure':
-        if (_rerouteFailureCallback != null) {
-          _rerouteFailureCallback!(call.arguments);
-        }
-        break;
+        _rerouteFailureCallback?.call(call.arguments as String?);
       default:
         throw MissingPluginException();
     }
@@ -109,11 +99,12 @@ class MethodChannelNavigationView extends NBNavigationViewPlatform {
       ?.receiveBroadcastStream()
       .map((dynamic progressMap) => _parseProgress(progressMap));
 
-  NavigationProgress? _parseProgress(Map<dynamic, dynamic>? progressMap) {
-    var jsonMap = jsonDecode(jsonEncode(progressMap));
-    if (progressMap != null) {
+  NavigationProgress? _parseProgress(dynamic progressMap) {
+    final jsonMap = jsonDecode(jsonEncode(progressMap)) as Map<String,dynamic>?;
+    if(jsonMap != null) {
       return NavigationProgress.fromJson(jsonMap);
     }
+
     return null;
   }
 
@@ -139,20 +130,26 @@ class MethodChannelNavigationView extends NBNavigationViewPlatform {
     _rerouteFromLocationCallback = callback;
   }
 
-  Waypoint? _parseWaypoint(Map<dynamic, dynamic>? waypointMap) {
-    var jsonMap = jsonDecode(jsonEncode(waypointMap));
-    if (waypointMap != null) {
+  Waypoint? _parseWaypoint(dynamic waypointMap) {
+    final jsonMap = jsonDecode(jsonEncode(waypointMap));
+    if (jsonMap != null && jsonMap is Map<String, dynamic>) {
       return Waypoint.fromJson(jsonMap);
     }
     return null;
   }
 
-  LatLng? _parseLocation(Map<dynamic, dynamic>? locationMap) {
-    var jsonMap = jsonDecode(jsonEncode(locationMap));
-    if (locationMap != null) {
+  LatLng? _parseLocation(dynamic locationMap) {
+    if (locationMap is Map<dynamic, dynamic>) {
+      final jsonMap = locationMap.cast<String, dynamic>();
       return LatLng(
-        jsonMap['location']["latitude"],
-        jsonMap['location']["longitude"],
+        (jsonMap["latitude"] as num).toDouble(),
+        (jsonMap["longitude"] as num).toDouble(),
+      );
+    } else if (locationMap is String) {
+      final jsonMap = jsonDecode(jsonEncode(locationMap)) as Map<String, dynamic>;
+      return LatLng(
+        (jsonMap["latitude"] as num).toDouble(),
+        (jsonMap["longitude"] as num).toDouble(),
       );
     }
     return null;
@@ -164,7 +161,7 @@ class MethodChannelNavigationView extends NBNavigationViewPlatform {
       await _channel?.invokeMethod("stopNavigation");
     } on PlatformException catch (e) {
       if (kDebugMode) {
-        print(e.toString());
+        print(e);
       }
     }
   }

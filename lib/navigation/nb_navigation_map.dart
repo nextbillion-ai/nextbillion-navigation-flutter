@@ -26,8 +26,8 @@ class NavNextBillionMap implements NavigationMap {
   static Future<NavNextBillionMap> create(NextbillionMapController controller,
       {RouteLineProperties routeLineProperties =
           const RouteLineProperties()}) async {
-    MapController mapController = NextbillionMapControllerWrapper(controller);
-    var navMap = NavNextBillionMap._create(mapController,
+    final MapController mapController = NextbillionMapControllerWrapper(controller);
+    final navMap = NavNextBillionMap._create(mapController,
         routeLineProperties: routeLineProperties);
     navMap.assetManager = AssetManager();
     await navMap.initGeoJsonSource();
@@ -39,7 +39,7 @@ class NavNextBillionMap implements NavigationMap {
       MapController mapController, IAssetManager assetManager,
       {RouteLineProperties routeLineProperties =
           const RouteLineProperties()}) async {
-    var navMap = NavNextBillionMap._create(mapController,
+    final navMap = NavNextBillionMap._create(mapController,
         routeLineProperties: routeLineProperties);
     navMap.assetManager = assetManager;
     await navMap.initGeoJsonSource();
@@ -89,11 +89,11 @@ class NavNextBillionMap implements NavigationMap {
     if (controller.disposed) {
       return;
     }
-    var origin = await assetManager.load(routeLineProperties.originMarkerName);
+    final origin = await assetManager.load(routeLineProperties.originMarkerName);
     if (controller.disposed) {
       return;
     }
-    var destination =
+    final destination =
         await assetManager.load(routeLineProperties.destinationMarkerName);
     if (controller.disposed) {
       return;
@@ -111,10 +111,10 @@ class NavNextBillionMap implements NavigationMap {
     if (controller.disposed) {
       return;
     }
-    String? belowLayer = await controller.findBelowLayerId(
+    final String? belowLayer = await controller.findBelowLayerId(
         [nbmapLocationId, highwayShieldLayerId, nbmapAnnotationId]);
 
-    LineLayerProperties routeShieldLayer =
+    final LineLayerProperties routeShieldLayer =
         routeLayerProvider.initializeRouteShieldLayer(
       routeLineProperties.routeScale,
       routeLineProperties.alternativeRouteScale,
@@ -131,7 +131,7 @@ class NavNextBillionMap implements NavigationMap {
 
     routeLayers[routeShieldLayerId] = routeShieldLayer;
 
-    LineLayerProperties routeLayer = routeLayerProvider.initializeRouteLayer(
+    final LineLayerProperties routeLayer = routeLayerProvider.initializeRouteLayer(
       routeLineProperties.routeScale,
       routeLineProperties.alternativeRouteScale,
       routeLineProperties.routeDefaultColor,
@@ -152,7 +152,7 @@ class NavNextBillionMap implements NavigationMap {
 
     routeLayers[routeLayerId] = routeLayer;
 
-    SymbolLayerProperties wayPointLayer = routeLayerProvider
+    final SymbolLayerProperties wayPointLayer = routeLayerProvider
         .initializeWayPointLayer(originMarkerName, destinationMarkerName);
     if (controller.disposed) {
       return;
@@ -160,7 +160,7 @@ class NavNextBillionMap implements NavigationMap {
     await controller.addSymbolLayer(
         waypointSourceId, waypointLayerId, wayPointLayer);
 
-    SymbolLayerProperties durationSymbolLayer =
+    final SymbolLayerProperties durationSymbolLayer =
         routeLayerProvider.initializeDurationSymbolLayer();
 
     if (controller.disposed) {
@@ -232,14 +232,14 @@ class NavNextBillionMap implements NavigationMap {
     if (controller.disposed) {
       return;
     }
-    List<Map<String, dynamic>> routeLineFeatures = [];
-    List<Map<String, dynamic>> primaryRouteFeatures = [];
+    final List<Map<String, dynamic>> routeLineFeatures = [];
+    final List<Map<String, dynamic>> primaryRouteFeatures = [];
 
     for (int i = 0; i < _routes.length; i++) {
-      DirectionsRoute route = _routes[i];
-      bool isPrimary = i == _primaryRouteIndex;
+      final DirectionsRoute route = _routes[i];
+      final bool isPrimary = i == _primaryRouteIndex;
 
-      List<Map<String, dynamic>> geoJson =
+      final List<Map<String, dynamic>> geoJson =
           _buildCongestionFeatureCollection(route, isPrimary);
 
       if (isPrimary) {
@@ -256,7 +256,7 @@ class NavNextBillionMap implements NavigationMap {
       return;
     }
 
-    List<Map<String, dynamic>> reversed = routeLineFeatures.reversed.toList();
+    final List<Map<String, dynamic>> reversed = routeLineFeatures.reversed.toList();
     await safeSetGeoJsonSource(
         routeShieldSourceId, buildFeatureCollection(reversed));
     await safeSetGeoJsonSource(routeSourceId, buildFeatureCollection(reversed));
@@ -264,8 +264,8 @@ class NavNextBillionMap implements NavigationMap {
 
   List<Map<String, dynamic>> _buildCongestionFeatureCollection(
       DirectionsRoute route, bool isPrimary) {
-    List<Map<String, dynamic>> routeCollectionFeatures = [];
-    List<LatLng> line =
+    final List<Map<String, dynamic>> routeCollectionFeatures = [];
+    final List<LatLng> line =
         decode(route.geometry ?? '', _getDecodePrecision(route.routeOptions));
     routeLines.add(line);
     // LineOptions lineOptions = LineOptions(geometry: line);
@@ -273,7 +273,7 @@ class NavNextBillionMap implements NavigationMap {
     // routeCollectionFeatures.add(geoJson);
 
     // geoJson["properties"][primaryRoutePropertyKey] = isPrimary ? "true" : "false";
-    List<Map<String, dynamic>> congestionGeoJson =
+    final List<Map<String, dynamic>> congestionGeoJson =
         _buildCongestionFeatureFromRoute(line, route.congestion, isPrimary);
     routeCollectionFeatures.addAll(congestionGeoJson);
     return routeCollectionFeatures;
@@ -284,15 +284,16 @@ class NavNextBillionMap implements NavigationMap {
     List<CongestionLevel>? congestion,
     bool isPrimary,
   ) {
-    List<Map<String, dynamic>> congestionFeatures = [];
+    final List<Map<String, dynamic>> congestionFeatures = [];
 
     if (congestion == null ||
         congestion.isEmpty ||
         congestion.length > coordinates.length - 1) {
-      Map<String, dynamic> json =
+      final Map<String, dynamic> json =
           Line("routeLine", LineOptions(geometry: coordinates)).toGeoJson();
-      json["properties"][primaryRoutePropertyKey] =
-          isPrimary ? "true" : "false";
+      final Map<String, dynamic> properties = json["properties"] as Map<String, dynamic>;
+      properties[primaryRoutePropertyKey] = isPrimary ? "true" : "false";
+      json["properties"] = properties;
       congestionFeatures.add(json);
       return congestionFeatures;
     }
@@ -301,12 +302,12 @@ class NavNextBillionMap implements NavigationMap {
     CongestionLevel currentCongestionLevel = congestion[0];
 
     for (int i = 0; i < congestion.length; i++) {
-      CongestionLevel congestionLevel = congestion[i];
+      final CongestionLevel congestionLevel = congestion[i];
       segmentCoordinates.add(coordinates[i + 1]);
 
       if (i == congestion.length - 1 ||
           currentCongestionLevel != congestionLevel) {
-        Map<String, dynamic> geoJson =
+        final Map<String, dynamic> geoJson =
             Line("routeLine", LineOptions(geometry: segmentCoordinates))
                 .toGeoJson();
         geoJson["properties"] = {
@@ -335,20 +336,20 @@ class NavNextBillionMap implements NavigationMap {
     if (controller.disposed) {
       return;
     }
-    var route = _routes[_primaryRouteIndex];
-    List<Map<String, dynamic>> wayPoints = [];
-    Coordinate origin = route.legs.first.steps!.first.maneuver!.coordinate!;
-    Coordinate destination = route.legs.last.steps!.last.maneuver!.coordinate!;
-    var originGeo = _generateWaypointSymbolGeo(origin, originMarkerName);
+    final route = _routes[_primaryRouteIndex];
+    final List<Map<String, dynamic>> wayPoints = [];
+    final Coordinate origin = route.legs.first.steps!.first.maneuver!.coordinate!;
+    final Coordinate destination = route.legs.last.steps!.last.maneuver!.coordinate!;
+    final originGeo = _generateWaypointSymbolGeo(origin, originMarkerName);
     wayPoints.add(originGeo);
 
     if (route.legs.length > 1) {
       for (int i = 0; i < route.legs.length - 1; i++) {
-        Leg leg = route.legs[i];
-        Coordinate? destination = leg.steps?.last.maneuver?.coordinate;
+        final Leg leg = route.legs[i];
+        final Coordinate? destination = leg.steps?.last.maneuver?.coordinate;
         if (destination != null) {
-          String waypointName = "$destinationMarkerName${i + 1}";
-          var wayPointGeo =
+          final String waypointName = "$destinationMarkerName${i + 1}";
+          final wayPointGeo =
               _generateWaypointSymbolGeo(destination, waypointName);
           wayPoints.add(wayPointGeo);
           if (controller.disposed) {
@@ -359,7 +360,7 @@ class NavNextBillionMap implements NavigationMap {
       }
     }
 
-    var desGeo = _generateWaypointSymbolGeo(destination, destinationMarkerName);
+    final desGeo = _generateWaypointSymbolGeo(destination, destinationMarkerName);
     wayPoints.add(desGeo);
 
     await safeSetGeoJsonSource(
@@ -371,21 +372,21 @@ class NavNextBillionMap implements NavigationMap {
       return;
     }
 
-    List<Map<String, dynamic>> wayPoints = [];
-    DirectionsRoute primaryRoute = _routes[_primaryRouteIndex];
-    Coordinate origin =
+    final List<Map<String, dynamic>> wayPoints = [];
+    final DirectionsRoute primaryRoute = _routes[_primaryRouteIndex];
+    final Coordinate origin =
         primaryRoute.legs.first.steps!.first.maneuver!.coordinate!;
-    Coordinate destination =
+    final Coordinate destination =
         primaryRoute.legs.last.steps!.last.maneuver!.coordinate!;
 
     _addWaypoint(wayPoints, origin, originMarkerName);
     _addIntermediaryWaypoints(wayPoints, primaryRoute);
     _addWaypoint(wayPoints, destination, destinationMarkerName);
 
-    for (var route in _routes) {
-      Coordinate? startCoordinate =
+    for (final route in _routes) {
+      final Coordinate? startCoordinate =
           route.legs.first.steps?.first.maneuver?.coordinate;
-      Coordinate? endCoordinate =
+      final Coordinate? endCoordinate =
           route.legs.last.steps?.last.maneuver?.coordinate;
 
       if (!_coordinatesEqual(startCoordinate, origin)) {
@@ -404,18 +405,18 @@ class NavNextBillionMap implements NavigationMap {
   void _addWaypoint(List<Map<String, dynamic>> wayPoints,
       Coordinate? coordinate, String markerName) {
     if (coordinate != null) {
-      var waypointGeo = _generateWaypointSymbolGeo(coordinate, markerName);
+      final waypointGeo = _generateWaypointSymbolGeo(coordinate, markerName);
       wayPoints.add(waypointGeo);
     }
   }
 
-  void _addIntermediaryWaypoints(
+  Future<void> _addIntermediaryWaypoints(
       List<Map<String, dynamic>> wayPoints, DirectionsRoute route) async {
     for (int i = 0; i < route.legs.length - 1; i++) {
-      Leg leg = route.legs[i];
-      Coordinate? destination = leg.steps?.last.maneuver?.coordinate;
+      final Leg leg = route.legs[i];
+      final Coordinate? destination = leg.steps?.last.maneuver?.coordinate;
       if (destination != null) {
-        String waypointName = "$destinationMarkerName${i + 1}";
+        final String waypointName = "$destinationMarkerName${i + 1}";
         _addWaypoint(wayPoints, destination, waypointName);
         if (controller.disposed) {
           return;
@@ -435,10 +436,12 @@ class NavNextBillionMap implements NavigationMap {
 
   Map<String, dynamic> _generateWaypointSymbolGeo(
       Coordinate coordinate, String propertiesValue) {
-    SymbolOptions coordinateSymbol = SymbolOptions(
+    final SymbolOptions coordinateSymbol = SymbolOptions(
         geometry: LatLng(coordinate.latitude, coordinate.longitude));
-    Map<String, dynamic> coordinateGeo = coordinateSymbol.toGeoJson();
-    coordinateGeo['properties'][waypointPropertyKey] = propertiesValue;
+    final Map<String, dynamic> coordinateGeo = coordinateSymbol.toGeoJson();
+    final Map<String, dynamic> properties = coordinateGeo["properties"] as Map<String, dynamic>;
+    properties[waypointPropertyKey] = propertiesValue;
+    coordinateGeo["properties"] = properties;
     return coordinateGeo;
   }
 
@@ -446,7 +449,7 @@ class NavNextBillionMap implements NavigationMap {
     if (controller.disposed) {
       return;
     }
-    var image = await NBNavigation.captureRouteWaypoints(index);
+    final image = await NBNavigation.captureRouteWaypoints(index);
     if (controller.disposed) {
       return;
     }
@@ -459,20 +462,22 @@ class NavNextBillionMap implements NavigationMap {
     if (controller.disposed) {
       return;
     }
-    List<Map<String, dynamic>> durationSymbols = [];
+    final List<Map<String, dynamic>> durationSymbols = [];
     for (int i = 0; i < _routes.length; i++) {
-      DirectionsRoute route = _routes[i];
-      bool isPrimary = i == _primaryRouteIndex;
-      List<LatLng> line =
+      final DirectionsRoute route = _routes[i];
+      final bool isPrimary = i == _primaryRouteIndex;
+      final List<LatLng> line =
           decode(route.geometry ?? '', _getDecodePrecision(route.routeOptions));
-      LatLng centerPoint = line[line.length ~/ 2];
-      SymbolOptions durationSymbol = SymbolOptions(
+      final LatLng centerPoint = line[line.length ~/ 2];
+      final SymbolOptions durationSymbol = SymbolOptions(
           geometry: LatLng(centerPoint.latitude, centerPoint.longitude));
-      Map<String, dynamic> geoJson = durationSymbol.toGeoJson();
-      geoJson["properties"][primaryRoutePropertyKey] =
+      final Map<String, dynamic> geoJson = durationSymbol.toGeoJson();
+      final Map<String, dynamic> properties = geoJson["properties"] as Map<String, dynamic>;
+      properties[primaryRoutePropertyKey] =
           isPrimary ? "true" : "false";
-      String durationSymbolKey = "ROUTE_DURATION_SYMBOL_ICON_KEY$i";
-      geoJson["properties"][routeDurationSymbolIconKey] = durationSymbolKey;
+      final String durationSymbolKey = "ROUTE_DURATION_SYMBOL_ICON_KEY$i";
+      properties[routeDurationSymbolIconKey] = durationSymbolKey;
+      geoJson["properties"] = properties;
       durationSymbols.add(geoJson);
       if (controller.disposed) {
         return;
@@ -488,7 +493,7 @@ class NavNextBillionMap implements NavigationMap {
     if (controller.disposed) {
       return;
     }
-    var image = await NBNavigation.captureRouteDurationSymbol(
+    final image = await NBNavigation.captureRouteDurationSymbol(
         route, index == _primaryRouteIndex);
 
     if (controller.disposed) {
@@ -522,7 +527,7 @@ class NavNextBillionMap implements NavigationMap {
       return;
     }
 
-    for (var entry in routeLayers.entries) {
+    for (final entry in routeLayers.entries) {
       if (entry.key == routeShieldLayerId ||
           entry.key == routeLayerId ||
           entry.key == routeDurationLayerId) {
@@ -594,7 +599,7 @@ class NavNextBillionMap implements NavigationMap {
     NBNavigationPlatform.instance
         .findSelectedRouteIndex(clickedPoint, routeLines)
         .then((routeIndex) {
-      if (routeIndex != _primaryRouteIndex) {
+      if (routeIndex != null && routeIndex != _primaryRouteIndex) {
         if (routeIndex >= 0 && routeIndex < routeLines.length) {
           _primaryRouteIndex = routeIndex;
         }
@@ -604,10 +609,9 @@ class NavNextBillionMap implements NavigationMap {
         } else {
           drawRoute(List.from(_routes), primaryRouteIndex: _primaryRouteIndex);
         }
-      }
-
-      if (_onRouteSelectedCallback != null) {
-        _onRouteSelectedCallback!(routeIndex);
+        if (_onRouteSelectedCallback != null) {
+          _onRouteSelectedCallback?.call(routeIndex);
+        }
       }
     });
   }

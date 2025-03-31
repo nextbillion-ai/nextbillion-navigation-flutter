@@ -10,14 +10,16 @@ class Waypoint {
   });
 
   factory Waypoint.fromJson(Map<String, dynamic> json) {
+    final locationData = json['location'] as Map<String, dynamic>?;
+
     return Waypoint(
-      arrivedWaypointLocation: json['location'] != null
+      arrivedWaypointLocation: locationData != null
           ? LatLng(
-              json['location']["latitude"],
-              json['location']["longitude"],
-            )
+        locationData["latitude"] as double,
+        locationData["longitude"] as double,
+      )
           : null,
-      arrivedWaypointIndex: json['arrivedWaypointIndex'],
+      arrivedWaypointIndex: json['arrivedWaypointIndex'] as int?,
     );
   }
 

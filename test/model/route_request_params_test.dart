@@ -4,10 +4,10 @@ import 'package:nb_navigation_flutter/nb_navigation_flutter.dart';
 void main() {
   group('RouteRequestParams.fromJson', () {
     test('returns default values when map is empty', () {
-      final params = RouteRequestParams.fromJson({});
-
-      expect(params.origin, const LatLng(0, 0));
-      expect(params.destination, const LatLng(0, 0));
+      expect(
+            () => RouteRequestParams.fromJson({}),
+        throwsA(isA<ArgumentError>()),
+      );
     });
 
     test('parses a valid map correctly', () {
@@ -62,5 +62,91 @@ void main() {
         SupportedApproaches.fromValue('unrestricted')
       ]);
     });
+
+    test('truckWeight should be within the valid range when mode is truck', () {
+      expect(
+            () => RouteRequestParams(
+          origin: const LatLng(0, 0),
+          destination: const LatLng(1, 1),
+          mode: ValidModes.truck,
+          truckWeight: 0, // Invalid, should throw error
+        ),
+        throwsA(isA<AssertionError>()),
+      );
+
+      expect(
+            () => RouteRequestParams(
+          origin: const LatLng(0, 0),
+          destination: const LatLng(1, 1),
+          mode: ValidModes.truck,
+          truckWeight: 100001, // Invalid, should throw error
+        ),
+        throwsA(isA<AssertionError>()),
+      );
+    });
+
+    test('truckSize should have exactly three values and be within limits when mode is truck', () {
+      expect(
+            () => RouteRequestParams(
+          origin: const LatLng(0, 0),
+          destination: const LatLng(1, 1),
+          mode: ValidModes.truck,
+          truckSize: [100, 100], // Invalid, should throw error
+        ),
+        throwsA(isA<AssertionError>()),
+      );
+
+      expect(
+            () => RouteRequestParams(
+          origin: const LatLng(0, 0),
+          destination: const LatLng(1, 1),
+          mode: ValidModes.truck,
+          truckSize: [1001, 4000, 4000], // Invalid height
+        ),
+        throwsA(isA<AssertionError>()),
+      );
+
+      expect(
+            () => RouteRequestParams(
+          origin: const LatLng(0, 0),
+          destination: const LatLng(1, 1),
+          mode: ValidModes.truck,
+          truckSize: [900, 6000, 4000], // Invalid width
+        ),
+        throwsA(isA<AssertionError>()),
+      );
+
+      expect(
+            () => RouteRequestParams(
+          origin: const LatLng(0, 0),
+          destination: const LatLng(1, 1),
+          mode: ValidModes.truck,
+          truckWeight: 10000000
+        ),
+        throwsA(isA<AssertionError>()),
+      );
+
+      expect(
+            () => RouteRequestParams(
+            origin: const LatLng(0, 0),
+            destination: const LatLng(1, 1),
+            mode: ValidModes.truck,
+            truckWeight: 1000
+        ),
+          isNotNull
+      );
+
+      expect(
+            () => RouteRequestParams(
+          origin: const LatLng(0, 0),
+          destination: const LatLng(1, 1),
+          mode: ValidModes.truck,
+          truckSize: [900, 3000, 4000],
+        ),
+        isNotNull
+      );
+    });
   });
+
+
 }

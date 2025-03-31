@@ -33,8 +33,8 @@ void main() {
       final json = waypoint.toJson();
 
       // Assert
-      expect(json['location']['latitude'], 12.34);
-      expect(json['location']['longitude'], 56.78);
+      expect((json['location'] as Map<String,dynamic>)['latitude'], 12.34);
+      expect((json['location'] as Map<String,dynamic>)['longitude'], 56.78);
       expect(json['arrivedWaypointIndex'], 1);
     });
 
