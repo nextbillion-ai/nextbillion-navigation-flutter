@@ -54,7 +54,10 @@ class NBNavigationMethodChannel extends NBNavigationPlatform {
     final int? errorCode = result["errorCode"] as int? ;
     final String? message = result["message"] as String?;
 
-    final Map<String, dynamic> routeRequest = result["routeOptions"] as Map<String, dynamic>?  ?? {};
+    // final Map<String, dynamic> routeRequest = result["routeOptions"] as Map<String, dynamic>?  ?? {};
+    final Map<String, dynamic> routeRequest = (result["routeOptions"] as Map<Object?, Object?>?)?.map(
+          (key, value) => MapEntry(key.toString(), value),
+    ) ?? {};
 
     RouteRequestParams? requestParams;
     if (routeRequest.isNotEmpty) {
@@ -67,9 +70,11 @@ class NBNavigationMethodChannel extends NBNavigationPlatform {
       for (final json in routeJson) {
         final Map<String, dynamic> routeMap =
         jsonDecode(json) as Map<String, dynamic>;
-        final DirectionsRoute route = DirectionsRoute.fromJson(routeMap);
+        DirectionsRoute route;
         if (requestParams != null) {
-          route.routeOptions = requestParams;
+          route = DirectionsRoute.fromJsonWithOption(routeMap, requestParams);
+        } else {
+          route = DirectionsRoute.fromJson(routeMap);
         }
         routes.add(route);
       }
