@@ -1,3 +1,6 @@
+## v2.3.1, Apr 9, 2025
+* Upgrade Android native SDK to 2.0.5 to fix the crash issue when origin is very close to destination
+
 ## v2.3.0+1, Mar 13, 2025
 * Add the missing permission annotation for the Android platform in the README
   ```
