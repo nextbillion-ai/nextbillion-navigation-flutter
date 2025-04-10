@@ -1,5 +1,5 @@
-## v2.4.0-dev.2, Apr 10, 2025
-* Upgrade iOS native SDK to 2.4.0-beta.3 to fix the build issue when Xcode upgrade to 16.3 or above
+## v2.3.2, Apr 10, 2025
+* Fixed: Fix  [NBNavigation.fetchRoute] route request error on iOS of the sdk version of v2.3.1
 
 ## v2.3.1, Apr 9, 2025
 * Upgrade Android native SDK to 2.0.5 to fix the crash issue when origin is very close to destination
