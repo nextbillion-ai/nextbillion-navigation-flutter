@@ -1,4 +1,4 @@
-## v2.4.0-dev.1, Apr 10, 2025
+## v2.4.0-dev.2, Apr 10, 2025
 * Upgrade iOS native SDK to 2.4.0-beta.3 to fix the build issue when Xcode upgrade to 16.3 or above
 
 ## v2.3.1, Apr 9, 2025
