@@ -19,12 +19,15 @@ class NBNavigationMethodChannel extends NBNavigationPlatform {
     switch (call.method) {
       case NBNavigationLauncherMethodID.nbOnNavigationExit:
         final arguments = call.arguments;
-        if (arguments is Map<String,dynamic>) {
-          final bool? shouldRefreshRoute = arguments["shouldRefreshRoute"] as bool?;
-          final int? remainingWaypoints = arguments["remainingWaypoints"] as int?;
+        if (arguments is Map<String, dynamic>) {
+          final bool? shouldRefreshRoute =
+              arguments["shouldRefreshRoute"] as bool?;
+          final int? remainingWaypoints =
+              arguments["remainingWaypoints"] as int?;
           if (shouldRefreshRoute != null && remainingWaypoints != null) {
             navigationExitCallback?.call(
-                arguments["shouldRefreshRoute"] as bool, arguments["remainingWaypoints"] as int);
+                arguments["shouldRefreshRoute"] as bool,
+                arguments["remainingWaypoints"] as int);
           }
         }
       default:
@@ -38,8 +41,8 @@ class NBNavigationMethodChannel extends NBNavigationPlatform {
     final dynamic result = await _channel.invokeMethod(
         NBRouteMethodID.nbFetchRouteMethod, jsonEncode(routeRequestParams));
     if (result is String) {
-       final json = jsonDecode(result) as Map<String, dynamic>;
-       return _handleRouteResult(json);
+      final json = jsonDecode(result) as Map<String, dynamic>;
+      return _handleRouteResult(json);
     } else if (result is Map) {
       final Map<String, dynamic> resultMap = Map<String, dynamic>.from(result);
       return _handleRouteResult(resultMap);
@@ -51,25 +54,31 @@ class NBNavigationMethodChannel extends NBNavigationPlatform {
   DirectionsRouteResponse _handleRouteResult(Map<dynamic, dynamic> result) {
     final List<String> routeJson =
         List<String>.from(result["routeResult"] as List<dynamic>? ?? []);
-    final int? errorCode = result["errorCode"] as int? ;
+    final int? errorCode = result["errorCode"] as int?;
     final String? message = result["message"] as String?;
 
-    final Map<String, dynamic> routeRequest = result["routeOptions"] as Map<String, dynamic>?  ?? {};
+    final Map<String, dynamic> routeRequest =
+        (result["routeOptions"] as Map<Object?, Object?>?)?.map(
+              (key, value) => MapEntry(key.toString(), value),
+            ) ??
+            {};
 
     RouteRequestParams? requestParams;
     if (routeRequest.isNotEmpty) {
-      requestParams = RouteRequestParams.fromJson(
-          Map<String, dynamic>.from(routeRequest));
+      requestParams =
+          RouteRequestParams.fromJson(Map<String, dynamic>.from(routeRequest));
     }
 
     final List<DirectionsRoute> routes = [];
     if (routeJson.isNotEmpty) {
       for (final json in routeJson) {
         final Map<String, dynamic> routeMap =
-        jsonDecode(json) as Map<String, dynamic>;
-        final DirectionsRoute route = DirectionsRoute.fromJson(routeMap);
+            jsonDecode(json) as Map<String, dynamic>;
+        DirectionsRoute route;
         if (requestParams != null) {
-          route.routeOptions = requestParams;
+          route = DirectionsRoute.fromJsonWithOption(routeMap, requestParams);
+        } else {
+          route = DirectionsRoute.fromJson(routeMap);
         }
         routes.add(route);
       }
