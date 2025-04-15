@@ -30,3 +30,11 @@ migrate_working_dir/
 Podfile.lock
 Cartfile.resolved
 build
+
+# Android NDK build artifacts
+.cxx/
+**/.cxx/
+**/build/cmake/
+**/intermediates/cmake/
+**/externalNativeBuild/
+**/build/.cxx/
