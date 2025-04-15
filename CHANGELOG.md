@@ -1,3 +1,6 @@
+## v2.5.0, Apr 15, 2025
+* Upgrade [nb_maps_flutter] version to 2.0.0 to fix build error on flutter 3.29 and above
+
 ## v2.4.0, Apr 10, 2025
 * Upgrade iOS native SDK to 2.4.0 to fix the build issue when Xcode upgrade to 16.3 or above
 
