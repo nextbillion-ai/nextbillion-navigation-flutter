@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'nb_navigation_flutter'
-  s.version          = '2.4.0'
+  s.version          = '2.5.0-dev.1'
   s.summary          = 'A new Flutter project.'
   s.description      = <<-DESC
 A new Flutter project.
@@ -19,6 +19,6 @@ A new Flutter project.
 
   # Flutter.framework does not contain a i386 slice.
 #   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
-  s.dependency 'NextBillionNavigation', '= 2.4.0'
+  s.dependency 'NextBillionNavigation', '= 2.5.0-beta.1'
 
 end

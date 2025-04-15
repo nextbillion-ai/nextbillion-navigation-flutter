@@ -1,3 +1,5 @@
+## v2.5.0-dev.1, Apr 14, 2025
+* Upgrade iOS native SDK to 2.5.0-beta.1 to solve all lint issue
 ## v2.4.0, Apr 10, 2025
 * Upgrade iOS native SDK to 2.4.0 to fix the build issue when Xcode upgrade to 16.3 or above
 
