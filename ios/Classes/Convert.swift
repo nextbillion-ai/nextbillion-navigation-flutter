@@ -61,7 +61,7 @@ public class Convert {
             return nil
         }
         
-        let locale = options["language"] as? String ?? Locale.DEFAULT_LANGUAGE_VALUE
+        let locale = options["language"] as? String ?? Locale.defaultLanguageValue
         routeOptions.locale = Locale.init(identifier: locale)
         
         if let unit = options["unit"] as? String, let unitValue = MeasurementSystem(description: unit) {
