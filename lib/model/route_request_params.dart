@@ -26,14 +26,43 @@ class RouteRequestParams {
   /// [SupportedAvoid.none]
   /// Please note that when this parameter is not provided in the input, [SupportedAvoid.ferry] are set to be avoided by default.
   /// When this parameter is provided, only the mentioned objects are avoided.
-  @Deprecated("This property is deprecated. Use [avoidType] instead.")
+  @Deprecated("This property is deprecated. Use [RouteRequestParams.avoidType] instead.")
   List<SupportedAvoid>? avoid;
 
-  /// The route classes that the calculated routes will avoid.
-  /// Possible values are:
-  /// [toll], [highway], [ferry], [sharp_turn], [turn], [service_road], [left_turn], [right_turn], [bbox], [geofence_id], [none]
-  /// Please note that when this parameter is not provided in the input, [ferry] are set to be avoided by default.
-  /// When this parameter is provided, only the mentioned objects are avoided.
+  /// The route elements to avoid when calculating routes.
+  ///
+  /// ### Notes:
+  /// - This parameter is only effective when `route_type=fastest`.
+  ///
+  /// #### 1. When [option] is set to [SupportedOption.flexible]:
+  /// - Possible values:
+  ///   [toll], [highway], [ferry], [sharp_turn], [turn], [service_road], [left_turn], [right_turn], [bbox], [geofence_id], [none].
+  /// - By default (when not provided), `[ferry]` is avoided.
+  /// - When specified, **only** the mentioned types will be avoided.
+  ///
+  /// - **bbox**:
+  ///   - Format: `bbox:min_latitude,min_longitude,max_latitude,max_longitude`.
+  ///   - Multiple bounding boxes can be specified (e.g., `avoid=bbox:34.0635,-118.2547,34.0679,-118.2478 | bbox:34.0521,-118.2342,34.0478,-118.2437`).
+  ///   - The perimeter of each bounding box must not exceed 500 km.
+  ///   - Bounding boxes act as hard filters; if they block all valid routes, a 4xx error will be returned.
+  ///
+  /// - **sharp_turn**:
+  ///   - Default allowed turn angle range is `[120, 240]`.
+  ///   - To customize, use the `turn_angle_range` parameter.
+  ///
+  /// - **geofence_id**:
+  ///   - Only geofences created via the NextBillion.ai Geofence API are supported.
+  ///
+  /// - **tunnel**:
+  ///   - If no alternate route is available, the service will return a 4xx error.
+  ///
+  /// #### 2. When [option] is set to [SupportedOption.fast]:
+  /// - Possible values: [SupportedAvoid.toll], [SupportedAvoid.ferry], [SupportedAvoid.highway], [SupportedAvoid.none].
+  ///
+  /// #### 3. Defaults:
+  /// - If the parameter is not set, [ferry] is avoided by default.
+  /// - If the parameter is set, only the specified avoid types are applied.
+
   List<String>? avoidType;
 
   ///The same base URL which was used during the request that resulted in this root directions
@@ -48,8 +77,10 @@ class RouteRequestParams {
 
   /// A string specifying the primary mode of transportation for the routes.
   /// This parameter, if set, should be set to
-  /// [ValidModes.car], [ValidModes.truck]
+  /// [ValidModes.car], [ValidModes.truck],[ValidModes.bike],[ValidModes.motorcycle]
   /// [ValidModes.car] is used by default.
+  /// Notes: When using [ValidModes.truck],[ValidModes.bike] or [ValidModes.motorcycle] ,
+  /// you must also set option to [SupportedOption.flexible] for the mode to take effect.
   ValidModes? mode;
 
   /// Displays the requested type of overview geometry. Can be
