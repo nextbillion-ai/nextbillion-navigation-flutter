@@ -134,7 +134,7 @@ class RouteFetcherHandler(methodChannel: MethodChannel?) : MethodChannelHandler(
         RouteFetcher.getRoute(paramsBuilder.build(), object : Callback<DirectionsResponse> {
             override fun onResponse(call: Call<DirectionsResponse>, response: Response<DirectionsResponse>) {
                 val args = mutableMapOf<String, Any>()
-                if (response.code() >= 200 && response.code() < 300) {
+                if (response.code() in 200..299) {
                     val routes = response.body()?.routes()
                     if (!routes.isNullOrEmpty()) {
                         val routeArray = mutableListOf<String>()

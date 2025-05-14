@@ -2,6 +2,14 @@
 
 [![codecov](https://codecov.io/github/nextbillion-ai/nextbillion-navigation-flutter/graph/badge.svg?token=70S2KSAQ8Q)](https://codecov.io/github/nextbillion-ai/nextbillion-navigation-flutter)
 
+## License
+
+This project is licensed under the BSD 3-Clause "New" or "Revised" License - see the [LICENSE](LICENSE) file for details.
+
+### Third-Party Licenses
+
+This project includes third-party components with their own licenses. See the [NOTICE](NOTICE) file for details.
+
 ## Instroduction
 ![IMG_0378](https://github.com/nextbillion-ai/nb-navigation-flutter/assets/100656364/870d9039-cea0-453e-a06c-adaada65cc8e)
 
@@ -186,7 +194,7 @@ Fetch route with requestParams using NBNavigation.fetchRoute(), and obtain the r
 
   After getting the routes, you can draw routes on the map view using `NavNextBillionMap`, If you need to use Maps related functions, for example: Display a Map widget, please refer to NB [Flutter Maps Plugin](https://pub.dev/packages/nb_maps_flutter)
 
-  Create `NavNextBillionMap` with `NextbillionMapController` in NBMap widget’s `onStyleLoadedCallback` callback:
+  Create `NavNextBillionMap` with `NextbillionMapController` in NBMap widget's `onStyleLoadedCallback` callback:
   ```
   void _onMapCreated(NextbillionMapController controller) {
       this.controller = controller;

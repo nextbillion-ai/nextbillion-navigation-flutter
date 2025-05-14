@@ -12,7 +12,9 @@ import NbmapCoreNavigation
 public class Convert {
     static let navigationMode = [
         "car": NBNavigationMode.car,
-        "truck": NBNavigationMode.truck
+        "truck": NBNavigationMode.truck,
+        "bike": NBNavigationMode.bike,
+        "motorcycle": NBNavigationMode.motocycle
     ]
     
     static let mapOptions = [

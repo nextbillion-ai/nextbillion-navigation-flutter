@@ -1,0 +1,36 @@
+NextBillion Navigation Flutter Example
+Copyright (c) 2024, NextBillion.ai Pte. Ltd.
+
+This software includes the following third-party components:
+
+1. Flutter SDK (>=3.5.0)
+   Copyright (c) 2014-2024 The Flutter Authors
+   License: BSD 3-Clause License
+   https://github.com/flutter/flutter/blob/master/LICENSE
+
+2. nb_navigation_flutter (latest)
+   Copyright (c) 2024 NextBillion.ai Pte. Ltd.
+   License: BSD 3-Clause License
+   https://github.com/nextbillion-ai/nextbillion-navigation-flutter/blob/main/LICENSE
+
+3. cupertino_icons (^1.0.2)
+   Copyright (c) 2016-2024 The Flutter Authors
+   License: MIT License
+   https://github.com/flutter/cupertino_icons/blob/master/LICENSE
+
+4. permission_handler (^11.4.0)
+   Copyright (c) 2018-2024 Baseflow
+   License: MIT License
+   https://github.com/Baseflow/flutter-permission-handler/blob/master/LICENSE
+
+5. fluttertoast (^8.2.2)
+   Copyright (c) 2017-2024 Pooja Bhaumik
+   License: MIT License
+   https://github.com/PonnamKarthik/FlutterToast/blob/master/LICENSE
+
+6. flutter_lints (^5.0.0)
+   Copyright (c) 2021-2024 The Flutter Authors
+   License: BSD 3-Clause License
+   https://github.com/flutter/packages/blob/main/LICENSE
+
+For full license texts, please refer to the individual project repositories. 

@@ -16,10 +16,21 @@ enum ValidModes {
   car,
 
   /// Travel mode: truck.
-  truck;
+  truck,
 
-  static ValidModes fromValue(String? s) =>
-      switch (s) { "car" => car, "truck" => truck, _ => car };
+  /// Travel mode: bike.
+  bike,
+
+  /// Travel mode: motorcycle.
+  motorcycle;
+
+  static ValidModes fromValue(String? s) => switch (s) {
+        "car" => car,
+        "truck" => truck,
+        "bike" => bike,
+        "motorcycle" => motorcycle,
+        _ => car
+      };
 }
 
 enum SupportedAvoid {

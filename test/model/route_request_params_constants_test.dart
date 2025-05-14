@@ -13,6 +13,8 @@ void main() {
   test('ValidModes.fromValue should return ValidModes', () {
     expect(ValidModes.fromValue('car'), equals(ValidModes.car));
     expect(ValidModes.fromValue('truck'), equals(ValidModes.truck));
+    expect(ValidModes.fromValue('bike'), equals(ValidModes.bike));
+    expect(ValidModes.fromValue('motorcycle'), equals(ValidModes.motorcycle));
     expect(ValidModes.fromValue(null), equals(ValidModes.car));
     expect(ValidModes.fromValue('invalid'), equals(ValidModes.car));
   });
