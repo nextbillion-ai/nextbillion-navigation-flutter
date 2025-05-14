@@ -1,3 +1,7 @@
+## v2.6.0, Mar 14, 2025
+* Upgraded [nb_maps_flutter] to version 2.1.0 to fix error logs when retrieving image resources.
+* Added support for bike and motorcycle modes in route generation.
+
 ## v2.5.0, Apr 15, 2025
 * Upgrade [nb_maps_flutter] version to 2.0.0 to fix build error on flutter 3.29 and above
 
