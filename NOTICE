@@ -1,59 +1,61 @@
 NextBillion Navigation Flutter Plugin
-Copyright (c) NextBillion.ai
+Copyright (c) 2024, NextBillion.ai Pte. Ltd.
 
 This software includes the following third-party components:
 
-1. Flutter SDK
-   Copyright (c) 2014 The Flutter Authors
+1. Flutter SDK (>=3.24.0)
+   Copyright (c) 2014-2024 The Flutter Authors
    License: BSD 3-Clause License
    https://github.com/flutter/flutter/blob/master/LICENSE
 
-2. nb_maps_flutter
-   Copyright (c) NextBillion.ai
+2. nb_maps_flutter (2.1.0)
+   Copyright (c) 2024 NextBillion.ai Pte. Ltd.
    License: BSD 3-Clause License
    https://github.com/nextbillion-ai/nextbillion-maps-flutter/blob/main/LICENSE
 
-3. plugin_platform_interface
-   Copyright (c) 2017 The Flutter Authors
+3. plugin_platform_interface (^2.0.2)
+   Copyright (c) 2017-2024 The Flutter Authors
    License: BSD 3-Clause License
    https://github.com/flutter/plugins/blob/master/LICENSE
 
-4. permission_handler
-   Copyright (c) 2018 Baseflow
+4. permission_handler (^11.4.0)
+   Copyright (c) 2018-2024 Baseflow
    License: MIT License
    https://github.com/Baseflow/flutter-permission-handler/blob/master/LICENSE
 
-5. fluttertoast
-   Copyright (c) 2017-2018 Pooja Bhaumik
+5. fluttertoast (^8.2.2)
+   Copyright (c) 2017-2024 Pooja Bhaumik
    License: MIT License
    https://github.com/PonnamKarthik/FlutterToast/blob/master/LICENSE
 
-6. mockito
-   Copyright (c) 2015 Dart Mockito contributors
+6. mockito (^5.0.17)
+   Copyright (c) 2015-2024 Dart Mockito contributors
    License: Apache License 2.0
    https://github.com/dart-lang/mockito/blob/master/LICENSE
 
-7. provider
-   Copyright (c) 2019 Remi Rousselet
+7. provider (^6.1.2)
+   Copyright (c) 2019-2024 Remi Rousselet
    License: MIT License
    https://github.com/rrousselGit/provider/blob/master/LICENSE
 
-8. flutter_lints
-   Copyright (c) 2021 The Flutter Authors
+8. flutter_lints (^5.0.0)
+   Copyright (c) 2021-2024 The Flutter Authors
    License: BSD 3-Clause License
    https://github.com/flutter/packages/blob/main/LICENSE
 
-9. build_runner
-   Copyright (c) 2018, the Dart project authors
+9. build_runner (^2.1.5)
+   Copyright (c) 2018-2024 the Dart project authors
    License: BSD 3-Clause License
    https://github.com/dart-lang/build/blob/master/LICENSE
 
-10. test
-    Copyright (c) 2014, the Dart project authors
+10. test (^1.24.9)
+    Copyright (c) 2014-2024 the Dart project authors
     License: BSD 3-Clause License
     https://github.com/dart-lang/test/blob/master/LICENSE
 
-11. lint
-    Copyright (c) 2020 Pascal Welsch
+11. lint (^2.6.1)
+    Copyright (c) 2020-2024 Pascal Welsch
     License: MIT License
-    https://github.com/passsy/dart-lint/blob/master/LICENSE 
+    https://github.com/passsy/dart-lint/blob/master/LICENSE
+
+For full license texts, please refer to the individual project repositories. 
