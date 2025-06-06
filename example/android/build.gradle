@@ -1,9 +1,12 @@
 buildscript {
-    ext.kotlin_version = '1.7.20'
+    ext.kotlin_version = '1.8.10'
     repositories {
         google()
         mavenCentral()
         maven { url 'https://plugins.gradle.org/m2' }
+        maven {
+            url "artifactregistry://asia-maven.pkg.dev/nextbillion/mobile-snapshot-maven"
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:8.1.0'
@@ -15,13 +18,16 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-
         maven { url 'https://plugins.gradle.org/m2' }
+        maven {
+            url "artifactregistry://asia-maven.pkg.dev/nextbillion/mobile-snapshot-maven"
+        }
     }
 }
 
 rootProject.buildDir = '../build'
 subprojects {
+    apply plugin: 'com.google.cloud.artifactregistry.gradle-plugin'
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
 subprojects {

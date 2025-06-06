@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'dev.flutter.flutter-gradle-plugin'
+    id 'com.google.cloud.artifactregistry.gradle-plugin'
 }
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
@@ -27,7 +28,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdk flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
     namespace "ai.nextbillion.navigation.nb_navigation_flutter_example"
 
@@ -64,6 +65,5 @@ flutter {
 }
 
 dependencies {
-
     implementation 'com.android.support:multidex:1.0.3'
 }
