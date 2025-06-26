@@ -1,41 +1,38 @@
 group 'ai.nextbillion.navigation.nb_navigation_flutter'
-version '2.1.0'
+version '2.2.0'
 
 buildscript {
+    ext.kotlin_version = '1.7.20'
     repositories {
         google()
-        jcenter()
         mavenCentral()
+        gradlePluginPortal()
     }
 
     dependencies {
-        classpath "com.android.tools.build:gradle:7.1.0"
+        classpath 'com.android.tools.build:gradle:8.1.0'
     }
 }
-
 
 allprojects {
     repositories {
         google()
-        jcenter()
         mavenCentral()
     }
-
 }
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
-
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
     namespace 'ai.nextbillion.navigation.nb_navigation_flutter'
 
     defaultConfig {
-        minSdkVersion 17
+        minSdkVersion 21
         buildConfigField "String", "GIT_REVISION_SHORT", String.format("\"%s\"", getGitRevision())
         buildConfigField "String", "NBNAV_FLUTTER_VERSION", String.format("\"%s\"", project.version)
 
@@ -46,18 +43,19 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        jvmTarget = JavaVersion.VERSION_11
     }
 }
 
 dependencies {
-    implementation 'ai.nextbillion:nb-navigation-android:2.1.0'
+    implementation 'ai.nextbillion:nb-navigation-android:2.2.0'
+
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.google.android.material:material:1.5.0'
 

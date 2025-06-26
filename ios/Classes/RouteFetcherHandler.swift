@@ -97,7 +97,7 @@ class RouteFetcherHandler: MethodChannelHandler {
             }
             if let timeDuration = arguments["duration"] as? Double, let isPrimaryRoute = arguments["isPrimaryRoute"] as? Bool {
                 
-                let durationSymbol = RouteDurationSymbol.init(duration: timeDuration, isPrimary: isPrimaryRoute, durationSymbolType: NavigationMapView.DurationSymbolType.ROUTE_DURATION)
+                let durationSymbol = RouteDurationSymbol.init(duration: timeDuration, isPrimary: isPrimaryRoute, durationSymbolType: NavigationMapView.DurationSymbolType.routeDuration)
                 
                 if let symbolImage = durationSymbol.screenshotImage() {
                     result(symbolImage.pngData())
