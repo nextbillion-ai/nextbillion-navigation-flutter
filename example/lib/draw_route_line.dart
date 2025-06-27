@@ -84,17 +84,23 @@ class DrawRouteLineState extends State<DrawRouteLine> {
 
   void _fetchRoute() async {
     RouteRequestParams requestParams = RouteRequestParams(
-      origin: origin,
-      destination: dest,
-      // waypoints: [Coordinate(latitude: wayP2.latitude, longitude: wayP2.longitude)],
-      // overview: ValidOverview.simplified,
-      // avoid: [SupportedAvoid.toll, SupportedAvoid.ferry],
-      option: SupportedOption.flexible,
-      truckSize: [200, 200, 600],
-      truckWeight: 100,
-      unit: SupportedUnits.imperial,
-      alternatives: true,
-      mode: ValidModes.truck,
+        origin: origin,
+        destination: dest,
+        // waypoints: [Coordinate(latitude: wayP2.latitude, longitude: wayP2.longitude)],
+        overview: ValidOverview.simplified,
+        avoid: [SupportedAvoid.toll, SupportedAvoid.ferry],
+        option: SupportedOption.flexible,
+        truckSize: [200, 200, 600],
+        truckWeight: 100,
+        unit: SupportedUnits.imperial,
+        alternatives: true,
+        mode: ValidModes.truck,
+        hazmatType: [SupportedHazmatType.harmfulToWater],
+        crossBorder: true,
+        allow: "taxi",
+        routeType: RouteType.shortest,
+        approaches: [SupportedApproaches.curb],
+
     );
 
     DirectionsRouteResponse routeResponse =

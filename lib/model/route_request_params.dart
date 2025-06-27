@@ -273,13 +273,13 @@ class RouteRequestParams {
           ?.map((point) => parseLatLng(point))
           .toList() ??
           [],
-      hazmatType: (map['hazmatType'] as List<String>?)
-          ?.map((x) => SupportedHazmatType.fromValue(x))
+      hazmatType: (map['hazmatType'] as List<dynamic>?)
+          ?.map((x) => SupportedHazmatType.fromValue(x as String))
           .whereType<SupportedHazmatType>()
           .toList() ??
           [],
-      approaches: (map['approaches'] as List<String>?)
-          ?.map((x) => SupportedApproaches.fromValue(x))
+      approaches: (map['approaches'] as List<dynamic>?)
+          ?.map((x) => SupportedApproaches.fromValue(x as String))
           .whereType<SupportedApproaches>()
           .toList() ??
           [],
