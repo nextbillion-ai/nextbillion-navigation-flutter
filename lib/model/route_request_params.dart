@@ -274,12 +274,12 @@ class RouteRequestParams {
           .toList() ??
           [],
       hazmatType: (map['hazmatType'] as List<dynamic>?)
-          ?.map((x) => SupportedHazmatType.fromValue(x as String))
+          ?.map((x) => SupportedHazmatType.fromValue(x as String?))
           .whereType<SupportedHazmatType>()
           .toList() ??
           [],
       approaches: (map['approaches'] as List<dynamic>?)
-          ?.map((x) => SupportedApproaches.fromValue(x as String))
+          ?.map((x) => SupportedApproaches.fromValue(x as String?))
           .whereType<SupportedApproaches>()
           .toList() ??
           [],
