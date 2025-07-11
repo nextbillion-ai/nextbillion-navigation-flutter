@@ -7,6 +7,7 @@ import ai.nextbillion.navigation.nb_navigation_flutter.R
 import ai.nextbillion.navigation.nb_navigation_flutter.databinding.NavigationActivityBinding
 import android.app.Activity
 import android.content.Context
+import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -40,7 +41,10 @@ class EmbeddedNavigationViewFactory(
     }
 
     private fun storeNavThemeConfig(context: Context, args: Any?) {
-        val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
+        val sharedPreferences: SharedPreferences = context
+            .getSharedPreferences(NavigationConstants.NAVIGATION_SHARE_PREFS, Context.MODE_PRIVATE)
+
+        val editor = sharedPreferences.edit()
         val config = (args as Map<*, *>?)?.get("launcherConfig") as? Map<*, *>
 
         config?.let {
