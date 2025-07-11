@@ -1,3 +1,11 @@
+##  2.7.0-dev.3
+* Replace deprecated [PreferenceManager.getDefaultSharedPreferences] with [context.getSharedPreferences] using "NAVIGATION_SHARE_PREFS"
+##  2.7.0-dev.2
+* Upgraded [NextBillionNavigation] to version 2.5.0 — fixed all native SDK lint issues in this release
+* Upgraded [ai.nextbillion:nb-navigation-android] from 2.1.0 to 2.2.0 — includes native SDK lint fixes
+* Upgraded [nb_maps_flutter] to 2.2.0 — includes native SDK lint fixes
+* Fixed all lint issues detected by [flutter_lints]
+* Fixed all lint issue check by [flutter_lint]
 ## v2.6.0, Mar 14, 2025
 * Upgraded [nb_maps_flutter] to version 2.1.0 to fix error logs when retrieving image resources.
 * Added support for bike and motorcycle modes in route generation.
