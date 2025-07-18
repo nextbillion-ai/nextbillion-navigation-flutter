@@ -19,6 +19,19 @@ void main() {
         'remainingWaypoints': 3,
         'currentStepPointIndex': 4,
         'isFinalLeg': true,
+        'currentLegProgress': {
+          'durationRemaining': 600.0,
+          'distanceRemaining': 2000.0,
+          'distanceTraveled': 1000.0,
+          'fractionTraveled': 0.5,
+          'currentStepIndex': 2,
+          'currentStepProgress': {
+            'durationRemaining': 300.0,
+            'distanceRemaining': 1000.0,
+            'distanceTraveled': 500.0,
+            'fractionTraveled': 0.5,
+          },
+        },
       };
 
       // Act
@@ -36,6 +49,10 @@ void main() {
       expect(navigationProgress.remainingWaypoints, 3);
       expect(navigationProgress.currentStepPointIndex, 4);
       expect(navigationProgress.isFinalLeg, true);
+      expect(navigationProgress.currentLegProgress?.durationRemaining, 600.0);
+      expect(navigationProgress.currentLegProgress?.distanceRemaining, 2000.0);
+      expect(navigationProgress.currentLegProgress?.currentStepIndex, 2);
+      expect(navigationProgress.currentLegProgress?.currentStepProgress?.durationRemaining, 300.0);
     });
 
     test('toJson should return a valid JSON map', () {
@@ -51,6 +68,19 @@ void main() {
         remainingWaypoints: 3,
         currentStepPointIndex: 4,
         isFinalLeg: true,
+        currentLegProgress: CurrentLegProgress(
+          durationRemaining: 600.0,
+          distanceRemaining: 2000.0,
+          distanceTraveled: 1000.0,
+          fractionTraveled: 0.5,
+          currentStepIndex: 2,
+          currentStepProgress: CurrentStepProgress(
+            durationRemaining: 300.0,
+            distanceRemaining: 1000.0,
+            distanceTraveled: 500.0,
+            fractionTraveled: 0.5,
+          ),
+        ),
       );
 
       // Act
@@ -68,6 +98,9 @@ void main() {
       expect(json['remainingWaypoints'], 3);
       expect(json['currentStepPointIndex'], 4);
       expect(json['isFinalLeg'], true);
+      expect((json['currentLegProgress'] as Map<String, dynamic>)['durationRemaining'], 600.0);
+      expect((json['currentLegProgress'] as Map<String, dynamic>)['distanceRemaining'], 2000.0);
+      expect((json['currentLegProgress'] as Map<String, dynamic>)['currentStepIndex'], 2);
     });
 
     test('toString should return a valid string representation', () {
@@ -83,6 +116,19 @@ void main() {
         remainingWaypoints: 3,
         currentStepPointIndex: 4,
         isFinalLeg: true,
+        currentLegProgress: CurrentLegProgress(
+          durationRemaining: 600.0,
+          distanceRemaining: 2000.0,
+          distanceTraveled: 1000.0,
+          fractionTraveled: 0.5,
+          currentStepIndex: 2,
+          currentStepProgress: CurrentStepProgress(
+            durationRemaining: 300.0,
+            distanceRemaining: 1000.0,
+            distanceTraveled: 500.0,
+            fractionTraveled: 0.5,
+          ),
+        ),
       );
 
       // Act
@@ -91,7 +137,7 @@ void main() {
       // Assert
       expect(
         stringRepresentation,
-        'NavigationProgress(location: LatLng(12.34, 56.78), distanceRemaining: 1000, durationRemaining: 300, currentLegIndex: 1, currentStepIndex: 2, distanceTraveled: 500, fractionTraveled: 0.5, remainingWaypoints: 3, currentStepPointIndex: 4, isFinalLeg: true)',
+        'NavigationProgress(location: LatLng(12.34, 56.78), distanceRemaining: 1000, durationRemaining: 300, currentLegIndex: 1, currentStepIndex: 2, distanceTraveled: 500, fractionTraveled: 0.5, remainingWaypoints: 3, currentStepPointIndex: 4, isFinalLeg: true, currentLegProgress: CurrentLegProgress(durationRemaining: 600.0, distanceRemaining: 2000.0, distanceTraveled: 1000.0, fractionTraveled: 0.5, currentStepIndex: 2, currentStepProgress: CurrentStepProgress(durationRemaining: 300.0, distanceRemaining: 1000.0, distanceTraveled: 500.0, fractionTraveled: 0.5)))',
       );
     });
   });

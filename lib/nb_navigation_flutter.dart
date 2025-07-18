@@ -17,6 +17,8 @@ export 'package:nb_maps_flutter/nb_maps_flutter.dart';
 
 part 'model/banner_instructions.dart';
 part 'model/congestion_level.dart';
+part 'model/current_leg_progress.dart';
+part 'model/current_step_progress.dart';
 part 'model/directions_route.dart';
 part 'model/intersections.dart';
 part 'model/maneuver.dart';

@@ -11,6 +11,7 @@ class NavigationProgress {
   int? remainingWaypoints;
   int? currentStepPointIndex;
   bool? isFinalLeg;
+  CurrentLegProgress? currentLegProgress;
 
   NavigationProgress({
     this.location,
@@ -23,6 +24,7 @@ class NavigationProgress {
     this.remainingWaypoints,
     this.currentStepPointIndex,
     this.isFinalLeg,
+    this.currentLegProgress,
   });
 
   factory NavigationProgress.fromJson(Map<String, dynamic> json) {
@@ -39,6 +41,12 @@ class NavigationProgress {
       }
     }
 
+    final currentLegProgressData = json['currentLegProgress'];
+    CurrentLegProgress? currentLegProgress;
+    if (currentLegProgressData != null && currentLegProgressData is Map<String, dynamic>) {
+      currentLegProgress = CurrentLegProgress.fromJson(currentLegProgressData);
+    }
+
     return NavigationProgress(
       location: location,
       distanceRemaining: (json['distanceRemaining'] as num?)?.toDouble(),
@@ -50,6 +58,7 @@ class NavigationProgress {
       remainingWaypoints: json['remainingWaypoints'] as int?,
       currentStepPointIndex: json['currentStepPointIndex'] as int?,
       isFinalLeg: json['isFinalLeg'] as bool? ?? false, // Defaults to false if null
+      currentLegProgress: currentLegProgress,
     );
   }
 
@@ -69,11 +78,12 @@ class NavigationProgress {
       'remainingWaypoints': remainingWaypoints,
       'currentStepPointIndex': currentStepPointIndex,
       'isFinalLeg': isFinalLeg,
+      'currentLegProgress': currentLegProgress?.toJson(),
     };
   }
 
   @override
   String toString() {
-    return 'NavigationProgress(location: $location, distanceRemaining: $distanceRemaining, durationRemaining: $durationRemaining, currentLegIndex: $currentLegIndex, currentStepIndex: $currentStepIndex, distanceTraveled: $distanceTraveled, fractionTraveled: $fractionTraveled, remainingWaypoints: $remainingWaypoints, currentStepPointIndex: $currentStepPointIndex, isFinalLeg: $isFinalLeg)';
+    return 'NavigationProgress(location: $location, distanceRemaining: $distanceRemaining, durationRemaining: $durationRemaining, currentLegIndex: $currentLegIndex, currentStepIndex: $currentStepIndex, distanceTraveled: $distanceTraveled, fractionTraveled: $fractionTraveled, remainingWaypoints: $remainingWaypoints, currentStepPointIndex: $currentStepPointIndex, isFinalLeg: $isFinalLeg, currentLegProgress: $currentLegProgress)';
   }
 }

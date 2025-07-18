@@ -129,6 +129,22 @@ extension EmbeddedNavigationView: NavigationViewControllerDelegate {
         resultMap["fractionTraveled"] = progress.fractionTraveled
         resultMap["remainingWaypoints"] = progress.remainingWaypoints.count
         resultMap["isFinalLeg"] = progress.isFinalLeg
+        
+        var stepProgressMap = [
+            "durationRemaining": progress.currentLegProgress.currentStepProgress.durationRemaining,
+            "distanceRemaining": progress.currentLegProgress.currentStepProgress.distanceRemaining,
+            "distanceTraveled": progress.currentLegProgress.currentStepProgress.distanceTraveled,
+            "fractionTraveled": progress.currentLegProgress.currentStepProgress.fractionTraveled,
+        ]
+        resultMap["currentLegProgress"] = [
+            "durationRemaining":  progress.currentLegProgress.durationRemaining,
+            "distanceRemaining":  progress.currentLegProgress.distanceRemaining,
+            "distanceTraveled":  progress.currentLegProgress.distanceTraveled,
+            "fractionTraveled":  progress.currentLegProgress.fractionTraveled,
+            "currentStepIndex": progress.currentLegProgress.stepIndex,
+            "currentStepProgress": stepProgressMap
+        ]
+        
         _eventSink?(resultMap)
     }
     

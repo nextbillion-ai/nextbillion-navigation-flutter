@@ -154,6 +154,7 @@ class NBNavigationView(
                 "latitude" to location?.latitude,
                 "longitude" to location?.longitude
             )
+
             resultMap["distanceRemaining"] = navProgress.distanceRemaining
             resultMap["durationRemaining"] = navProgress.durationRemaining
             resultMap["currentLegIndex"] = navProgress.currentLegIndex
@@ -163,6 +164,22 @@ class NBNavigationView(
             resultMap["remainingWaypoints"] = navProgress.remainingWaypoints
             resultMap["currentStepPointIndex"] = navProgress.currentStepPointIndex
             resultMap["isFinalLeg"] = navProgress.currentLegIndex == navProgress.route.legs()?.size?.minus(1)
+
+            val stepProgressMap = mutableMapOf(
+                "durationRemaining" to navProgress.currentLegProgress?.currentStepProgress?.durationRemaining,
+                "distanceRemaining" to navProgress.currentLegProgress?.currentStepProgress?.distanceRemaining,
+                "distanceTraveled" to navProgress.currentLegProgress?.currentStepProgress?.distanceTraveled,
+                "fractionTraveled" to navProgress.currentLegProgress?.currentStepProgress?.fractionTraveled,
+            )
+            resultMap["currentLegProgress"] = mutableMapOf(
+                "durationRemaining" to  navProgress.currentLegProgress?.durationRemaining,
+                "distanceRemaining" to navProgress.currentLegProgress?.distanceRemaining,
+                "distanceTraveled" to navProgress.currentLegProgress?.distanceTraveled,
+                "fractionTraveled" to navProgress.currentLegProgress?.fractionTraveled,
+                "currentStepIndex" to navProgress.currentLegProgress?.currentStepIndex,
+                "currentStepProgress" to stepProgressMap
+            )
+
             eventSink?.success(resultMap)
         } else {
             eventSink?.success(null)
