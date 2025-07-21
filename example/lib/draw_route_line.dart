@@ -88,6 +88,7 @@ class DrawRouteLineState extends State<DrawRouteLine> {
         destination: dest,
         // waypoints: [Coordinate(latitude: wayP2.latitude, longitude: wayP2.longitude)],
         overview: ValidOverview.simplified,
+        // ignore: deprecated_member_use
         avoid: [SupportedAvoid.toll, SupportedAvoid.ferry],
         option: SupportedOption.flexible,
         truckSize: [200, 200, 600],
