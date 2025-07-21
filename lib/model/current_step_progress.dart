@@ -35,4 +35,4 @@ class CurrentStepProgress {
   String toString() {
     return 'CurrentStepProgress(durationRemaining: $durationRemaining, distanceRemaining: $distanceRemaining, distanceTraveled: $distanceTraveled, fractionTraveled: $fractionTraveled)';
   }
-} 
+}

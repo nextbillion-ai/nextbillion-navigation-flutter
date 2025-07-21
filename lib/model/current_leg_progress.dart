@@ -49,4 +49,4 @@ class CurrentLegProgress {
   String toString() {
     return 'CurrentLegProgress(durationRemaining: $durationRemaining, distanceRemaining: $distanceRemaining, distanceTraveled: $distanceTraveled, fractionTraveled: $fractionTraveled, currentStepIndex: $currentStepIndex, currentStepProgress: $currentStepProgress)';
   }
-} 
+}
