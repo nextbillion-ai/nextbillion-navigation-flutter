@@ -294,7 +294,8 @@ class RouteRequestParams {
     return {
       'altCount': altCount,
       'alternatives': alternatives,
-      'avoid': avoidType?.isNotEmpty == true ? avoidType : [],
+      // ignore: deprecated_member_use_from_same_package
+      'avoid': avoidType?.isNotEmpty == true ? avoidType : avoid?.map((e) => e.description).toList(),
       'approaches': approaches?.map((e) => e.description).toList(),
       'baseUrl': baseUrl,
       'departureTime': departureTime,
