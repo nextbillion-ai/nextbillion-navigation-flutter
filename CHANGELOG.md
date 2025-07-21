@@ -1,5 +1,6 @@
 ##  2.7.0-dev.4 Aug 21, 2025
-* Fixed an issue where the avoid function only applied [RouteRequestParams.avoidType] and ignored the [RouteRequestParams.avoid] parameter.
+* Fixed: `avoid` function now correctly handles both [RouteRequestParams.avoidType] and [RouteRequestParams.avoid].
+* Feature: Added `currentLegProgress` to [NavigationProgress], enabling access to ETA for upcoming waypoints via [NBNavigationView.onProgressChange].
 ##  2.7.0-dev.3
 * Replace deprecated [PreferenceManager.getDefaultSharedPreferences] with [context.getSharedPreferences] using "NAVIGATION_SHARE_PREFS"
 ##  2.7.0-dev.2
