@@ -218,8 +218,6 @@ class EmbeddedNavigationViewExampleState
     config.shouldSimulateRoute = false;
     config.themeMode = NavigationThemeMode.system;
     config.useCustomNavigationStyle = false;
-    // Please set the custom map style url if you only have the OSM map style access
-    config.navigationMapStyleUrl = NbNavigationStyles.nbMapCustomMapLightStyle;
     return config;
   }
 
@@ -255,7 +253,6 @@ class EmbeddedNavigationViewExampleState
           onMapLongClick: _onMapLongClick,
           onCameraTrackingDismissed: _onCameraTrackingChanged,
           onMapClick: _onMapClick,
-          styleString: NbNavigationStyles.nbMapDefaultLightStyle,
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),

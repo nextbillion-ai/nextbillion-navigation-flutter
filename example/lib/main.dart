@@ -46,7 +46,9 @@ class _NavigationDemoState extends State<NavigationDemo> {
   @override
   void initState() {
     super.initState();
-    NBNavigation.initNextBillion(NavigationDemo.accessKey);
+    // NBNavigation.initNextBillion(NavigationDemo.accessKey);
+
+    NBNavigation.initNextBillionWithTileServer(accessKey: NavigationDemo.accessKey, server: WellKnownTileServer.nbTomtom);
 
     // Set user ID If needed
     NBNavigation.setUserId("123344").then((value) {});

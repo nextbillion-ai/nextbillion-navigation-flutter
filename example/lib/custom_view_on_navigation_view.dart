@@ -266,7 +266,6 @@ class CustomViewOnNavigationViewState
           onUserLocationUpdated: _onUserLocationUpdate,
           onCameraTrackingDismissed: _onCameraTrackingChanged,
           onMapClick: _onMapClick,
-          styleString: NbNavigationStyles.nbMapDefaultLightStyle,
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nb_navigation_flutter/nb_navigation_flutter.dart';
-import 'package:nb_navigation_flutter_example/constants.dart';
+
 
 class FullNavigationExample extends StatefulWidget {
   static const String title = "Full Navigation Experience Example";
@@ -26,6 +26,9 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
   UserLocation? currentLocation;
   List<LatLng> waypoints = [];
   var primaryIndex = 0;
+  // Tile server state
+  WellKnownTileServer currentTileServer = WellKnownTileServer.nbTomtom;
+  bool isSwitchingTileServer = false;
 
   void _onMapCreated(NextbillionMapController controller) {
     this.controller = controller;
@@ -67,6 +70,66 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
     });
   }
 
+  Future<void> _switchTileServer() async {
+    if (isSwitchingTileServer) return;
+    
+    setState(() {
+      isSwitchingTileServer = true;
+    });
+
+    try {
+      // For now, we'll just toggle between nbTomtom and itself
+      // since we don't know all available enum values
+      WellKnownTileServer nextServer = currentTileServer == WellKnownTileServer.nbTomtom ? WellKnownTileServer.nbMapTiler: WellKnownTileServer.nbTomtom;
+
+      // Switch tile server
+      bool success = await NBNavigation.switchTileServer(server: nextServer);
+      
+      if (success) {
+        setState(() {
+          currentTileServer = nextServer;
+        });
+        
+        // Clear current routes and reload map
+        clearRouteResult();
+        waypoints.clear();
+        
+        // Show success message
+        Fluttertoast.showToast(
+          msg: "Switched to ${_getTileServerName(nextServer)}",
+          toastLength: Toast.LENGTH_SHORT,
+        );
+      } else {
+        Fluttertoast.showToast(
+          msg: "Failed to switch tile server",
+          toastLength: Toast.LENGTH_SHORT,
+        );
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: "Error switching tile server: $e",
+        toastLength: Toast.LENGTH_SHORT,
+      );
+    } finally {
+      setState(() {
+        isSwitchingTileServer = false;
+      });
+    }
+  }
+
+  String _getTileServerName(WellKnownTileServer server) {
+    switch (server) {
+      case WellKnownTileServer.nbTomtom:
+        return "TomTom";
+      case WellKnownTileServer.nbMapTiler:
+        return "nbMapTiler";
+      default:
+        return "Unknown";
+    }
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -85,7 +148,6 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
           onUserLocationUpdated: _onUserLocationUpdate,
           onCameraTrackingDismissed: _onCameraTrackingChanged,
           onMapClick: _onMapClick,
-          styleString: NbNavigationStyles.nbMapCustomMapLightStyle,
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -110,6 +172,59 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
                     }),
               ),
               const Padding(padding: EdgeInsets.only(top: 35)),
+              // Tile Server Switch Button
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(
+                        isSwitchingTileServer ? Colors.grey : Colors.orange,
+                      ),
+                    ),
+                    onPressed: isSwitchingTileServer ? null : _switchTileServer,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (isSwitchingTileServer)
+                          const SizedBox(
+                            width: 16,
+                            height: 16,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                            ),
+                          ),
+                        if (isSwitchingTileServer)
+                          const SizedBox(width: 8),
+                        Text(
+                          isSwitchingTileServer 
+                            ? "Switching..." 
+                            : "Switch Tile Server",
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const Padding(padding: EdgeInsets.only(top: 8)),
+              // Current Tile Server Info
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: Colors.black.withValues(alpha: 0.7),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Text(
+                  "Current: ${_getTileServerName(currentTileServer)}",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              const Padding(padding: EdgeInsets.only(top: 8)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -232,8 +347,9 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
     config.shouldSimulateRoute = true;
     config.themeMode = NavigationThemeMode.system;
     config.useCustomNavigationStyle = false;
+    config.themeMode = NavigationThemeMode.dark;
     // Please set the custom map style url if you only have the OSM map style access
-    config.navigationMapStyleUrl = NbNavigationStyles.nbMapCustomMapLightStyle;
+    // config.navigationMapStyleUrl = NbNavigationStyles.nbMapCustomMapLightStyle;
     NBNavigation.startNavigation(config);
   }
 
