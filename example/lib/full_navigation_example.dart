@@ -6,9 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nb_navigation_flutter/nb_navigation_flutter.dart';
 
-import 'full_navigation_example.dart';
-
-
 class FullNavigationExample extends StatefulWidget {
   static const String title = "Full Navigation Experience Example";
 

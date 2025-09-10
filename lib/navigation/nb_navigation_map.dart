@@ -336,6 +336,9 @@ class NavNextBillionMap implements NavigationMap {
     if (controller.disposed) {
       return;
     }
+    if (_routes.isEmpty) {
+      return;
+    }
     final route = _routes[_primaryRouteIndex];
     final List<Map<String, dynamic>> wayPoints = [];
     final Coordinate origin = route.legs.first.steps!.first.maneuver!.coordinate!;
