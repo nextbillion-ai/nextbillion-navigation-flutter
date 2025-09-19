@@ -160,7 +160,7 @@ NBMap(
           ),
      trackCameraPosition: true,
      myLocationEnabled: true,
-     myLocationTrackingMode: MyLocationTrackingMode.Tracking,
+     myLocationTrackingMode: MyLocationTrackingMode.tracking,
      onUserLocationUpdated: _onUserLocationUpdate,
 )
 ```

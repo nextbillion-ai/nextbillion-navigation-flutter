@@ -398,7 +398,7 @@ void main() {
   test(
       'updateMyLocationTrackingMode should call updateMyLocationTrackingMode on the controller',
       () async {
-    const mode = MyLocationTrackingMode.Tracking;
+    const mode = MyLocationTrackingMode.tracking;
     await mapControllerWrapper.updateMyLocationTrackingMode(mode);
     verify(mockController.updateMyLocationTrackingMode(mode)).called(1);
   });

@@ -195,7 +195,7 @@ class LaunchEmbeddedNavigationViewState
           ),
           trackCameraPosition: true,
           myLocationEnabled: true,
-          myLocationTrackingMode: MyLocationTrackingMode.Tracking,
+          myLocationTrackingMode: MyLocationTrackingMode.tracking,
           onMapLongClick: _onMapLongClick,
           onUserLocationUpdated: _onUserLocationUpdate,
           onCameraTrackingDismissed: _onCameraTrackingChanged,
@@ -217,7 +217,7 @@ class LaunchEmbeddedNavigationViewState
                     ),
                     onTap: () {
                       controller?.updateMyLocationTrackingMode(
-                          MyLocationTrackingMode.Tracking);
+                          MyLocationTrackingMode.tracking);
                       setState(() {
                         locationTrackImage = 'assets/location_on.png';
                       });

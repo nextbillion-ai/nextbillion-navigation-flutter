@@ -49,7 +49,7 @@ class MapViewStyleState extends State<MapViewStyle> {
               zoom: 13.0,
             ),
             onStyleLoadedCallback: _onStyleLoaded,
-            styleString: isLight ? NbMapStyles.LIGHT : NbMapStyles.DARK,
+            styleType: isLight ? NBMapStyleType.bright : NBMapStyleType.night,
           ),
         ],
       ),

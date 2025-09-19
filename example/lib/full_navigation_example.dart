@@ -47,7 +47,7 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
       navNextBillionMap = await NavNextBillionMap.create(controller!);
       await loadAssetImage();
       await controller?.updateMyLocationTrackingMode(
-          MyLocationTrackingMode.Tracking);
+          MyLocationTrackingMode.tracking);
       if (currentLocation != null) {
         controller?.animateCamera(
             CameraUpdate.newLatLngZoom(currentLocation!.position, 14),
@@ -220,8 +220,8 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
     }
   }
 
-  Future<void> _switchMapStyle() async {
-    if (isSwitchingStyle || controller == null) return;
+  void _switchMapStyle() {
+    if (isSwitchingStyle) return;
     
     setState(() {
       isSwitchingStyle = true;
@@ -229,19 +229,13 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
 
     try {
       // Toggle between light and dark styles
-      bool nextStyle = !isLightStyle;
-      String styleString = nextStyle ? NbMapStyles.LIGHT : NbMapStyles.DARK;
-      
-      // Switch map style using the controller
-      await controller!.setStyleString(styleString);
-      
       setState(() {
-        isLightStyle = nextStyle;
+        isLightStyle = !isLightStyle;
       });
       
       // Show success message
       Fluttertoast.showToast(
-        msg: "Switched to ${nextStyle ? 'Light' : 'Dark'} style",
+        msg: "Switched to ${isLightStyle ? 'Bright' : 'Night'} style",
         toastLength: Toast.LENGTH_SHORT,
       );
     } catch (e) {
@@ -257,7 +251,7 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
   }
 
   String _getStyleName(bool isLight) {
-    return isLight ? "Light" : "Dark";
+    return isLight ? "Bright" : "Night";
   }
 
   IconData _getStyleIcon(bool isLight) {
@@ -279,7 +273,7 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
           ),
           trackCameraPosition: true,
           myLocationEnabled: true,
-          myLocationTrackingMode: MyLocationTrackingMode.Tracking,
+          myLocationTrackingMode: MyLocationTrackingMode.tracking,
           onMapLongClick: _onMapLongClick,
           onUserLocationUpdated: _onUserLocationUpdate,
           onCameraTrackingDismissed: _onCameraTrackingChanged,
@@ -302,7 +296,7 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
                     ),
                     onTap: () {
                       controller?.updateMyLocationTrackingMode(
-                          MyLocationTrackingMode.Tracking);
+                          MyLocationTrackingMode.tracking);
                       setState(() {
                         locationTrackImage = 'assets/location_on.png';
                       });

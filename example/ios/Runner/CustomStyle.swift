@@ -11,7 +11,6 @@ import NbmapNavigation
 class CustomDayStyle: DayStyle {
     required init() {
         super.init()
-        mapStyleURL = URL(string: "https://api.nextbillion.io/tt/style/1/style/22.2.1-9?map=2/basic_street-light")!
     }
     
     override func apply() {
@@ -112,7 +111,6 @@ class CustomDayStyle: DayStyle {
 class CustomNightStyle: NightStyle {
     required init() {
         super.init()
-        mapStyleURL = URL(string: "https://api.nextbillion.io/tt/style/1/style/22.2.1-9?map=2/basic_street-dark")!
     }
     
     override func apply() {

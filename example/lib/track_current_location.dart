@@ -22,7 +22,7 @@ class TrackCurrentLocationState extends State<TrackCurrentLocation> {
 
   _onStyleLoadedCallback() async {
     Future.delayed(const Duration(milliseconds: 80), () {
-      controller?.updateMyLocationTrackingMode(MyLocationTrackingMode.Tracking);
+      controller?.updateMyLocationTrackingMode(MyLocationTrackingMode.tracking);
     });
   }
 
@@ -55,7 +55,7 @@ class TrackCurrentLocationState extends State<TrackCurrentLocation> {
             ),
             trackCameraPosition: true,
             myLocationEnabled: true,
-            myLocationTrackingMode: MyLocationTrackingMode.Tracking,
+            myLocationTrackingMode: MyLocationTrackingMode.tracking,
             onUserLocationUpdated: _onUserLocationUpdate,
             onCameraTrackingDismissed: _onCameraTrackingChanged,
           ),
@@ -73,7 +73,7 @@ class TrackCurrentLocationState extends State<TrackCurrentLocation> {
                     ),
                     onTap: () {
                       controller?.updateMyLocationTrackingMode(
-                          MyLocationTrackingMode.Tracking);
+                          MyLocationTrackingMode.tracking);
                       setState(() {
                         locationTrackImage = 'assets/location_on.png';
                       });
