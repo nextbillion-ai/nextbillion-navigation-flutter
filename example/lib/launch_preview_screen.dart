@@ -80,7 +80,7 @@ class LaunchPreviewScreenState extends State<LaunchPreviewScreen> {
           ),
           trackCameraPosition: true,
           myLocationEnabled: true,
-          myLocationTrackingMode: MyLocationTrackingMode.Tracking,
+          myLocationTrackingMode: MyLocationTrackingMode.tracking,
           onMapLongClick: _onMapLongClick,
           onUserLocationUpdated: _onUserLocationUpdate,
           onCameraTrackingDismissed: _onCameraTrackingChanged,
@@ -102,7 +102,7 @@ class LaunchPreviewScreenState extends State<LaunchPreviewScreen> {
                     ),
                     onTap: () {
                       controller?.updateMyLocationTrackingMode(
-                          MyLocationTrackingMode.Tracking);
+                          MyLocationTrackingMode.tracking);
                       setState(() {
                         locationTrackImage = 'assets/location_on.png';
                       });

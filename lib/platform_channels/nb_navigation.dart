@@ -15,7 +15,7 @@ mixin NBNavigation {
   }
 
   static Future<bool> switchTileServer({required WellKnownTileServer server}) async {
-    return await NextBillion.switchWellKnownTileServer(server);
+    return await NextBillion.switchWellKnownTileServer(server) ?? false;
   }
 
   /// allow to set the [NBNavigationPlatform] for testing

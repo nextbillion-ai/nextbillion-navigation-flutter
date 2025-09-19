@@ -1,124 +1,308 @@
-##  2.7.0 Aug 23, 2025
-* Fixed: `avoid` function now correctly handles both [RouteRequestParams.avoidType] and [RouteRequestParams.avoid].
-* Feature: Added `currentLegProgress` to [NavigationProgress], enabling access to ETA for upcoming waypoints via [NBNavigationView.onProgressChange].
-* Replace deprecated [PreferenceManager.getDefaultSharedPreferences] with [context.getSharedPreferences] using "NAVIGATION_SHARE_PREFS"
-* Upgraded [NextBillionNavigation] to version 2.5.0 — fixed all native SDK lint issues in this release
-* Upgraded [ai.nextbillion:nb-navigation-android] from 2.1.0 to 2.2.0 — includes native SDK lint fixes
-* Upgraded [nb_maps_flutter] to 2.2.0 — includes native SDK lint fixes
-* Fixed all lint issues detected by [flutter_lints]
-* Fixed all lint issue check by [flutter_lint]
+# Changelog
 
-## v2.6.0, Mar 14, 2025
-* Upgraded [nb_maps_flutter] to version 2.1.0 to fix error logs when retrieving image resources.
-* Added support for bike and motorcycle modes in route generation.
+All notable changes to this project will be documented in this file.
 
-## v2.5.0, Apr 15, 2025
-* Upgrade [nb_maps_flutter] version to 2.0.0 to fix build error on flutter 3.29 and above
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v2.4.0, Apr 10, 2025
-* Upgrade iOS native SDK to 2.4.0 to fix the build issue when Xcode upgrade to 16.3 or above
+## [3.0.0] - 2025-09-19 🚀
 
-## v2.3.2, Apr 10, 2025
-* Fixed: Fix  [NBNavigation.fetchRoute] route request error on iOS of the sdk version of v2.3.1
+### ⚠️ BREAKING CHANGES
 
-## v2.3.1, Apr 9, 2025
-* Upgrade Android native SDK to 2.0.5 to fix the crash issue when origin is very close to destination
+#### iOS Metal Migration
+The iOS navigation native framework has been updated to version 3.0.0 with migration to Metal rendering.
+- **Benefit**: Significantly improved rendering performance and modern graphics pipeline
 
-## v2.3.0+1, Mar 13, 2025
-* Add the missing permission annotation for the Android platform in the README
-  ```
+#### Enum Naming Convention Changes
+Multiple enums have been updated to follow lowercase naming conventions.
+
+**MyLocationTrackingMode**:
+- ⚠️ **Action Required**: Update your code to use lowercase enum values
+- **Before**: `MyLocationTrackingMode.Tracking`, `MyLocationTrackingMode.TrackingCompass`, `MyLocationTrackingMode.TrackingGPS`
+- **After**: `MyLocationTrackingMode.tracking`, `MyLocationTrackingMode.trackingCompass`, `MyLocationTrackingMode.trackingGPS`
+
+**Map Style Types**:
+- **New**: `NBMapStyleType.bright`, `NBMapStyleType.night` (replaces previous style string approach)
+- **Usage**: Set via `styleType` property in `NBMap` widget instead of `styleString`
+
+#### Android Performance Optimization
+The Android navigation native framework has been updated to version 2.3.0 with major performance improvements.
+- **Benefit**: Resolved stuttering issues on long-distance routes
+
+### Added
+- **Tile Server Switching**: Added support for switching between different tile servers dynamically
+  - `NBNavigation.switchTileServer(server: WellKnownTileServer)`
+  - Support for TomTom and MapTiler tile servers
+- **Map Style Switching**: Added support for switching map styles at runtime
+  - Light/Dark theme switching via `NextbillionMapController.setStyleString()`
+  - Dynamic style updates without map recreation
+- **Enhanced Example App**: Added interactive buttons in `FullNavigationExample` for:
+  - Transportation mode switching (Car → Truck → Bike → Motorcycle)
+  - Tile server switching with visual feedback
+  - Map style switching with loading indicators
+
+### Fixed
+- **Route Request Serialization**: Fixed `avoid` parameter type inconsistency in `RouteRequestParams.toJson()`
+  - Ensured both `avoidType` and legacy `avoid` parameters serialize to consistent string arrays
+  - Added comprehensive unit tests for avoid parameter handling
+- **Long Route Performance**: Resolved stuttering and performance issues on long-distance routes (Android)
+- **Build Configuration**: Fixed JVM target compatibility issues between Java and Kotlin compilation
+
+### Changed
+- **iOS Native SDK**: Upgraded to 3.0.0 with Metal rendering support
+  - **Migration to Metal**: Complete transition from OpenGL to Metal for improved performance
+  - **Performance**: Significantly faster rendering and better memory management
+  - **Compatibility**: Requires iOS 12.0+ (Metal-compatible devices)
+- **Android Native SDK**: Upgraded to 2.3.0 with performance optimizations
+  - **Long Route Performance**: Resolved stuttering and lag issues on long-distance routes
+  - **Memory Optimization**: Improved memory usage during navigation
+- **Dependencies**: Updated `nb_maps_flutter` to version 3.0.1
+- **Build System**: Updated Android Gradle configuration for better compatibility
+  - Java compilation target: VERSION_11
+  - Kotlin JVM target: '11'
+
+### Improved
+- **User Experience**: Enhanced visual feedback for all switching operations
+- **Error Handling**: Improved error messages and user notifications
+- **Code Quality**: Added comprehensive unit tests for route parameter serialization
+- **Performance**: Significant performance improvements for long-distance navigation routes
+- **Developer Experience**: Enhanced example app with multiple interactive features for testing
+
+### Technical Details
+- **iOS Rendering**: Complete migration from OpenGL ES to Metal for better performance and future-proofing
+- **Android Optimization**: Optimized route calculation and rendering for long-distance routes (>100km)
+- **Memory Management**: Improved memory usage patterns in both platforms
+- **Testing Coverage**: Added 35+ unit tests for route parameter serialization and avoid field handling
+
+### Migration Guide
+For developers upgrading from 2.x to 3.0.0:
+
+#### Required Code Changes
+1. **MyLocationTrackingMode Enum**: Update enum value casing
+   ```dart
+   // Before (2.x)
+   MyLocationTrackingMode.Tracking
+   MyLocationTrackingMode.TrackingCompass
+   MyLocationTrackingMode.TrackingGPS
+   
+   // After (3.0.0)
+   MyLocationTrackingMode.tracking
+   MyLocationTrackingMode.trackingCompass
+   MyLocationTrackingMode.trackingGPS
+   ```
+
+2. **Map Style Configuration**: Update from string-based to enum-based styling
+   ```dart
+   // Before (2.x)
+   NBMap(
+     styleString: isLight ? NbMapStyles.LIGHT : NbMapStyles.DARK,
+   )
+   
+   // After (3.0.0)
+   NBMap(
+     styleType: isLight ? NBMapStyleType.bright : NBMapStyleType.night,
+   )
+   ```
+
+#### Platform Requirements
+3. **iOS**: Ensure your minimum deployment target is iOS 12.0+ (Metal support required)
+4. **Android**: No action required - performance improvements are automatic
+
+#### Testing & Verification
+5. **API Compatibility**: All other existing APIs remain compatible
+6. **Performance Testing**: Verify navigation performance on your specific use cases
+7. **Device Testing**: Test on older iOS devices to ensure Metal compatibility
+
+## [2.7.0] - 2025-08-23
+
+### Added
+- Added `currentLegProgress` to `NavigationProgress`, enabling access to ETA for upcoming waypoints via `NBNavigationView.onProgressChange`
+
+### Fixed
+- Fixed `avoid` function now correctly handles both `RouteRequestParams.avoidType` and `RouteRequestParams.avoid`
+- Fixed all lint issues detected by `flutter_lints`
+- Fixed all lint issues checked by `flutter_lint`
+
+### Changed
+- Replaced deprecated `PreferenceManager.getDefaultSharedPreferences` with `context.getSharedPreferences` using "NAVIGATION_SHARE_PREFS"
+- Upgraded `NextBillionNavigation` to version 2.5.0 — fixed all native SDK lint issues in this release
+- Upgraded `ai.nextbillion:nb-navigation-android` from 2.1.0 to 2.2.0 — includes native SDK lint fixes
+- Upgraded `nb_maps_flutter` to 2.2.0 — includes native SDK lint fixes
+
+## [2.6.0] - 2025-03-14
+
+### Added
+- Added support for bike and motorcycle modes in route generation
+
+### Changed
+- Upgraded `nb_maps_flutter` to version 2.1.0 to fix error logs when retrieving image resources
+
+## [2.5.0] - 2025-04-15
+
+### Fixed
+- Fixed build error on Flutter 3.29 and above
+
+### Changed
+- Upgraded `nb_maps_flutter` version to 2.0.0
+
+## [2.4.0] - 2025-04-10
+
+### Fixed
+- Fixed build issue when Xcode upgraded to 16.3 or above
+
+### Changed
+- Upgraded iOS native SDK to 2.4.0
+
+## [2.3.2] - 2025-04-10
+
+### Fixed
+- Fixed `NBNavigation.fetchRoute` route request error on iOS of the SDK version v2.3.1
+
+## [2.3.1] - 2025-04-09
+
+### Fixed
+- Fixed crash issue when origin is very close to destination
+
+### Changed
+- Upgraded Android native SDK to 2.0.5
+
+## [2.3.0+1] - 2025-03-13
+
+### Added
+- Added missing permission annotations for the Android platform in the README:
+  ```xml
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION"/>
   <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   ```
 
-## v2.3.0, Mar 13, 2025
-* Upgrade the iOS native SDK to 2.3.0 to fix the following issues :
-  * Dissolved route progress not matching the primary route progress
-  * Support live traffic on the navigation screen
-  * Fix crash issue in simulation mode on iOS
-* Refactor README
-* Update iOS PLATFORM_VERSION to 12.0
-* Bump the version to 2.3.0 to align with the nb_maps_flutter SDK
-* Bump the minimum flutter version to 3.24.1
-* Bump the minimum android version to 21
-* Fix issue where dissolved route style doesn't work on Android when using [NBNavigationView].
-  * Support custom map style on preview screen
-  * Fix crash issue in simulation mode on iOS
-  * Optimize the off-route detector on iOS
-  * Instrumentation enabled by default
-* Fix alternative route selection issue
-  * Refactor NavigationMap.addRouteSelectedListener:
-    * Removed the LatLng parameter.
-    * Changed the method to use an internal calculation mechanism instead.
-  * Add `NavigationMap.removeRouteSelectedListener`:
-    * Introduced a method to remove the route selection listener.
-  * Resolved the issue where the wrong route was launched if the primary route was changed before starting navigation
+## [2.3.0] - 2025-03-13
 
-## v2.2.0, Feb 7, 2025
-* Support for the 'avoid' parameter in route request options
-* Add an [RouteRequestParams.routeType] field in the route request parameters,it will take effect when [RouteRequestParams.option] set as [SupportedOption.flexible]
-* Fix the android navigation screen display incorrect route instead of the selected route
-* Update the android navigation native framework to 1.5.0 to fix the follow issue 
-  * Instrumentation enabled by default
-  * Fixed puck icon jumpiness during rerouting
-  * Increased network request timeout to 30 seconds
-  * Fixed incorrect U-turn display in "Then" step instructions
+### Added
+- Added support for custom map style on preview screen
+- Added `NavigationMap.removeRouteSelectedListener` method to remove the route selection listener
+- Added instrumentation enabled by default
 
-## v2.1.0, Dec 16, 2024
-* Adapting to Android Gradle Plugin 8.0 Without Using the AGP Upgrading Assistant
-* Adapting to Android Kotlin Plugin 1.8.0+
+### Fixed
+- Fixed dissolved route progress not matching the primary route progress
+- Fixed crash issue in simulation mode on iOS
+- Fixed issue where dissolved route style doesn't work on Android when using `NBNavigationView`
+- Fixed alternative route selection issue
+- Fixed the issue where the wrong route was launched if the primary route was changed before starting navigation
 
-## v2.0.0, Dec 13, 2024
-### Breaking Changes
-#### Bitcode Disabled:
+### Changed
+- Upgraded iOS native SDK to 2.3.0
+- Refactored README documentation
+- Updated iOS PLATFORM_VERSION to 12.0
+- Bumped version to 2.3.0 to align with the nb_maps_flutter SDK
+- Bumped minimum Flutter version to 3.24.1
+- Bumped minimum Android version to 21
+- Optimized the off-route detector on iOS
+- Refactored `NavigationMap.addRouteSelectedListener`:
+  - Removed the LatLng parameter
+  - Changed the method to use an internal calculation mechanism instead
+
+### Improved
+- Added support for live traffic on the navigation screen
+
+## [2.2.0] - 2025-02-07
+
+### Added
+- Added support for the 'avoid' parameter in route request options
+- Added `RouteRequestParams.routeType` field in route request parameters (takes effect when `RouteRequestParams.option` is set as `SupportedOption.flexible`)
+
+### Fixed
+- Fixed Android navigation screen displaying incorrect route instead of the selected route
+- Fixed puck icon jumpiness during rerouting
+- Fixed incorrect U-turn display in "Then" step instructions
+
+### Changed
+- Updated Android navigation native framework to 1.5.0
+- Increased network request timeout to 30 seconds
+- Instrumentation enabled by default
+
+## [2.1.0] - 2024-12-16
+
+### Changed
+- Adapted to Android Gradle Plugin 8.0 without using the AGP Upgrading Assistant
+- Adapted to Android Kotlin Plugin 1.8.0+
+
+## [2.0.0] - 2024-12-13
+
+### ⚠️ BREAKING CHANGES
+
+#### Bitcode Disabled
 The iOS navigation native framework has been updated to version v2.1.0, and Bitcode support has been disabled. This change is breaking for projects that require Bitcode.
-- Ensure you update your project settings to account for the disabled Bitcode when integrating this framework version.
-#### Android Gradle Plugin 8.0+ Support:
+- ⚠️ **Action Required**: Ensure you update your project settings to account for the disabled Bitcode when integrating this framework version
+
+#### Android Gradle Plugin 8.0+ Support
 The Android navigation native framework has been updated to version v1.4.0 and now supports Android Gradle Plugin (AGP) 8.0+.
-- If your project is using AGP 8.0 or above, please upgrade to this version.
-### Changes
-* Updated the iOS navigation native framework to version v2.1.0.
-* Updated the Android navigation native framework to version v1.4.0.
-* Added support for the 'allow' parameter in route request options.
-* Add an avoidType field in the route request parameters to accept a List<String> as its type, which enhances support for the 'avoid' parameter.
+- ⚠️ **Action Required**: If your project is using AGP 8.0 or above, please upgrade to this version
 
-## v1.0.1, Sept 6, 2024
-* Update android native framework to 1.3.10
-  * Disable automatic theme switching in tunnel mode on Android to fix the crash issue occurring during navigation
-  
-## v1.0.0, Sept 5, 2024
-* Update the android navigation native framework to 1.3.9
-* Update the iOS navigation native framework to 1.6.1
-  * Remove NbmapDirections.xcframework from NbmapCoreNavigation and merged related classes into NbmapCoreNavigation.
-  * Upgrade the dependency version of NBmaps.xcframework to 1.1.5
-* Optimization: Simplified Route Switching Handling, by removing unnecessary list operations, the new code is more efficient.
-  * Previous Implementation:
-    * When a route was selected, the code moved the selected route to the beginning of the list and redrew the routes.
-  * New Implementation:
-    * Simplified the logic to just set primaryIndex to selectedRouteIndex.
-      ```
-        navNextBillionMap.addRouteSelectedListener(coordinates, (selectedRouteIndex) {
-           if (routes.isNotEmpty) {
-             primaryIndex = selectedRouteIndex;
-           }
-        });
-      ```
-* Bug Fix: Primary Route Selection
-  * Issue: The selected route was not being used as the primary route; the default behavior was always using routes.first.
-  * Fix: Updated the configuration to support the selected route as the primary route.
-    ```
-      NavigationLauncherConfig config = NavigationLauncherConfig(route: selectedRoute, routes: routes);
+### Added
+- Added support for the 'allow' parameter in route request options
+- Added `avoidType` field in route request parameters to accept a `List<String>` as its type, which enhances support for the 'avoid' parameter
+
+### Changed
+- Updated iOS navigation native framework to version v2.1.0
+- Updated Android navigation native framework to version v1.4.0
+
+## [1.0.1] - 2024-09-06
+
+### Fixed
+- Fixed crash issue occurring during navigation in tunnel mode on Android
+
+### Changed
+- Updated Android native framework to 1.3.10
+- Disabled automatic theme switching in tunnel mode on Android
+
+## [1.0.0] - 2024-09-05 🎉
+
+### Added
+- **Major Release**: First stable version of the NextBillion Navigation Flutter SDK
+
+### Fixed
+- **Primary Route Selection**: Fixed issue where the selected route was not being used as the primary route (default behavior was always using `routes.first`)
+  ```dart
+  // New implementation
+  NavigationLauncherConfig config = NavigationLauncherConfig(route: selectedRoute, routes: routes);
+  ```
+
+### Changed
+- Updated Android navigation native framework to 1.3.9
+- Updated iOS navigation native framework to 1.6.1
+- Upgraded dependency version of NBmaps.xcframework to 1.1.5
+
+### Improved
+- **Route Switching Optimization**: Simplified route switching handling by removing unnecessary list operations for better performance
+  - **Previous**: When a route was selected, the code moved the selected route to the beginning of the list and redrew the routes
+  - **New**: Simplified logic to just set `primaryIndex` to `selectedRouteIndex`
+    ```dart
+    navNextBillionMap.addRouteSelectedListener(coordinates, (selectedRouteIndex) {
+       if (routes.isNotEmpty) {
+         primaryIndex = selectedRouteIndex;
+       }
+    });
     ```
 
-## v0.7.0, July 23, 2024
-* Update the android navigation native framework to 1.3.6 to fix the speedometer view shown issue on the [NBNavigationView]
-  * Fix speedometer not shown on Android when use [NBNavigationView] 
-* Add [showSpeedometer] property to [NavigationLauncherConfig] to support showing the speedometer on the navigation screen
-* Fix [NBNavigationView.onArriveAtWaypoint] callback not triggered on iOS when arrive at waypoint
-* Add [NBNavigationView.onRerouteFailureCallback] callback to support listening to the navigation reroute failure event
-* Add [NBNavigationView.onRerouteAlongCallback] callback to support listening to the navigation reroute along event
+### Removed
+- Removed NbmapDirections.xcframework from NbmapCoreNavigation and merged related classes into NbmapCoreNavigation
+
+## [0.7.0] - 2024-07-23
+
+### Added
+- Added `showSpeedometer` property to `NavigationLauncherConfig` to support showing the speedometer on the navigation screen
+- Added `NBNavigationView.onRerouteFailureCallback` callback to support listening to navigation reroute failure events
+- Added `NBNavigationView.onRerouteAlongCallback` callback to support listening to navigation reroute along events
+
+### Fixed
+- Fixed speedometer view display issue on `NBNavigationView` for Android
+- Fixed speedometer not shown on Android when using `NBNavigationView`
+- Fixed `NBNavigationView.onArriveAtWaypoint` callback not triggered on iOS when arriving at waypoint
+
+### Changed
+- Updated Android navigation native framework to 1.3.6
 
 ## v0.6.4, July 17, 2024
 * Fix [DirectionsRoute.fromJson] issue
@@ -280,26 +464,29 @@ The Android navigation native framework has been updated to version v1.4.0 and n
 * Add permissions annotation
 
 
-## v0.1.0, July 19, 2023
-* Maps Plugin
-* Support fetch route
-  * RouteRequestParams
-* Support draw route line on MapView
-* Support alternative routes
-  * Toggle alternative line visibility
-  * Toggle Route duration symbol visibility
-* Launch Navigation with given route
-  * route
-  * routes (all routes contain alternative routes)
-  * themeMode: system(default), light, dark
-  * locationLayerRenderMode: default LocationLayerRenderMode.GPS
-  * enableDissolvedRouteLine: default true
-* Customize Route line appearance
-  * route line Shield Color
-  * alternative Route line ShieldColor
-  * route width
-  * route color
-  * alternative route color
-  * route origin marker image
-  * route destination marker image
-* Customize Navigation View appearance
+## [0.1.0] - 2023-07-19 🚀
+
+### Added
+- **Initial Release**: NextBillion Navigation Flutter SDK
+- **Maps Plugin**: Core mapping functionality
+- **Route Fetching**: Support for fetching routes with `RouteRequestParams`
+- **Route Visualization**: Support for drawing route lines on MapView
+- **Alternative Routes**: 
+  - Toggle alternative line visibility
+  - Toggle route duration symbol visibility
+- **Navigation Launch**: Launch navigation with given route
+  - Single route support
+  - Multiple routes support (including alternative routes)
+  - Theme modes: system (default), light, dark
+  - Location layer render mode: default `LocationLayerRenderMode.GPS`
+  - Dissolved route line: enabled by default
+
+### Customization Features
+- **Route Line Appearance**:
+  - Route line shield color
+  - Alternative route line shield color
+  - Route width and color
+  - Alternative route color
+  - Route origin marker image
+  - Route destination marker image
+- **Navigation View Appearance**: Customizable navigation view styling

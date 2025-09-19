@@ -674,7 +674,7 @@ class NextbillionMapControllerWrapper extends MapController {
   }
 
   @override
-  Future<Point> toScreenLocation(LatLng latLng) {
+  Future<Point?> toScreenLocation(LatLng latLng) {
     return _controller.toScreenLocation(latLng);
   }
 
