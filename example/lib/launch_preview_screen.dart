@@ -85,7 +85,6 @@ class LaunchPreviewScreenState extends State<LaunchPreviewScreen> {
           onUserLocationUpdated: _onUserLocationUpdate,
           onCameraTrackingDismissed: _onCameraTrackingChanged,
           onMapClick: _onMapClick,
-          styleString: NbNavigationStyles.nbMapDefaultLightStyle,
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -227,8 +226,7 @@ class LaunchPreviewScreenState extends State<LaunchPreviewScreen> {
   void _startNavigation() {
     if (routes.isEmpty) return;
 
-    NBNavigation.startPreviewNavigation(routes[primaryIndex],
-        mapStyle: NbNavigationStyles.nbMapDefaultDarkStyle);
+    NBNavigation.startPreviewNavigation(routes[primaryIndex]);
   }
 
   Future<void> loadAssetImage() async {

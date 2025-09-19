@@ -10,6 +10,14 @@ mixin NBNavigation {
     await NextBillion.initNextBillion(accessKey);
   }
 
+  static Future<void> initNextBillionWithTileServer({required String accessKey,required WellKnownTileServer server}) async {
+    return await NextBillion.initNextBillionWithTileServer(accessKey, server);
+  }
+
+  static Future<bool> switchTileServer({required WellKnownTileServer server}) async {
+    return await NextBillion.switchWellKnownTileServer(server);
+  }
+
   /// allow to set the [NBNavigationPlatform] for testing
   @visibleForTesting
   static void setNBNavigationPlatform(NBNavigationPlatform nbNavigationPlatform) {
