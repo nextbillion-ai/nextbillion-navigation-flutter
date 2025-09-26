@@ -19,7 +19,7 @@ class NBNavigationMethodChannel extends NBNavigationPlatform {
     switch (call.method) {
       case NBNavigationLauncherMethodID.nbOnNavigationExit:
         final arguments = call.arguments;
-        if (arguments is Map<String, dynamic>) {
+        if (arguments is Map) {
           final bool? shouldRefreshRoute =
               arguments["shouldRefreshRoute"] as bool?;
           final int? remainingWaypoints =
