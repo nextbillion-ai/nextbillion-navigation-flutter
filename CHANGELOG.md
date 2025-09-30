@@ -2,12 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-## [Unreleased]
-
-## [3.1.0-dev.1] - 2025-09-30
+## [3.1.0] - 2025-09-30
 ### Changed
 - **Android Native SDK**: Updated to 2.4.0 (from 2.3.1-beta.1)
 - **Build System**: Updated Android Gradle Plugin (AGP) to 8.6.0
@@ -18,10 +13,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Android **16kb** alignment support
 - Update android **minSdkVersion** version from 21 to 23
 
-### Improved
-- **Build Performance**: Enhanced build stability and reduced cache-related issues
-- **Dependency Management**: Better version constraint handling
-- 
 ## [3.0.1] - 2025-09-26
 - Fixed `OnNavigationExitCallback` not called when navigation canceled
 - 
