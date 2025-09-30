@@ -1,7 +1,30 @@
 # Changelog
-## [3.0.1] - 2025-09-26
-- Fixes `OnNavigationExitCallback` not called when navigation canceled
 
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+## [3.1.0-dev.1] - 2025-09-30
+### Changed
+- **Android Native SDK**: Updated to 2.4.0 (from 2.3.1-beta.1)
+- **Build System**: Updated Android Gradle Plugin (AGP) to 8.6.0
+- **Dependencies**: Updated `nb_maps_flutter` to version 3.0.2 (3.1.0 available but constrained)
+- **Build Configuration**: Improved Gradle cache management and build reliability
+- 
+### ⚠️ BREAKING CHANGES
+- Android **16kb** alignment support
+- Update android **minSdkVersion** version from 21 to 23
+
+### Improved
+- **Build Performance**: Enhanced build stability and reduced cache-related issues
+- **Dependency Management**: Better version constraint handling
+- 
+## [3.0.1] - 2025-09-26
+- Fixed `OnNavigationExitCallback` not called when navigation canceled
+- 
 ## [3.0.0] - 2025-09-19 🚀
 
 ### ⚠️ BREAKING CHANGES
@@ -50,11 +73,13 @@ The Android navigation native framework has been updated to version 2.3.0 with m
   - **Migration to Metal**: Complete transition from OpenGL to Metal for improved performance
   - **Performance**: Significantly faster rendering and better memory management
   - **Compatibility**: Requires iOS 12.0+ (Metal-compatible devices)
-- **Android Native SDK**: Upgraded to 2.3.0 with performance optimizations
+- **Android Native SDK**: Upgraded to 2.4.0 with performance optimizations
   - **Long Route Performance**: Resolved stuttering and lag issues on long-distance routes
   - **Memory Optimization**: Improved memory usage during navigation
-- **Dependencies**: Updated `nb_maps_flutter` to version 3.0.1
+- **Dependencies**: Updated `nb_maps_flutter` to version 3.0.2
 - **Build System**: Updated Android Gradle configuration for better compatibility
+  - Android Gradle Plugin (AGP): Upgraded to 8.6.0
+  - Kotlin: Upgraded to 1.9.24
   - Java compilation target: VERSION_11
   - Kotlin JVM target: '11'
 
@@ -276,12 +301,12 @@ The Android navigation native framework has been updated to version v1.4.0 and n
   - **Previous**: When a route was selected, the code moved the selected route to the beginning of the list and redrew the routes
   - **New**: Simplified logic to just set `primaryIndex` to `selectedRouteIndex`
     ```dart
-    navNextBillionMap.addRouteSelectedListener(coordinates, (selectedRouteIndex) {
-       if (routes.isNotEmpty) {
-         primaryIndex = selectedRouteIndex;
-       }
-    });
-    ```
+        navNextBillionMap.addRouteSelectedListener(coordinates, (selectedRouteIndex) {
+           if (routes.isNotEmpty) {
+             primaryIndex = selectedRouteIndex;
+           }
+        });
+      ```
 
 ### Removed
 - Removed NbmapDirections.xcframework from NbmapCoreNavigation and merged related classes into NbmapCoreNavigation

@@ -15,7 +15,7 @@ This project includes third-party components with their own licenses. See the [N
 
 ## Prerequisites
 * Access Key
-* Android minSdkVersion 21+
+* Android minSdkVersion 23+
 * iOS 12+
 * Flutter 3.22+
 ## Initialization
