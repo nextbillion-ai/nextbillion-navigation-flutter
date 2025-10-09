@@ -9,7 +9,7 @@ import Foundation
 import Flutter
 import NbmapNavigation
 import NbmapCoreNavigation
-import Turf
+import NBTurf
 
 class RouteFetcherHandler: MethodChannelHandler {
     let dateComponentsFormatter = DateComponentsFormatter()
@@ -58,15 +58,15 @@ class RouteFetcherHandler: MethodChannelHandler {
             }
             let closest = lines.sorted { (left, right) -> Bool in
                 //existance has been assured through use of filter.
-                let leftLine = Polyline(left)
-                let rightLine = Polyline(right)
+                let leftLine = NBPolyline(left)
+                let rightLine = NBPolyline(right)
                 let leftDistance = leftLine.closestCoordinate(to: tapCoordinate)!.distance
                 let rightDistance = rightLine.closestCoordinate(to: tapCoordinate)!.distance
                 
                 return leftDistance < rightDistance
             }
             let candidates = closest.filter {
-                let closestCoordinate = Polyline($0).closestCoordinate(to: tapCoordinate)!.coordinate
+                let closestCoordinate = NBPolyline($0).closestCoordinate(to: tapCoordinate)!.coordinate
                 return closestCoordinate.distance(to: tapCoordinate) < 5000
             }
             if !candidates.isEmpty, let routeIndex = lines.firstIndex(of: candidates.first!) {
