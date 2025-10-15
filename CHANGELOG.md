@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [3.1.1-dev.1] - 2025-10-09
+## [3.1.1] - 2025-10-15
 - Bump iOS Navigation SDK to **3.1.1**. This resolves a crash that occasionally occurs during rerouting
 
 ## [3.1.0] - 2025-09-30
