@@ -68,7 +68,7 @@ class NavigationLauncherHandler(methodChannel: MethodChannel?) : MethodChannelHa
             }
             val navLauncherConfig = configBuilder?.build()
             if (navLauncherConfig != null && activity != null) {
-                NavigationLauncher.startNavigation(activity, navLauncherConfig)
+                NavigationLauncher.startNavigation(activity!!, navLauncherConfig)
             }
         }
         NavigationResultEventDispatcher.getInstance().setNavigationResultListeners(mResultListener)
