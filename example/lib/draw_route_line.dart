@@ -101,6 +101,9 @@ class DrawRouteLineState extends State<DrawRouteLine> {
         allow: "taxi",
         routeType: RouteType.shortest,
         approaches: [SupportedApproaches.curb],
+        // New truck-specific parameters
+        prefer: SupportedPrefer.truckRoute, // Prioritize truck-friendly roads
+        truckType: [SupportedTruckType.semiTrailer, SupportedTruckType.rigidTruck], // Specify truck types
 
     );
 
@@ -111,6 +114,8 @@ class DrawRouteLineState extends State<DrawRouteLine> {
         routes = routeResponse.directionsRoutes;
       });
       drawRoutes(routes);
+      var options =  routes.first.routeOptions?.toJson();
+      print("options ： $options");
     } else if (routeResponse.message != null) {
       if (kDebugMode) {
         print(
