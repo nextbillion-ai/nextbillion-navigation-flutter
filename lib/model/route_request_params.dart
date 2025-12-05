@@ -175,6 +175,31 @@ class RouteRequestParams {
   /// The [RouteType.shortest] only available for [RouteRequestParams.option] set as [SupportedOption.flexible]
   RouteType? routeType;
 
+  /// Prioritizes truck-friendly roads when calculating routes.
+  /// This configuration aims to maximize truck-friendly road inclusion in the final route.
+  /// 
+  /// **Requirements:**
+  /// - Only effective when `option=flexible` and `mode=truck`
+  /// - The `truck_type` setting is ineffective without this parameter
+  /// 
+  /// **Allowed Values:**
+  /// - [SupportedPrefer.truckRoute]
+  SupportedPrefer? prefer;
+
+  /// Specifies the types of truck for route calculation.
+  /// This parameter works in conjunction with [prefer] parameter.
+  /// 
+  /// **Requirements:**
+  /// - Only effective when `option=flexible`, `mode=truck`, and `prefer=truck_route`
+  /// 
+  /// **Allowed Values:**
+  /// - [SupportedTruckType.rigidTruck] - Rigid truck type
+  /// - [SupportedTruckType.semiTrailer] - Semi-trailer truck type  
+  /// - [SupportedTruckType.bDouble] - B-double truck type
+  /// - [SupportedTruckType.roadTrain] - Road train truck type
+  /// - [SupportedTruckType.genericTruck] - Generic truck type
+  List<SupportedTruckType>? truckType;
+
   RouteRequestParams({
     required this.origin,
     required this.destination,
@@ -202,6 +227,8 @@ class RouteRequestParams {
     this.truckAxleLoad,
     this.allow,
     this.routeType,
+    this.prefer,
+    this.truckType,
   }) : assert(
   mode != ValidModes.truck ||
       (truckWeight == null || (truckWeight >= 1 && truckWeight <= 100000)),
@@ -287,6 +314,12 @@ class RouteRequestParams {
       truckAxleLoad: (map['truckAxleLoad'] as num?)?.toDouble(),
       allow: map['allow'] as String?,
       routeType: RouteType.fromValue(map['routeType'] as String?),
+      prefer: SupportedPrefer.fromValue(map['prefer'] as String?),
+      truckType: (map['truckType'] as List<dynamic>?)
+          ?.map((x) => SupportedTruckType.fromValue(x as String?))
+          .whereType<SupportedTruckType>()
+          .toList() ??
+          [],
     );
   }
 
@@ -317,6 +350,8 @@ class RouteRequestParams {
       'truckAxleLoad': truckAxleLoad,
       'allow': allow,
       'routeType': routeType?.description,
+      'prefer': prefer?.description,
+      'truckType': truckType?.isNotEmpty == true ? truckType?.map((e) => e.description).toList() : null,
     };
   }
 }

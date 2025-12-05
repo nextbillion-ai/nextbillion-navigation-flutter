@@ -118,11 +118,20 @@ public class Convert {
             routeOptions.allow = allow
         }
 
-         if let routeType = options["routeType"] as? String {
-             routeOptions.routeType = NBNavigationRouteType.init(routeType)
-         }
+        if let routeType = options["routeType"] as? String {
+            routeOptions.routeType = NBNavigationRouteType.init(routeType)
+        }
         //            routeOptions.apiEndpoint
         //            routeOptions.accessToken
+        
+        if let prefer = options["prefer"] as? String {
+            routeOptions.prefer = NBTruckPrefer(description: prefer) ?? .none
+        }
+        
+        if let truckType = options["truckType"] as? [String] ,
+           let truckTypes = TruckTypes(descriptions: truckType) {
+            routeOptions.truckTypes = truckTypes
+        }
         
         return routeOptions
             
@@ -179,6 +188,7 @@ public class Convert {
         options["truckSize"] = routeOptions.truckSize
         options["truckWeight"] = routeOptions.truckWeight
         options["allow"] = routeOptions.allow
+        options["routeType"] = routeOptions.routeType?.rawValue
 
         if (!routeOptions.hazmatTypes.isEmpty) {
             options["hazmatType"] = routeOptions.hazmatTypes.description.components(separatedBy: ";")
@@ -190,6 +200,8 @@ public class Convert {
 
         options["crossBorder"] = routeOptions.crossBorder
         options["truckAxleLoad"] = routeOptions.truckAxleLoad
+        options["prefer"] = routeOptions.prefer.description
+        options["truckType"] = routeOptions.truckTypes.description.components(separatedBy: "|")
         return options
     }
     

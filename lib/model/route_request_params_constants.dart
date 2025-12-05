@@ -153,6 +153,24 @@ extension EnumExtension on Enum {
     if (this == SupportedAvoid.serviceRoad) {
       return "service_road";
     }
+    if (this == SupportedPrefer.truckRoute) {
+      return "truck_route";
+    }
+    if (this == SupportedTruckType.rigidTruck) {
+      return "rigid_truck";
+    }
+    if (this == SupportedTruckType.semiTrailer) {
+      return "semi_trailer";
+    }
+    if (this == SupportedTruckType.bDouble) {
+      return "b_double";
+    }
+    if (this == SupportedTruckType.roadTrain) {
+      return "road_train";
+    }
+    if (this == SupportedTruckType.genericTruck) {
+      return "generic_truck";
+    }
     return toString().split('.').last;
   }
 }
@@ -173,4 +191,45 @@ enum RouteType {
     }
     return "fastest";
   }
+}
+
+enum SupportedPrefer {
+  /// Prioritizes truck-friendly roads when calculating routes.
+  /// This configuration aims to maximize truck-friendly road inclusion in the final route.
+  /// It is effective only when option=flexible and mode=truck.
+  /// Please note that the truck_type setting is ineffective without this parameter.
+  truckRoute;
+
+  static SupportedPrefer? fromValue(String? s) => switch (s) {
+        "truck_route" => truckRoute,
+        _ => null,
+      };
+
+  String get description => "truck_route";
+}
+
+enum SupportedTruckType {
+  /// Rigid truck type.
+  rigidTruck,
+
+  /// Semi-trailer truck type.
+  semiTrailer,
+
+  /// B-double truck type.
+  bDouble,
+
+  /// Road train truck type.
+  roadTrain,
+
+  /// Generic truck type.
+  genericTruck;
+
+  static SupportedTruckType? fromValue(String? s) => switch (s) {
+        "rigid_truck" => rigidTruck,
+        "semi_trailer" => semiTrailer,
+        "b_double" => bDouble,
+        "road_train" => roadTrain,
+        "generic_truck" => genericTruck,
+        _ => null,
+      };
 }

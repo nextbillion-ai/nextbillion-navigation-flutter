@@ -718,5 +718,171 @@ void main() {
     });
   });
 
+  group('RouteRequestParams prefer and truckType parameters', () {
+    group('fromJson parsing', () {
+      test('should parse prefer parameter correctly', () {
+        final map = {
+          'origin': [-118.243683, 34.052235],
+          'destination': [-74.005974, 40.712776],
+          'prefer': 'truck_route',
+        };
+
+        final params = RouteRequestParams.fromJson(map);
+        
+        expect(params.prefer, SupportedPrefer.truckRoute);
+      });
+
+      test('should parse truckType parameter correctly', () {
+        final map = {
+          'origin': [-118.243683, 34.052235],
+          'destination': [-74.005974, 40.712776],
+          'truckType': ['semi_trailer'],
+        };
+
+        final params = RouteRequestParams.fromJson(map);
+        
+        expect(params.truckType, [SupportedTruckType.semiTrailer]);
+      });
+
+      test('should handle all truckType values', () {
+        final map = {
+          'origin': [-118.243683, 34.052235],
+          'destination': [-74.005974, 40.712776],
+          'truckType': [
+            'rigid_truck',
+            'semi_trailer', 
+            'b_double',
+            'road_train',
+            'generic_truck'
+          ],
+        };
+        
+        final expectedTypes = [
+          SupportedTruckType.rigidTruck,
+          SupportedTruckType.semiTrailer,
+          SupportedTruckType.bDouble,
+          SupportedTruckType.roadTrain,
+          SupportedTruckType.genericTruck,
+        ];
+
+        final params = RouteRequestParams.fromJson(map);
+        expect(params.truckType, expectedTypes);
+      });
+
+      test('should handle null prefer and truckType', () {
+        final map = {
+          'origin': [-118.243683, 34.052235],
+          'destination': [-74.005974, 40.712776],
+          'prefer': null,
+          'truckType': null,
+        };
+
+        final params = RouteRequestParams.fromJson(map);
+        
+        expect(params.prefer, isNull);
+        expect(params.truckType, isEmpty);
+      });
+
+      test('should handle invalid prefer and truckType values', () {
+        final map = {
+          'origin': [-118.243683, 34.052235],
+          'destination': [-74.005974, 40.712776],
+          'prefer': 'invalid_prefer',
+          'truckType': ['invalid_truck_type'],
+        };
+
+        final params = RouteRequestParams.fromJson(map);
+        
+        expect(params.prefer, isNull);
+        expect(params.truckType, isEmpty);
+      });
+    });
+
+    group('toJson serialization', () {
+      test('should serialize prefer parameter correctly', () {
+        final params = RouteRequestParams(
+          origin: const LatLng(34.052235, -118.243683),
+          destination: const LatLng(40.712776, -74.005974),
+          prefer: SupportedPrefer.truckRoute,
+        );
+
+        final json = params.toJson();
+        
+        expect(json['prefer'], 'truck_route');
+      });
+
+      test('should serialize truckType parameter correctly', () {
+        final params = RouteRequestParams(
+          origin: const LatLng(34.052235, -118.243683),
+          destination: const LatLng(40.712776, -74.005974),
+          truckType: [SupportedTruckType.semiTrailer],
+        );
+
+        final json = params.toJson();
+        
+        expect(json['truckType'], ['semi_trailer']);
+      });
+
+      test('should serialize all truckType values correctly', () {
+        final truckTypes = [
+          SupportedTruckType.rigidTruck,
+          SupportedTruckType.semiTrailer,
+          SupportedTruckType.bDouble,
+          SupportedTruckType.roadTrain,
+          SupportedTruckType.genericTruck,
+        ];
+        
+        final expectedStrings = [
+          'rigid_truck',
+          'semi_trailer',
+          'b_double',
+          'road_train',
+          'generic_truck',
+        ];
+
+        final params = RouteRequestParams(
+          origin: const LatLng(34.052235, -118.243683),
+          destination: const LatLng(40.712776, -74.005974),
+          truckType: truckTypes,
+        );
+
+        final json = params.toJson();
+        expect(json['truckType'], expectedStrings);
+      });
+
+      test('should handle null prefer and truckType in toJson', () {
+        final params = RouteRequestParams(
+          origin: const LatLng(34.052235, -118.243683),
+          destination: const LatLng(40.712776, -74.005974),
+          prefer: null,
+          truckType: null,
+        );
+
+        final json = params.toJson();
+        
+        expect(json['prefer'], isNull);
+        expect(json['truckType'], isNull);
+      });
+
+      test('should serialize prefer and truckType together for truck routing', () {
+        final params = RouteRequestParams(
+          origin: const LatLng(34.052235, -118.243683),
+          destination: const LatLng(40.712776, -74.005974),
+          mode: ValidModes.truck,
+          option: SupportedOption.flexible,
+          prefer: SupportedPrefer.truckRoute,
+          truckType: [SupportedTruckType.semiTrailer],
+        );
+
+        final json = params.toJson();
+        
+        expect(json['mode'], 'truck');
+        expect(json['option'], 'flexible');
+        expect(json['prefer'], 'truck_route');
+        expect(json['truckType'], ['semi_trailer']);
+      });
+    });
+  });
+
 
 }
