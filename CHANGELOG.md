@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.1.2] - 2025-12-05
+- Bump iOS Navigation SDK to 3.1.3, including a refactored off-route detection module.
+- Bump Android Navigation SDK to 2.4.1, with refactored and optimized off-route detection.
 ## [3.1.1] - 2025-10-15
 - Bump iOS Navigation SDK to **3.1.1**. This resolves a crash that occasionally occurs during rerouting
 
