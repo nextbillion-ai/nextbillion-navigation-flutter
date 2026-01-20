@@ -11,8 +11,8 @@ All notable changes to this project will be documented in this file.
 ## [3.1.0] - 2025-09-30
 ### Changed
 - **Android Native SDK**: Updated to 2.4.0 (from 2.3.1-beta.1)
-- **Build System**: Updated Android Gradle Plugin (AGP) to 8.6.0
-- **Dependencies**: Updated `nb_maps_flutter` to version 3.0.2 (3.1.0 available but constrained)
+- **Build System**: Updated Android Gradle Plugin (AGP) to 8.6.0  
+- **Dependencies**: Updated `nb_maps_flutter` to use Git branch `bump_to_3.2.0` (3.2.0-dev.1)
 - **Build Configuration**: Improved Gradle cache management and build reliability
 - 
 ### ⚠️ BREAKING CHANGES
