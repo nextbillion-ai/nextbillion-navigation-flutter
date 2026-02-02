@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.2.0] - 2026-02-02
+- Bump iOS Navigation SDK to 3.1.4, including support "gzip" into request header.
+- Bump Android Navigation SDK to 2.5.0, including support "gzip" into request header.
+
 ## [3.1.2] - 2025-12-05
 - Bump iOS Navigation SDK to 3.1.3, including a refactored off-route detection module.
 - Bump Android Navigation SDK to 2.4.1, with refactored and optimized off-route detection.
@@ -10,9 +14,9 @@ All notable changes to this project will be documented in this file.
 
 ## [3.1.0] - 2025-09-30
 ### Changed
-- **Android Native SDK**: Updated to 2.4.0 (from 2.3.1-beta.1)
+- **Android Native SDK**: Updated to 2.4.0 (from 2.3.1)
 - **Build System**: Updated Android Gradle Plugin (AGP) to 8.6.0  
-- **Dependencies**: Updated `nb_maps_flutter` to use Git branch `bump_to_3.2.0` (3.2.0-dev.1)
+- **Dependencies**: Updated `nb_maps_flutter` to use Git branch `bump_to_3.2.0` (3.2.0)
 - **Build Configuration**: Improved Gradle cache management and build reliability
 - 
 ### ⚠️ BREAKING CHANGES
