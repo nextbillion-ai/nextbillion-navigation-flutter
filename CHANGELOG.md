@@ -1,8 +1,8 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
-## [3.2.1-dev.1] - 2026-02-02
-- Bump iOS Navigation SDK to 3.1.5-beta.2 to solve `ngl_interpolate:withCurveType:parameters:stops:` warning
+## [3.2.1] - 2026-03-04
+- Bump iOS Navigation SDK to 3.1.5to solve `ngl_interpolate:withCurveType:parameters:stops:` warning
 - Bump to solve `NSPredicate: Use of NGL_MATCH as an NSExpression function is forbidden` warning
 - 
 ## [3.2.0] - 2026-02-02
