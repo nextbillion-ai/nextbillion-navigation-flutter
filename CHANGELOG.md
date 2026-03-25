@@ -1,6 +1,14 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+
+## [3.3.0] - 2026-03-25
+- Api-key security enhancement supported with these changes : 
+* Bump iOS navigation native SDK to **3.2.1**
+* Bump Android navigation native SDK to **2.6.0**
+* Bump `nb_maps_flutter` to **3.3.0**
+
+
 ## [3.2.1] - 2026-03-04
 - Bump iOS Navigation SDK to 3.1.5to solve `ngl_interpolate:withCurveType:parameters:stops:` warning
 - Bump to solve `NSPredicate: Use of NGL_MATCH as an NSExpression function is forbidden` warning
