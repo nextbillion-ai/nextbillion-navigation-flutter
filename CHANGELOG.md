@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.3.0] - 2026-04-03
+- Fix UA format issue on iOS maps SDK 
+
 ## [3.3.0] - 2026-03-25
 - Api-key security enhancement supported with these changes : 
 * Bump iOS navigation native SDK to **3.2.1**
