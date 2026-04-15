@@ -2,9 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.3.2-dev.2 - 2026-04-15
+- Fix dissolved route line issue
+
 ## [3.3.2-dev.1 - 2026-04-09
 - Fix dissolved route line issue
-- 
+
 ## [3.3.2] - 2026-04-03
 - Fix UA format issue on iOS maps SDK 
 
