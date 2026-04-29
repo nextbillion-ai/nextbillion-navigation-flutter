@@ -131,6 +131,20 @@ class RouteFetcherHandler(methodChannel: MethodChannel?) : MethodChannelHandler(
         if (TextUtils.equals(params.option(), "fast")) {
             paramsBuilder.option(null)
         }
+
+        try {
+            val jsonObj = JSONObject(data)
+            if (jsonObj.has("roadInfo")) {
+                val roadInfoArray = jsonObj.getJSONArray("roadInfo")
+                val roadInfoList = mutableListOf<String>()
+                for (i in 0 until roadInfoArray.length()) {
+                    roadInfoList.add(roadInfoArray.getString(i))
+                }
+                paramsBuilder.roadInfo(roadInfoList)
+            }
+        } catch (_: Exception) {
+        }
+
         RouteFetcher.getRoute(paramsBuilder.build(), object : Callback<DirectionsResponse> {
             override fun onResponse(call: Call<DirectionsResponse>, response: Response<DirectionsResponse>) {
                 val args = mutableMapOf<String, Any>()

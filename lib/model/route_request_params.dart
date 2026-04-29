@@ -171,6 +171,17 @@ class RouteRequestParams {
   /// Possible values are: [taxi], [hov]
   String? allow;
 
+  /// Specifies the types of road information to include in the route response.
+  /// When provided, the API will return road-level details for the specified types.
+  ///
+  /// **Allowed Values:**
+  /// - [SupportedRoadInfo.maxSpeed] - Include speed limit information
+  /// - [SupportedRoadInfo.truckRoute] - Include truck route information
+  ///
+  /// Multiple values can be specified simultaneously.
+  /// Defaults to [[SupportedRoadInfo.maxSpeed]] if not explicitly set.
+  List<SupportedRoadInfo>? roadInfo;
+
   /// The type of route to calculate. The default is [RouteType.fastest].
   /// The [RouteType.shortest] only available for [RouteRequestParams.option] set as [SupportedOption.flexible]
   RouteType? routeType;
@@ -226,6 +237,7 @@ class RouteRequestParams {
     this.crossBorder,
     this.truckAxleLoad,
     this.allow,
+    this.roadInfo = const [SupportedRoadInfo.maxSpeed],
     this.routeType,
     this.prefer,
     this.truckType,
@@ -313,6 +325,11 @@ class RouteRequestParams {
       crossBorder: map['crossBorder'] as bool?,
       truckAxleLoad: (map['truckAxleLoad'] as num?)?.toDouble(),
       allow: map['allow'] as String?,
+      roadInfo: (map['roadInfo'] as List<dynamic>?)
+          ?.map((x) => SupportedRoadInfo.fromValue(x as String?))
+          .whereType<SupportedRoadInfo>()
+          .toList() ??
+          [SupportedRoadInfo.maxSpeed],
       routeType: RouteType.fromValue(map['routeType'] as String?),
       prefer: SupportedPrefer.fromValue(map['prefer'] as String?),
       truckType: (map['truckType'] as List<dynamic>?)
@@ -349,6 +366,7 @@ class RouteRequestParams {
       'crossBorder': crossBorder,
       'truckAxleLoad': truckAxleLoad,
       'allow': allow,
+      'roadInfo': roadInfo?.map((e) => e.description).toList(),
       'routeType': routeType?.description,
       'prefer': prefer?.description,
       'truckType': truckType?.isNotEmpty == true ? truckType?.map((e) => e.description).toList() : null,

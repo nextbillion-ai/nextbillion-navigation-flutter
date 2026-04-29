@@ -12,6 +12,7 @@ class DirectionsRoute {
   String? countryCode;
   String? voiceLanguage;
   List<CongestionLevel>? congestion;
+  Map<String, dynamic>? roadInfo;
 
   DirectionsRoute({
     this.distance,
@@ -25,6 +26,7 @@ class DirectionsRoute {
     this.weightName,
     this.voiceLanguage,
     this.congestion,
+    this.roadInfo,
   });
 
   factory DirectionsRoute.fromJson(Map<String, dynamic> map) {
@@ -36,7 +38,6 @@ class DirectionsRoute {
           ?.whereType<Map<dynamic, dynamic>>() // Filter only valid maps
           .map((leg) {
         final Map<String, dynamic> convertedMap = leg.cast<String, dynamic>();
-        // final Map<String, dynamic> convertedMap = Map<String, dynamic>.from(leg);
         return Leg.fromJson(convertedMap);
       })
           .toList() ??
@@ -55,6 +56,7 @@ class DirectionsRoute {
           CongestionLevelExtension.fromValue(level as int))
           .toList() ??
           [],
+      roadInfo: (map['road_info'] as Map<dynamic, dynamic>?)?.cast<String, dynamic>(),
     );
   }
 
@@ -67,7 +69,6 @@ class DirectionsRoute {
           ?.whereType<Map<dynamic, dynamic>>() // Filter only valid maps
           .map((leg) {
         final Map<String, dynamic> convertedMap = leg.cast<String, dynamic>();
-        // final Map<String, dynamic> convertedMap = Map<String, dynamic>.from(leg);
         return Leg.fromJson(convertedMap);
       })
           .toList() ??
@@ -83,6 +84,7 @@ class DirectionsRoute {
           CongestionLevelExtension.fromValue(level as int))
           .toList() ??
           [],
+      roadInfo: (map['road_info'] as Map<dynamic, dynamic>?)?.cast<String, dynamic>(),
     );
   }
 
@@ -100,6 +102,7 @@ class DirectionsRoute {
       'voiceLocale': voiceLanguage,
       "congestion":
           congestion?.map((congestion) => congestion.index).toList() ?? [],
+      'road_info': roadInfo,
     };
   }
 }
