@@ -882,6 +882,91 @@ void main() {
         expect(json['truckType'], ['semi_trailer']);
       });
     });
+
+    group('roadInfo serialization', () {
+      test('should have default roadInfo as [max_speed]', () {
+        final params = RouteRequestParams(
+          origin: const LatLng(34.052235, -118.243683),
+          destination: const LatLng(40.712776, -74.005974),
+        );
+
+        expect(params.roadInfo, [SupportedRoadInfo.maxSpeed]);
+
+        final json = params.toJson();
+        expect(json['roadInfo'], ['max_speed']);
+      });
+
+      test('should serialize roadInfo with multiple values', () {
+        final params = RouteRequestParams(
+          origin: const LatLng(34.052235, -118.243683),
+          destination: const LatLng(40.712776, -74.005974),
+          roadInfo: [SupportedRoadInfo.maxSpeed, SupportedRoadInfo.truckRoute],
+        );
+
+        final json = params.toJson();
+        expect(json['roadInfo'], ['max_speed', 'truck_route']);
+      });
+
+      test('should serialize roadInfo with single value', () {
+        final params = RouteRequestParams(
+          origin: const LatLng(34.052235, -118.243683),
+          destination: const LatLng(40.712776, -74.005974),
+          roadInfo: [SupportedRoadInfo.truckRoute],
+        );
+
+        final json = params.toJson();
+        expect(json['roadInfo'], ['truck_route']);
+      });
+
+      test('should handle null roadInfo in toJson', () {
+        final params = RouteRequestParams(
+          origin: const LatLng(34.052235, -118.243683),
+          destination: const LatLng(40.712776, -74.005974),
+          roadInfo: null,
+        );
+
+        final json = params.toJson();
+        expect(json['roadInfo'], isNull);
+      });
+
+      test('should parse roadInfo from JSON', () {
+        final map = {
+          'origin': [-118.243683, 34.052235],
+          'destination': [-74.005974, 40.712776],
+          'roadInfo': ['max_speed', 'truck_route'],
+        };
+
+        final params = RouteRequestParams.fromJson(map);
+        expect(params.roadInfo, [
+          SupportedRoadInfo.maxSpeed,
+          SupportedRoadInfo.truckRoute,
+        ]);
+      });
+
+      test('should default to [maxSpeed] when roadInfo not in JSON', () {
+        final map = {
+          'origin': [-118.243683, 34.052235],
+          'destination': [-74.005974, 40.712776],
+        };
+
+        final params = RouteRequestParams.fromJson(map);
+        expect(params.roadInfo, [SupportedRoadInfo.maxSpeed]);
+      });
+
+      test('should filter out invalid roadInfo values from JSON', () {
+        final map = {
+          'origin': [-118.243683, 34.052235],
+          'destination': [-74.005974, 40.712776],
+          'roadInfo': ['max_speed', 'invalid_value', 'truck_route'],
+        };
+
+        final params = RouteRequestParams.fromJson(map);
+        expect(params.roadInfo, [
+          SupportedRoadInfo.maxSpeed,
+          SupportedRoadInfo.truckRoute,
+        ]);
+      });
+    });
   });
 
 
