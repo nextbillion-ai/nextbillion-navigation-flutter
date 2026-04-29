@@ -80,6 +80,20 @@ void main() {
     expect(SupportedApproaches.fromValue(null), equals(null));
   });
 
+  test('SupportedRoadInfo.fromValue should return SupportedRoadInfo', () {
+    expect(SupportedRoadInfo.fromValue('max_speed'),
+        equals(SupportedRoadInfo.maxSpeed));
+    expect(SupportedRoadInfo.fromValue('truck_route'),
+        equals(SupportedRoadInfo.truckRoute));
+    expect(SupportedRoadInfo.fromValue(null), equals(null));
+    expect(SupportedRoadInfo.fromValue('invalid'), equals(null));
+  });
+
+  test('SupportedRoadInfo.description should return correct string', () {
+    expect(SupportedRoadInfo.maxSpeed.description, equals('max_speed'));
+    expect(SupportedRoadInfo.truckRoute.description, equals('truck_route'));
+  });
+
   test('EnumExtension.description should return description', () {
     expect(ValidOverview.none.description, equals('false'));
     expect(ValidOverview.full.description, equals('full'));

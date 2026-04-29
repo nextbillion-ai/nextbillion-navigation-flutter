@@ -133,6 +133,10 @@ public class Convert {
             routeOptions.truckTypes = truckTypes
         }
         
+        if let roadInfo = options["roadInfo"] as? [String] {
+            routeOptions.roadInfo = roadInfo.compactMap { NBNavigationRoadInfo(rawValue: $0) }
+        }
+        
         return routeOptions
             
     }
@@ -202,6 +206,7 @@ public class Convert {
         options["truckAxleLoad"] = routeOptions.truckAxleLoad
         options["prefer"] = routeOptions.prefer.description
         options["truckType"] = routeOptions.truckTypes.description.components(separatedBy: "|")
+        options["roadInfo"] = routeOptions.roadInfo.map { $0.rawValue }
         return options
     }
     

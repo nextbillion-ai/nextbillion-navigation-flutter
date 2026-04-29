@@ -233,3 +233,22 @@ enum SupportedTruckType {
         _ => null,
       };
 }
+
+enum SupportedRoadInfo {
+  /// Include speed limit information in the route response.
+  maxSpeed,
+
+  /// Include truck route information in the route response.
+  truckRoute;
+
+  static SupportedRoadInfo? fromValue(String? s) => switch (s) {
+        "max_speed" => maxSpeed,
+        "truck_route" => truckRoute,
+        _ => null,
+      };
+
+  String get description => switch (this) {
+        SupportedRoadInfo.maxSpeed => "max_speed",
+        SupportedRoadInfo.truckRoute => "truck_route",
+      };
+}

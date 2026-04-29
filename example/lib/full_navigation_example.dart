@@ -532,11 +532,12 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
       destination: waypoints.last,
       // overview: ValidOverview.simplified,
       // avoidType: ["bbox: 17.453016,78.395004, 17.463005,78.413029|toll"],
-      option: SupportedOption.flexible,
+      // option: SupportedOption.flexible,
       // truckSize: [200, 200, 600],
       // truckWeight: 100,
       // unit: SupportedUnits.imperial,
       routeType: RouteType.shortest,
+      // roadInfo: [SupportedRoadInfo.maxSpeed],
       altCount: 3,
       alternatives: true,
       mode: currentMode, // Use the current selected mode
