@@ -55,6 +55,9 @@ object Convert {
             val showSpeedometer = arguments["showSpeedometer"] as? Boolean
             configBuilder.showSpeedometer(showSpeedometer ?: true)
 
+            val darkModeInTunnel = arguments["darkModeInTunnel"] as? Boolean
+            configBuilder.darkModeInTunnel(darkModeInTunnel ?: true)
+
             val dissolvedRouteLineStyle = arguments["enableDissolvedRouteLine"] as? Boolean
             if (dissolvedRouteLineStyle != null) {
                 configBuilder.dissolvedRouteEnabled(dissolvedRouteLineStyle)

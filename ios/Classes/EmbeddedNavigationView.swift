@@ -54,6 +54,7 @@ public class EmbeddedNavigationView : NSObject, FlutterPlatformView, FlutterStre
         }
         var enableDissolvedRoute = true
         var showSpeed = true
+        var darkModeInTunnel = true
 
         if let config = args["launcherConfig"] as? [String : Any] {
             if let dissolvedRoute = config["enableDissolvedRouteLine"] as? Bool {
@@ -62,11 +63,15 @@ public class EmbeddedNavigationView : NSObject, FlutterPlatformView, FlutterStre
             if let showSpeedometer = config["showSpeedometer"] as? Bool {
                 showSpeed = showSpeedometer
             }
+            if let tunnelDarkMode = config["darkModeInTunnel"] as? Bool {
+                darkModeInTunnel = tunnelDarkMode
+            }
         }
         let navigationOptions = Convert.convertNavigationOptions(args: args, routes: routes, index: routeIndex ?? 0)
         navigationController = NavigationViewController(for: routes, routeIndex: routeIndex, navigationOptions: navigationOptions)
         navigationController?.delegate = self
         navigationController?.routeLineTracksTraversal = enableDissolvedRoute
+        navigationController?.usesNightStyleWhileInTunnel = darkModeInTunnel
         
         navigationController?.showsArrivalWaypointSheet = false
         navigationController?.showsSpeed = showSpeed

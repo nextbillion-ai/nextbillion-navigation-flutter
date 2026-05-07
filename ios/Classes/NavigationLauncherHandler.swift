@@ -36,6 +36,7 @@ class NavigationLauncherHandler: MethodChannelHandler {
             var enableDissolvedRoute = true
             var showsArrivalWaypointSheet = true
             var showSpeed = true
+            var darkModeInTunnel = true
 
             if let config = args["launcherConfig"] as? [String : Any] {
                 if let dissolvedRoute = config["enableDissolvedRouteLine"] as? Bool {
@@ -46,6 +47,9 @@ class NavigationLauncherHandler: MethodChannelHandler {
                 }
                 if let showSpeedometer = config["showSpeedometer"] as? Bool {
                     showSpeed = showSpeedometer
+                }
+                if let tunnelDarkMode = config["darkModeInTunnel"] as? Bool {
+                    darkModeInTunnel = tunnelDarkMode
                 }
             }
             
@@ -58,6 +62,7 @@ class NavigationLauncherHandler: MethodChannelHandler {
             navigationViewController.routeLineTracksTraversal = enableDissolvedRoute
             navigationViewController.showsArrivalWaypointSheet = showsArrivalWaypointSheet
             navigationViewController.showsSpeed = showSpeed
+            navigationViewController.usesNightStyleWhileInTunnel = darkModeInTunnel
             viewController?.present(navigationViewController, animated: true)
             break
             
