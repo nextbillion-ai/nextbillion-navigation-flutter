@@ -2,22 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
-## [3.3.2-dev.5] - 2026-04-29
-- Added `roadInfo` parameter to `RouteRequestParams` to support requesting road information (e.g., speed limits) from the API
-- Supported values: `SupportedRoadInfo.maxSpeed`, `SupportedRoadInfo.truckRoute`
-- Default value is `[SupportedRoadInfo.maxSpeed]` to enable speed limit data by default
-- Added `roadInfo` field to `DirectionsRoute` to preserve road information (including speed limits) through the Flutter-to-native data flow
-- Adapted Android and iOS native layers to correctly pass `roadInfo` parameter to the navigation SDK
+## [3.3.2] - 2026-05-07
+- Speed limits display supported
+  - Added `roadInfo` parameter to `RouteRequestParams` to support requesting road information (e.g., speed limits) from the API
+  - Supported values: `SupportedRoadInfo.maxSpeed`, `SupportedRoadInfo.truckRoute`
+  - Default value is `[SupportedRoadInfo.maxSpeed]` to enable speed limit data by default
+  - Added `roadInfo` field to `DirectionsRoute` to preserve road information (including speed limits) through the Flutter-to-native data flow
+  - Adapted Android and iOS native layers to correctly pass `roadInfo` parameter to the navigation SDK
+- dissolved route line optimization
 
 ## [3.3.2-dev.4] - 2026-04-15
 - Fix dissolved route line issue
 - Fix speed shows 0 sometimes
 - Add speed limit view display
 
-## [3.3.2-dev.1 - 2026-04-09
-- Fix dissolved route line issue
 
-## [3.3.2] - 2026-04-03
+## [3.3.1] - 2026-04-03
 - Fix UA format issue on iOS maps SDK 
 
 ## [3.3.0] - 2026-03-25
