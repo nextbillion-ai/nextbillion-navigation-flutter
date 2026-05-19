@@ -282,12 +282,13 @@ public class Convert {
     
     class func convertNavigationOptions(args: [String : Any], routes: [Route], index: Int) -> NavigationOptions {
         var simulate = SimulationMode.onPoorGPS
-        var navigationModeStyle: [NbmapNavigation.Style] = [NavStyleManager.customDayStyle, NavStyleManager.customNightStyle]
+        var navigationModeStyle: [NbmapNavigation.Style]? = [NavStyleManager.customDayStyle, NavStyleManager.customNightStyle]
 
         if let config = args["launcherConfig"] as? [String : Any] {
             if let isSimulate = config["shouldSimulateRoute"] as? Bool {
                 simulate = isSimulate ? .always : .onPoorGPS
             }
+         
             if let themeMode = config["themeMode"] as? String, let useCustom = config["useCustomNavigationStyle"] as? Bool {
                 let navigationDayStyle = dayStyle(useCustom)
                 let navigationNightStyle = nightStyle(useCustom)

@@ -1,6 +1,11 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+## [3.3.3-dev.1] - 2026-05-07
+- Updated the iOS native framework to 3.4.0-beta.1 to fix CarPlay issues.
+- Updated the Android native framework to 2.7.2-dev.1 to fix an issue where the route line sometimes did not display.
+- Fixed dark mode not working in tunnels.
+  
 
 ## [3.3.2] - 2026-05-07
 - Speed limits display supported

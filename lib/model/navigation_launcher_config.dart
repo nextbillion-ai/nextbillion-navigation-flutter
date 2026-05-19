@@ -60,6 +60,20 @@ class NavigationLauncherConfig {
   /// If set to true, the speedometer will be shown during navigation.
   /// If set to false, the speedometer will not be shown during navigation.
   bool? showSpeedometer;
+
+  /// Indicates whether to automatically switch to dark mode when entering a tunnel.
+  /// If set to true, the navigation view will switch to dark mode when the user enters a tunnel.
+  /// If set to false, the navigation view will keep the current theme mode in tunnels.
+  /// Default is true.
+  ///
+  /// **Note (iOS only):** This feature requires [themeMode] to be set to
+  /// [NavigationThemeMode.system] (the default). When [themeMode] is set to
+  /// [NavigationThemeMode.light] or [NavigationThemeMode.dark], only a single
+  /// style is provided to the navigation view, and the SDK cannot switch
+  /// between day/night styles in tunnels. On Android, this works regardless
+  /// of [themeMode].
+  bool? darkModeInTunnel;
+
   // double? maxNavCameraTilt;
   // double? minNavCameraTilt;
   // double? maxNavCameraZoom;
@@ -76,6 +90,7 @@ class NavigationLauncherConfig {
     this.navigationMapStyleUrl,
     this.showArriveDialog = true,
     this.showSpeedometer = true,
+    this.darkModeInTunnel = true,
   });
 
   Map<String, dynamic> toJson() {
@@ -90,6 +105,7 @@ class NavigationLauncherConfig {
       'navigationMapStyleUrl': navigationMapStyleUrl,
       'showArriveDialog': showArriveDialog,
       'showSpeedometer': showSpeedometer,
+      'darkModeInTunnel': darkModeInTunnel,
       // 'maxNavCameraTilt': maxNavCameraTilt,
       // 'minNavCameraTilt': minNavCameraTilt,
       // 'maxNavCameraZoom': maxNavCameraZoom,
