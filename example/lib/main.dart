@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nb_navigation_flutter_example/custom_navigation_style.dart';
 import 'package:nb_navigation_flutter_example/draw_route_line.dart';
 import 'package:nb_navigation_flutter_example/launch_embedded_navigation_view.dart';
@@ -8,7 +11,6 @@ import 'package:nb_navigation_flutter_example/navigation_theme_mode.dart';
 import 'package:nb_navigation_flutter_example/route_line_style.dart';
 import 'package:nb_navigation_flutter_example/track_current_location.dart';
 import 'package:nb_navigation_flutter/nb_navigation_flutter.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import 'custom_view_on_navigation_view.dart';
 import 'draw_route_line_with_raw_json.dart';
@@ -43,6 +45,10 @@ class NavigationDemo extends StatefulWidget {
 }
 
 class _NavigationDemoState extends State<NavigationDemo> {
+  static const MethodChannel _permissionChannel = MethodChannel(
+    'nb_navigation_flutter_example/permissions',
+  );
+
   @override
   void initState() {
     super.initState();
@@ -59,59 +65,50 @@ class _NavigationDemoState extends State<NavigationDemo> {
     // Get NB ID If needed
     NBNavigation.getNBId().then((value) {});
 
-    requestPermission();
+    _requestLocationPermission(showDeniedMessage: false);
   }
 
-  Future requestPermission() async {
-    var status = await Permission.location.status;
-
-    if (!mounted) {
-      return;
+  Future<bool> _requestLocationPermission({
+    required bool showDeniedMessage,
+  }) async {
+    if (!Platform.isAndroid && !Platform.isIOS) {
+      return true;
     }
 
-    if (status.isDenied) {
-      await [Permission.location].request();
-
-      if (!mounted) {
-        return;
+    try {
+      final bool granted =
+          await _permissionChannel.invokeMethod<bool>('requestLocationPermission') ??
+              false;
+      if (!granted && showDeniedMessage && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Location permission is required for navigation.'),
+          ),
+        );
       }
-    } else {
-      var alwaysLocation = await Permission.locationAlways.status;
-      if (alwaysLocation.isDenied) {
-        await [Permission.locationAlways].request();
+      return granted;
+    } on PlatformException {
+      if (showDeniedMessage && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Unable to request location permission.'),
+          ),
+        );
       }
-    }
-
-    if (!mounted) {
-      return;
-    }
-
-    var notificationStatus = await Permission.notification.status;
-    if (notificationStatus.isDenied) {
-      await [Permission.notification].request();
+      return false;
     }
   }
 
-  void _pushPage(
-      BuildContext context, Widget page, bool isRequiredPermission) async {
+  Future<void> _pushPage(BuildContext context, Widget page) async {
     if (!mounted) {
       return;
     }
 
-    if (isRequiredPermission) {
-      var status = await Permission.location.status;
-
-      if (!mounted) {
-        return;
-      }
-
-      if (status.isDenied) {
-        await [Permission.location].request();
-
-        if (!mounted) {
-          return;
-        }
-      }
+    final bool hasPermission = await _requestLocationPermission(
+      showDeniedMessage: true,
+    );
+    if (!hasPermission || !mounted) {
+      return;
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -139,7 +136,7 @@ class _NavigationDemoState extends State<NavigationDemo> {
               itemBuilder: (_, int index) => ListTile(
                   title: Text(_allPages.keys.toList()[index]),
                   onTap: () {
-                    _pushPage(context, _allPages.values.toList()[index], true);
+                    _pushPage(context, _allPages.values.toList()[index]);
                   }),
             ),
     );

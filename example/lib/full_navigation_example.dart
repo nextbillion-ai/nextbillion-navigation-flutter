@@ -536,10 +536,12 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
       // truckSize: [200, 200, 600],
       // truckWeight: 100,
       // unit: SupportedUnits.imperial,
+      option: SupportedOption.flexible,
       routeType: RouteType.shortest,
       // roadInfo: [SupportedRoadInfo.maxSpeed],
       altCount: 3,
       alternatives: true,
+      roadInfo: [SupportedRoadInfo.maxSpeed],
       mode: currentMode, // Use the current selected mode
     );
 

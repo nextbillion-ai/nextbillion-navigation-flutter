@@ -106,7 +106,7 @@ enum SupportedOption {
   static SupportedOption? fromValue(String? s) => switch (s) {
         "flexible" => flexible,
         "fast" => fast,
-        _ => fast,
+        _ => flexible,
       };
 }
 

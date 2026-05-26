@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "maps-native-distribution",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nextbillion-ai/maps-native-distribution",
+      "state" : {
+        "revision" : "e72c356e503150ad2838fc37c0527d2b9ac236ac",
+        "version" : "2.1.6"
+      }
+    }
+  ],
+  "version" : 2
+}

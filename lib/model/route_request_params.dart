@@ -124,7 +124,7 @@ class RouteRequestParams {
   /// It serves requests for truck specific routing, time based routing, allows choosing between fastest and shortest route types and also offers to return segment-wise speed limits of the route suggested.
   /// The traffic conditions are also factored in by the service to avoid delays under usual circumstances.
   ///
-  /// The default is [SupportedOption.fast].
+  /// The default is [SupportedOption.flexible].
   SupportedOption? option;
 
   /// The format of the returned geometry. Allowed values are:
@@ -230,7 +230,7 @@ class RouteRequestParams {
     this.truckSize,
     this.unit,
     this.waypoints,
-    this.option,
+    this.option = SupportedOption.flexible,
     this.geometry,
     this.hazmatType,
     this.approaches,
