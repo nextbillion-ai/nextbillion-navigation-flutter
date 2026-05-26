@@ -255,6 +255,18 @@ void main() {
   });
 
   group('RouteRequestParams.toJson', () {
+    test('should default option to flexible when not provided', () {
+      final params = RouteRequestParams(
+        origin: const LatLng(34.052235, -118.243683),
+        destination: const LatLng(40.712776, -74.005974),
+      );
+
+      expect(params.option, SupportedOption.flexible);
+
+      final json = params.toJson();
+      expect(json['option'], 'flexible');
+    });
+
     test('should serialize avoidType correctly when avoidType is not empty', () {
       final params = RouteRequestParams(
         origin: const LatLng(34.052235, -118.243683),
