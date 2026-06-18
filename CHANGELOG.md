@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.4.1] - 2026-06-18
+- Add `NBNavigation.setApiKeyHeaderName` to support set api key name into request header
+- Update maps sdk and iOS navigation native SDK version 
+- 
 ## [3.4.0] - 2026-05-26
 - Migrated iOS integration to Swift Package Manager (SPM).
 - Included tunnel mode dark theme support updates (from `feat/tunel_mode`, PR #66).
