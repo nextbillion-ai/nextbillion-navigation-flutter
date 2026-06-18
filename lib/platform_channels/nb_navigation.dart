@@ -10,6 +10,14 @@ mixin NBNavigation {
     await NextBillion.initNextBillion(accessKey);
   }
 
+  /// Set the name of the request API key in the request header.
+  ///  Please note: if this value is configured, the access key will be assembled into the request header together with it,
+  ///  and the authentication method on API Gateway will be different.
+  ///  If you have not configured API key authentication via request headers, do not set this value.
+  static Future<void> setApiKeyHeaderName(String name) async {
+    return await NextBillion.setApiKeyHeaderName(name);
+  }
+
   static Future<void> initNextBillionWithTileServer({required String accessKey,required WellKnownTileServer server}) async {
     return await NextBillion.initNextBillionWithTileServer(accessKey, server);
   }
