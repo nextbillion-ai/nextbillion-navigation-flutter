@@ -1,0 +1,37 @@
+version: 3
+
+analyze:
+  modules:
+    - name: nextbillion-navigation-flutter
+      type: pub
+      target: .
+  experimental:
+    dart: true
+
+cli:
+  server: https://app.fossa.com
+  allow-unmatched-deep: true
+  allow-unmatched-license: true
+
+revision: v1.0.0
+
+targets:
+  only:
+    - type: pub
+      path: .
+
+display:
+  homepage: https://github.com/nextbillion-ai/nextbillion-navigation-flutter
+  description: A Flutter plugin for Nextbillion.ai Navigation SDK, providing turn-by-turn navigation.
+  license: BSD-3-Clause
+  license_file: LICENSE
+  notice_file: NOTICE
+  readme_file: README.md
+
+license:
+  policy:
+    - type: approved
+      licenses:
+        - BSD-3-Clause
+        - MIT
+        - Apache-2.0 
