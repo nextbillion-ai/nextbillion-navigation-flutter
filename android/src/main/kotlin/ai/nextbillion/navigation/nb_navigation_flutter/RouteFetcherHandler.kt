@@ -1,12 +1,16 @@
 package ai.nextbillion.navigation.nb_navigation_flutter
 
-import ai.nextbillion.kits.directions.models.DirectionsResponse
 import ai.nextbillion.kits.directions.models.RouteRequestParams
 import ai.nextbillion.kits.geojson.Point
 import ai.nextbillion.kits.turf.TurfConstants
 import ai.nextbillion.kits.turf.TurfMeasurement
 import ai.nextbillion.kits.turf.TurfMisc
-import ai.nextbillion.navigation.core.routefetcher.RouteFetcher
+import ai.nextbillion.navigation.ui.NBNavigation
+import ai.nextbillion.navigation.core.offline.RouteSource
+import ai.nextbillion.kits.directions.models.DirectionsRoute
+import android.os.Handler
+import android.os.Looper
+import java.util.concurrent.atomic.AtomicBoolean
 import ai.nextbillion.navigation.core.utils.time.TimeFormatter
 import ai.nextbillion.navigation.ui.event.NextBillionNavigation
 import ai.nextbillion.navigation.ui.route.DefaultWayPointStyle
@@ -16,11 +20,7 @@ import android.graphics.Bitmap
 import android.text.TextUtils
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
-import org.json.JSONException
 import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.io.ByteArrayOutputStream
 
 
@@ -38,7 +38,13 @@ class RouteFetcherHandler(methodChannel: MethodChannel?) : MethodChannelHandler(
         result: MethodChannel.Result?,
     ) {
         super.handleMethodCallResult(activity, call, result)
-        if (activity == null || call == null || result == null) {
+        if (call == null || result == null) return
+        if (call.method == MethodID.NAVIGATION_FETCH_ROUTE) {
+            fetchRoute(call, result)
+            return
+        }
+        if (activity == null) {
+            result.error("NO_ACTIVITY", "A foreground Activity is required", null)
             return
         }
 
@@ -89,19 +95,39 @@ class RouteFetcherHandler(methodChannel: MethodChannel?) : MethodChannelHandler(
     }
 
     private fun findSelectedRouteIndex(call: MethodCall, result: MethodChannel.Result) {
-        val data = call.arguments as Map<*, *>
-        val clicked: List<Double> = data["clickPoint"] as List<Double>
-        val clickedPoint = Point.fromLngLat(clicked[1], clicked[0])
-        val coordinates: List<List<List<Double>>> = data["coordinates"] as List<List<List<Double>>>
+        fun point(value: Any?): Point? {
+            val pair = value as? List<*> ?: return null
+            if (pair.size < 2) return null
+            val latitude = (pair[0] as? Number)?.toDouble() ?: return null
+            val longitude = (pair[1] as? Number)?.toDouble() ?: return null
+            if (!latitude.isFinite() || !longitude.isFinite() || latitude !in -90.0..90.0 || longitude !in -180.0..180.0) return null
+            return Point.fromLngLat(longitude, latitude)
+        }
+        val data = call.arguments as? Map<*, *>
+        val clickedPoint = point(data?.get("clickPoint"))
+        val coordinates = data?.get("coordinates") as? List<*>
+        if (clickedPoint == null || coordinates == null) {
+            result.error("INVALID_ARGUMENT", "Invalid route selection coordinates", null)
+            return
+        }
         val routeDistancesAwayFromClick = HashMap<Double, Int>()
 
         for (index in coordinates.indices) {
-            val coords = coordinates[index]
+            val coords = coordinates[index] as? List<*>
+            if (coords == null) {
+                result.error("INVALID_ARGUMENT", "Invalid route selection coordinates", null)
+                return
+            }
             val points = arrayListOf<Point>()
             for (coord in coords) {
-                val point = Point.fromLngLat(coord[1], coord[0])
-                points.add(point)
+                val value = point(coord)
+                if (value == null) {
+                    result.error("INVALID_ARGUMENT", "Invalid route selection coordinates", null)
+                    return
+                }
+                points.add(value)
             }
+            if (points.size < 2) continue
             val pointOnLine = findPointOnLine(clickedPoint, points)
             pointOnLine?.let {
                 val distance = TurfMeasurement.distance(clickedPoint, pointOnLine, TurfConstants.UNIT_METERS)
@@ -113,7 +139,7 @@ class RouteFetcherHandler(methodChannel: MethodChannel?) : MethodChannelHandler(
         if (distancesAwayFromClick.isNotEmpty()) {
             val routeIndex = routeDistancesAwayFromClick[distancesAwayFromClick[0]]
             result.success(routeIndex)
-        }
+        } else { result.success(null) }
     }
 
     private fun findPointOnLine(clickPoint: Point, points: List<Point>): Point? {
@@ -122,70 +148,39 @@ class RouteFetcherHandler(methodChannel: MethodChannel?) : MethodChannelHandler(
     }
 
     private fun fetchRoute(call: MethodCall, result: MethodChannel.Result) {
-        val data = call.arguments as? String
-        if (data == null || data.isEmpty()) {
-            return
+        val replied = AtomicBoolean(false)
+        val main = Handler(Looper.getMainLooper())
+        fun complete(value: Any) {
+            main.post { if (replied.compareAndSet(false, true)) result.success(value) }
         }
-        val params = RouteRequestParams.fromJson(data.toString())
-        val paramsBuilder = params.toBuilder()
-        if (TextUtils.equals(params.option(), "fast")) {
-            paramsBuilder.option(null)
-        }
-
         try {
-            val jsonObj = JSONObject(data)
-            if (jsonObj.has("roadInfo")) {
-                val roadInfoArray = jsonObj.getJSONArray("roadInfo")
-                val roadInfoList = mutableListOf<String>()
-                for (i in 0 until roadInfoArray.length()) {
-                    roadInfoList.add(roadInfoArray.getString(i))
-                }
-                paramsBuilder.roadInfo(roadInfoList)
+            val data = call.arguments as? String
+            require(!data.isNullOrEmpty()) { "Route parameters must be JSON" }
+            val params = RouteRequestParams.fromJson(data)
+            val builder = params.toBuilder()
+            if (TextUtils.equals(params.option(), "fast")) builder.option(null)
+            val json = JSONObject(data)
+            if (json.has("roadInfo")) {
+                val roads = json.getJSONArray("roadInfo")
+                builder.roadInfo((0 until roads.length()).map { roads.getString(it) })
             }
-        } catch (_: Exception) {
+            NBNavigation.fetchRoute(builder.build(), object : NBNavigation.SourceAwareRoutingCallback {
+                override fun onRoutingReady(routes: MutableList<DirectionsRoute>, source: RouteSource) {
+                    complete(mapOf("routeResult" to routes.map { it.toJson() },
+                        "routeSource" to if (source == RouteSource.Offline) "offline" else "online"))
+                }
+                override fun onRoutingError(error: Throwable) {
+                    val native = NBNavigation.toNavigationError(error)
+                    complete(mapOf("message" to native.message, "errorCode" to -1,
+                        "errorDetails" to mapOf("code" to native.code.name,
+                            "recoverable" to native.recoverable, "causeCode" to native.causeCode)))
+                }
+            })
+        } catch (error: Exception) {
+            val native = NBNavigation.toNavigationError(error)
+            complete(mapOf("message" to native.message, "errorCode" to -1,
+                "errorDetails" to mapOf("code" to native.code.name,
+                    "recoverable" to native.recoverable, "causeCode" to native.causeCode)))
         }
-
-        RouteFetcher.getRoute(paramsBuilder.build(), object : Callback<DirectionsResponse> {
-            override fun onResponse(call: Call<DirectionsResponse>, response: Response<DirectionsResponse>) {
-                val args = mutableMapOf<String, Any>()
-                if (response.code() in 200..299) {
-                    val routes = response.body()?.routes()
-                    if (!routes.isNullOrEmpty()) {
-                        val routeArray = mutableListOf<String>()
-                        for (route in routes) {
-                            routeArray.add(route.toJson())
-                        }
-                        args["routeResult"] = routeArray
-                    }
-                } else {
-                    val errorMessage = response.errorBody()!!.charStream().readText()
-                    val httpErrorCode = response.code()
-                    var jsonObj: JSONObject? = null
-                     try {
-                         jsonObj = JSONObject(errorMessage)
-                         val errorMsg = jsonObj.getString("msg")
-                         val errorCode = jsonObj.getInt("status")
-                         args["message"] = errorMsg
-                         args["errorCode"] = errorCode
-                    } catch (e: JSONException) {
-                         args["message"] = errorMessage.ifEmpty { "Request failed" }
-                         args["errorCode"] = httpErrorCode
-                     }
-                }
-                result.success(args)
-
-            }
-
-            override fun onFailure(call: Call<DirectionsResponse>, t: Throwable) {
-                val args = mutableMapOf<String,Any>()
-                args["message"] = t?.message ?: "Request failed"
-                args["errorCode"] = -1
-                result.success(args)
-            }
-
-        })
-
-
     }
-
 }

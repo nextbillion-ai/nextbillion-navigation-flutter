@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nb_navigation_flutter/nb_navigation_flutter.dart';
-import 'package:nb_navigation_flutter_example/constants.dart';
 
 class LaunchPreviewScreen extends StatefulWidget {
   static const String title = "Launch Preview screen Example";

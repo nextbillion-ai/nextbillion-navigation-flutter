@@ -141,6 +141,8 @@ class FullNavigationExampleState extends State<FullNavigationExample> {
         return "TomTom";
       case WellKnownTileServer.nbMapTiler:
         return "nbMapTiler";
+      case WellKnownTileServer.nbTomtomOrbis:
+        return "TomTom Orbis";
     }
   }
 

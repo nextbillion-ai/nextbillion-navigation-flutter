@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/nextbillion-ai/maps-native-distribution",
       "state" : {
-        "revision" : "bc433203b09fb8e4e44e2a16dd15fae6ec0f7d1a",
-        "version" : "2.1.7"
+        "revision" : "90740948fb5fc48ee5c9169e5926661c13809b6a",
+        "version" : "2.3.3"
       }
     }
   ],

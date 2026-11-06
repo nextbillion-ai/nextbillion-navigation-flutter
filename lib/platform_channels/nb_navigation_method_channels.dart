@@ -84,44 +84,41 @@ class NBNavigationMethodChannel extends NBNavigationPlatform {
       }
     }
     return DirectionsRouteResponse(
-        directionsRoutes: routes, message: message, errorCode: errorCode);
+        directionsRoutes: routes,
+        message: message,
+        errorCode: errorCode,
+        routeSource: switch (result['routeSource']) {
+          'online' => NavigationRouteSource.online,
+          'offline' => NavigationRouteSource.offline,
+          _ => null,
+        },
+        errorDetails: result['errorDetails'] is Map
+            ? _offlineMap(result['errorDetails'])
+            : null);
   }
 
   @override
   Future<void> startNavigation(NavigationLauncherConfig launcherConfig) async {
-    try {
-      final Map<String, dynamic> arguments = {};
-      if (Platform.isIOS) {
-        arguments["routeOptions"] =
-            jsonEncode(launcherConfig.route.routeOptions);
-      }
-      arguments["launcherConfig"] = launcherConfig.toJson();
-      await _channel.invokeMethod(
-          NBNavigationLauncherMethodID.nbNavigationLauncherMethod, arguments);
-    } on PlatformException catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+    final Map<String, dynamic> arguments = {};
+    if (Platform.isIOS) {
+      arguments["routeOptions"] = jsonEncode(launcherConfig.route.routeOptions);
     }
+    arguments["launcherConfig"] = launcherConfig.toJson();
+    await _channel.invokeMethod(
+        NBNavigationLauncherMethodID.nbNavigationLauncherMethod, arguments);
   }
 
   @override
   Future<void> startPreviewNavigation(DirectionsRoute route,
       {String? mapStyle}) async {
-    try {
-      final Map<String, dynamic> arguments = {};
-      if (Platform.isIOS) {
-        arguments["routeOptions"] = jsonEncode(route.routeOptions);
-      }
-      arguments["route"] = jsonEncode(route);
-      arguments["mapStyle"] = mapStyle;
-      await _channel.invokeMethod(
-          NBNavigationLauncherMethodID.nbPreviewNavigationMethod, arguments);
-    } on PlatformException catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+    final Map<String, dynamic> arguments = {};
+    if (Platform.isIOS) {
+      arguments["routeOptions"] = jsonEncode(route.routeOptions);
     }
+    arguments["route"] = jsonEncode(route);
+    arguments["mapStyle"] = mapStyle;
+    await _channel.invokeMethod(
+        NBNavigationLauncherMethodID.nbPreviewNavigationMethod, arguments);
   }
 
   @override

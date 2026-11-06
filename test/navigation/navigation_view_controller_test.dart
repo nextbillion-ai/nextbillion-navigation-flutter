@@ -7,8 +7,8 @@ import 'package:nb_navigation_flutter/nb_navigation_flutter.dart';
 class MockNBNavigationViewPlatform extends Mock
     implements NBNavigationViewPlatform {
   @override
-  Future<void> stopNavigation() async {
-    super.noSuchMethod(
+  Future<void> stopNavigation() {
+    return super.noSuchMethod(
       Invocation.method(#stopNavigation, []),
       returnValue: Future<void>.value(),
       returnValueForMissingStub: Future<void>.value(),
@@ -126,22 +126,46 @@ void main() {
         NavigationViewController(navViewPlatform: mockNavViewPlatform);
   });
 
-  tearDown(() {
-    navigationController.dispose();
+  tearDown(() async {
+    await navigationController.dispose();
   });
 
-  test('dispose should cancel subscription and stop navigation', () {
-    navigationController.dispose();
+  test('dispose should cancel subscription and stop navigation', () async {
+    await navigationController.dispose();
 
     verify(mockNavViewPlatform.stopNavigation()).called(1);
     verify(mockNavViewPlatform.dispose()).called(1);
   });
 
-  test('dispose should cancel subscription and stop navigation', () {
-    navigationController.dispose();
+  test('repeated disposal stops native navigation only once', () async {
+    await Future.wait(
+        [navigationController.dispose(), navigationController.dispose()]);
 
     verify(mockNavViewPlatform.stopNavigation()).called(1);
     verify(mockNavViewPlatform.dispose()).called(1);
+  });
+
+  test(
+      'native teardown waits for stream cancellation and retains the channel until stopped',
+      () async {
+    final cancelled = Completer<void>();
+    final stopped = Completer<void>();
+    final stream =
+        StreamController<NavigationProgress?>(onCancel: () => cancelled.future);
+    final platform = MockNBNavigationViewPlatform();
+    when(platform.navProgressListener).thenAnswer((_) => stream.stream);
+    when(platform.stopNavigation()).thenAnswer((_) => stopped.future);
+    final controller = NavigationViewController(navViewPlatform: platform);
+    final done = controller.dispose();
+    verifyNever(platform.stopNavigation());
+    cancelled.complete();
+    await Future<void>.delayed(Duration.zero);
+    verify(platform.stopNavigation()).called(1);
+    verifyNever(platform.dispose());
+    stopped.complete();
+    await done;
+    verify(platform.dispose()).called(1);
+    await stream.close();
   });
 
   test('Check callback should be called', () {

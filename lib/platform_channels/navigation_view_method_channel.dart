@@ -24,12 +24,13 @@ class MethodChannelNavigationView extends NBNavigationViewPlatform {
             _rerouteAlongCallback!(null);
             return;
           }
-          if (call.arguments is String) {
-            final Map<String, dynamic>? json = jsonDecode(call.arguments as String) as Map<String, dynamic>?;
+          if (call.arguments is String || call.arguments is Map) {
+            final Map<String, dynamic>? json = call.arguments is String
+                ? jsonDecode(call.arguments as String) as Map<String, dynamic>?
+                : _offlineMap(call.arguments);
             if (json != null) {
               _rerouteAlongCallback?.call(DirectionsRoute.fromJson(json));
             }
-
           }
           return;
         }
@@ -100,8 +101,9 @@ class MethodChannelNavigationView extends NBNavigationViewPlatform {
       .map((dynamic progressMap) => _parseProgress(progressMap));
 
   NavigationProgress? _parseProgress(dynamic progressMap) {
-    final jsonMap = jsonDecode(jsonEncode(progressMap)) as Map<String,dynamic>?;
-    if(jsonMap != null) {
+    final jsonMap =
+        jsonDecode(jsonEncode(progressMap)) as Map<String, dynamic>?;
+    if (jsonMap != null) {
       return NavigationProgress.fromJson(jsonMap);
     }
 
@@ -139,14 +141,15 @@ class MethodChannelNavigationView extends NBNavigationViewPlatform {
   }
 
   LatLng? _parseLocation(dynamic locationMap) {
-    if (locationMap is Map<dynamic, dynamic>) {
-      final jsonMap = locationMap.cast<String, dynamic>();
-      return LatLng(
-        (jsonMap["latitude"] as num).toDouble(),
-        (jsonMap["longitude"] as num).toDouble(),
-      );
-    } else if (locationMap is String) {
-      final jsonMap = jsonDecode(jsonEncode(locationMap)) as Map<String, dynamic>;
+    dynamic value = locationMap;
+    if (value is String) {
+      value = jsonDecode(value);
+    }
+    if (value is Map && value['location'] is Map) {
+      value = value['location'];
+    }
+    if (value is Map<dynamic, dynamic>) {
+      final jsonMap = value.cast<String, dynamic>();
       return LatLng(
         (jsonMap["latitude"] as num).toDouble(),
         (jsonMap["longitude"] as num).toDouble(),
@@ -163,6 +166,8 @@ class MethodChannelNavigationView extends NBNavigationViewPlatform {
       if (kDebugMode) {
         print(e);
       }
+    } on MissingPluginException {
+      // The platform view may already have been removed by the host lifecycle.
     }
   }
 

@@ -45,8 +45,7 @@ class NBNavigationView extends StatefulWidget {
 }
 
 class _NBNavigationViewState extends State<NBNavigationView> {
-  final Completer<NavigationViewController> _controller =
-      Completer<NavigationViewController>();
+  NavigationViewController? _controller;
 
   final NBNavigationViewPlatform _nbNavViewPlatform =
       NBNavigationViewPlatform.createInstance();
@@ -66,6 +65,14 @@ class _NBNavigationViewState extends State<NBNavigationView> {
 
   Future<void> _onPlatformViewCreated(int id) async {
     await _nbNavViewPlatform.initPlatform(id);
+    if (!mounted) {
+      try {
+        await _nbNavViewPlatform.stopNavigation();
+      } finally {
+        _nbNavViewPlatform.dispose();
+      }
+      return;
+    }
     final NavigationViewController controller = NavigationViewController(
       navViewPlatform: _nbNavViewPlatform,
       onProgressChange: widget.onProgressChange,
@@ -75,7 +82,7 @@ class _NBNavigationViewState extends State<NBNavigationView> {
       onRerouteAlongCallback: widget.onRerouteAlongCallback,
       onRerouteFailureCallback: widget.onRerouteFailureCallback,
     );
-    _controller.complete(controller);
+    _controller = controller;
 
     if (widget.onNavigationViewReady != null) {
       _nbNavViewPlatform.setOnNavigationRunningCallback(() {
@@ -85,11 +92,10 @@ class _NBNavigationViewState extends State<NBNavigationView> {
   }
 
   @override
-  Future<void> dispose() async {
+  void dispose() {
+    final controller = _controller;
+    _controller = null;
+    if (controller != null) unawaited(controller.dispose());
     super.dispose();
-    if (_controller.isCompleted) {
-      final controller = await _controller.future;
-      controller.dispose();
-    }
   }
 }

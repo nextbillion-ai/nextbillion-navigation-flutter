@@ -10,6 +10,4 @@ analyzer:
 
 linter:
   rules:
-    - avoid_returning_null
-    - always_require_non_null_named_parameters
     - null_check_on_nullable_type_parameter

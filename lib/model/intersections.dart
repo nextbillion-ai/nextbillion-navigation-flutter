@@ -1,7 +1,7 @@
 part of '../nb_navigation_flutter.dart';
 
 class Intersection {
-  List<int>? bearings;
+  List<num>? bearings;
   List<String>? classes;
   List<dynamic>? entry;
   int? inCount;
@@ -21,14 +21,14 @@ class Intersection {
 
   factory Intersection.fromJson(Map<String, dynamic> map) {
     return Intersection(
-      bearings: (map['bearings'] as List?)?.whereType<int>().toList() ?? [],
+      bearings: (map['bearings'] as List?)?.cast<num>().toList() ?? [],
       classes: (map['classes'] as List?)?.whereType<String>().toList() ?? [],
       entry: (map['entry'] as List?)?.whereType<bool>().toList() ?? [],
-      inCount: map['intersection_in'] as int?,
+      inCount: (map['intersection_in'] ?? map['in']) as int? ?? -1,
       lanes: (map['lanes'] as List?)
           ?.map((lane) => Lane.fromJson(lane as Map<String, dynamic>))
           .toList(),
-      outCount: map['intersection_out'] as int? ?? 0,
+      outCount: (map['intersection_out'] ?? map['out']) as int? ?? -1,
       location: map['location'] != null
           ? Coordinate.fromJson(map['location'] as Map<String, dynamic>)
           : null,
@@ -40,12 +40,17 @@ class Intersection {
       'bearings': bearings,
       'classes': classes,
       'entry': entry,
-      'intersection_in': inCount,
+      'intersection_in': _validIndex(inCount),
       'lanes': lanes?.map((lane) => lane.toJson()).toList(),
-      'intersection_out': outCount,
+      'intersection_out': _validIndex(outCount),
       'location': location?.toJson(),
     };
   }
+
+  int _validIndex(int? index) =>
+      index != null && index >= 0 && index < (bearings?.length ?? 0)
+          ? index
+          : -1;
 }
 
 class Lane {

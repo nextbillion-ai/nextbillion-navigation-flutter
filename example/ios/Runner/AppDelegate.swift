@@ -8,6 +8,9 @@ import nb_navigation_flutter
     private let permissionChannelName = "nb_navigation_flutter_example/permissions"
     private var locationManager: CLLocationManager?
     private var pendingPermissionResult: FlutterResult?
+    #if DEBUG || OFFLINE_ACCEPTANCE_UI_TEST
+    private var offlineAcceptanceHost: OfflineAcceptanceTestHost?
+    #endif
 
     override func application(
         _ application: UIApplication,
@@ -23,6 +26,11 @@ import nb_navigation_flutter
         navigationController.delegate = self
         window?.makeKeyAndVisible()
         configurePermissionChannel(controller: controller)
+        #if DEBUG || OFFLINE_ACCEPTANCE_UI_TEST
+        if ProcessInfo.processInfo.environment["OFFLINE_ACCEPTANCE_UI_TEST"] == "1" {
+            offlineAcceptanceHost = OfflineAcceptanceTestHost(messenger: controller.binaryMessenger)
+        }
+        #endif
         
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }

@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.0.0] - 2026-11-06
+
+### Breaking Changes
+
+- Require Flutter 3.41+, iOS 13+, and Kotlin 2.2.20+ for Android.
+- Remove CocoaPods iOS integration, the plugin podspec, and the example's Pods configuration references. Version 4.0.0 and later support Swift Package Manager exclusively for this plugin's native dependencies.
+- Replace `MapController.setStyleString` with `setStyleType(NBMapStyleType)`. Use `NBMap.styleString` for custom styles.
+
+### Added
+
+- Add `NBNavigation.offline` for regional catalogs, routing-network and map downloads, pause/resume/cancel/delete, installed data, progress subscriptions, region boundaries, health checks, display readiness, and download-page sessions. Both datasets are managed through the native Navigation SDK.
+- Add `onlineOnly`, `offlineOnly`, `onlinePreferred`, `offlinePreferred`, and `smart` routing policies, shared by initial route requests and full-screen/embedded rerouting. The default remains `onlineOnly`.
+- Expose the actual online/offline `routeSource` and structured `errorDetails` on route responses, plus independent routing/map operation results and native error details.
+- Add Offline Navigation and offline download manager examples with available-region, task, installed-data, and diagnostic tabs; independent routing/map progress; region filtering and boundaries; network policies; deletion confirmation; and engine/session/subscription controls. Download management does not require location permission.
+- Add runtime access-key entry and bounded, redacted diagnostic history to the example.
+- Add native regression tests and physical-device acceptance for downloads, disconnected process cold starts, offline map rendering, and full-screen/embedded rerouting.
+
+### Changed
+
+- Update iOS Navigation SDK to 4.1.4 and Android Navigation SDK to 3.1.2.
+- Update `nb_maps_flutter` to 4.0.0-beta.1 and align the shared iOS Maps dependency to 2.3.3.
+- Align Android plugin version metadata with the Flutter package version, 4.0.0.
+
+### Fixed
+
+- Fix an iOS embedded-navigation exit crash by ending the complete native navigation session before releasing its controller.
+- Release embedded lifecycle observers, channels, subscriptions, and services on disposal; wait for progress-stream cancellation before native teardown.
+- Preserve native route fields and guidance across Dart/native round trips, including iOS fused reroutes without original JSON, lane banners, sign images, fractional bearings, intersection indices, and road/exit/roundabout metadata.
+- Validate malformed route-selection coordinates and skip empty or incomplete route geometry to prevent native crashes.
+- Prevent duplicate route-click listeners after style reloads and ignore delayed route-selection results after disposal.
+- Fix embedded reroute failure/location callbacks and complete iOS navigation launch results.
+- Fix iOS 4.1.4 missing boundary-detail loading while keeping local-only boundary reads offline.
+- Make Android offline shutdown idempotent before engine registration, and expose bounded local-state observations after combined-operation failures without implying rollback.
+- Refresh offline map resources after initialization, discard stale example route requests, and add a close action for modal iOS previews.
+- Redact credentials in typed catalog errors and JSON diagnostics, and remove example logging of complete route request parameters.
+
 ## [3.4.1] - 2026-06-18
 - Add `NBNavigation.setApiKeyHeaderName` to support set api key name into request header
 - Update maps sdk and iOS navigation native SDK version 

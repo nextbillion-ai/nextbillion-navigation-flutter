@@ -16,6 +16,7 @@ import android.app.Activity
 import android.location.Location
 import android.view.View
 import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import io.flutter.plugin.common.BinaryMessenger
@@ -46,15 +47,19 @@ class NBNavigationView(
     private val viewId: Int = vId
     private val messenger: BinaryMessenger = binaryMessenger
     private var navigationView: NavigationView? = null
-    private var lifecycleProvider: NbNavigationFlutterPlugin.LifecycleProvider? = null
+    private var lifecycle: Lifecycle? = null
+    private var disposed = false
+    private var created = false
+    private var started = false
+    private var resumed = false
 
     private var viewConfigBuilder: NavViewConfig.Builder = NavViewConfig.builder()
     private var inTunnelMode = false
 
     fun initialize(lifecycleProvider: NbNavigationFlutterPlugin.LifecycleProvider) {
         initFlutterChannelHandlers()
-        this.lifecycleProvider = lifecycleProvider
-        lifecycleProvider.lifecycle?.addObserver(this)
+        lifecycle = lifecycleProvider.lifecycle
+        lifecycle?.addObserver(this)
     }
     private fun initFlutterChannelHandlers() {
         navigationView = binding.navigationView
@@ -65,12 +70,15 @@ class NBNavigationView(
     }
 
     override fun onCreate(owner: LifecycleOwner) {
+        if (disposed || created) return
         super.onCreate(owner)
+        created = true
         navigationView?.onCreate(null)
         navigationView?.initialize(this)
     }
 
     override fun onNavigationReady(isRunning: Boolean) {
+        if (disposed) return
         viewConfigBuilder = NavViewConfig.builder()
         viewConfigBuilder.navigationListener(this)
         viewConfigBuilder.routeListener(this)
@@ -124,17 +132,39 @@ class NBNavigationView(
     }
 
     override fun dispose() {
+        if (disposed) return
+        disposed = true
+        lifecycle?.removeObserver(this)
+        lifecycle = null
+        eventSink = null
+        methodChannel?.setMethodCallHandler(null)
+        eventChannel?.setStreamHandler(null)
+        methodChannel = null
+        eventChannel = null
+        val view = navigationView
+        navigationView = null
+        // Only send lifecycle transitions that have not already been delivered.
+        try {
+            if (resumed) view?.onPause()
+        } finally {
+            resumed = false
+            try {
+                if (started) view?.onStop()
+            } finally {
+                started = false
+                if (created) { created = false; view?.onDestroy() }
+                viewConfigBuilder = NavViewConfig.builder()
+            }
+        }
     }
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when (call.method) {
             "stopNavigation" -> {
-                navigationView?.onPause()
-                navigationView?.onStop()
-                navigationView?.onDestroy()
-                navigationView = null
+                dispose()
                 result.success(null)
             }
+            else -> result.notImplemented()
         }
 
     }
@@ -217,7 +247,7 @@ class NBNavigationView(
     }
 
     override fun onFailedReroute(p0: String?) {
-        methodChannel?.invokeMethod("onFailedReroute", p0)
+        methodChannel?.invokeMethod("onRerouteFailure", p0)
     }
 
     override fun onArrival(navProgress: NavProgress?, waypointIndex: Int) {
@@ -249,28 +279,36 @@ class NBNavigationView(
 
 
     override fun onStart(owner: LifecycleOwner) {
+        if (disposed || started) return
+        started = true
         super.onStart(owner)
         navigationView?.onStart()
     }
 
     override fun onResume(owner: LifecycleOwner) {
+        if (disposed || resumed) return
+        resumed = true
         super.onResume(owner)
         navigationView?.onResume()
     }
 
     override fun onPause(owner: LifecycleOwner) {
+        if (disposed || !resumed) return
+        resumed = false
         super.onPause(owner)
         navigationView?.onPause()
     }
 
     override fun onStop(owner: LifecycleOwner) {
+        if (disposed || !started) return
+        started = false
         super.onStop(owner)
         navigationView?.onStop()
     }
 
     override fun onDestroy(owner: LifecycleOwner) {
         super.onDestroy(owner)
-        navigationView?.onDestroy()
+        dispose()
     }
 
 }

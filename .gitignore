@@ -27,6 +27,7 @@ migrate_working_dir/
 **/doc/api/
 .dart_tool/
 .packages
+example/offline_test_config.local.json
 Podfile.lock
 Cartfile.resolved
 build

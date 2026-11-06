@@ -26,6 +26,7 @@ public class EmbeddedNavigationView : NSObject, FlutterPlatformView, FlutterStre
     var eventChannel: FlutterEventChannel
     var navigationController: NavigationViewController?
     var _eventSink: FlutterEventSink? = nil
+    private var disposed = false
     
     
     init(messenger: FlutterBinaryMessenger, frame: CGRect, viewId: Int64, args: Any?) {
@@ -95,17 +96,31 @@ public class EmbeddedNavigationView : NSObject, FlutterPlatformView, FlutterStre
     func onMethodCall(methodCall: FlutterMethodCall, result: @escaping FlutterResult) {
         switch methodCall.method {
         case "stopNavigation":
-            
-            navigationController = nil;
+            dispose()
             result(nil)
             break
             
         default:
-            break
+            result(FlutterMethodNotImplemented)
         }
+    }
+
+    private func dispose() {
+        guard !disposed else { return }
+        disposed = true
+        _eventSink = nil
+        navigationController?.delegate = nil
+        // End the complete SDK session while its controller is still alive.
+        // 4.1.4's deinit fallback reads weak view data during ornaments teardown;
+        // stopping only the service leaves that fallback able to trap on exit.
+        navigationController?.endNavigation()
+        navigationController = nil
+        eventChannel.setStreamHandler(nil)
+        channel.setMethodCallHandler(nil)
     }
     
     public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
+        guard !disposed else { return FlutterError(code: "DISPOSED", message: "Navigation view disposed", details: nil) }
         _eventSink = events
         return nil
     }
@@ -166,7 +181,11 @@ extension EmbeddedNavigationView: NavigationViewControllerDelegate {
     }
     
     public func navigationViewController(_ navigationViewController: NavigationViewController, didRerouteAlong route: Route) {
-        channel.invokeMethod("onRerouteAlong", arguments: route.json)
+        do {
+            channel.invokeMethod("onRerouteAlong", arguments: try NavigationRouteCodec.encode(route))
+        } catch {
+            channel.invokeMethod("onRerouteFailure", arguments: error.localizedDescription)
+        }
     }
     
     public func navigationViewController(_ navigationViewController: NavigationViewController, didFailToRerouteWith error: any Error) {

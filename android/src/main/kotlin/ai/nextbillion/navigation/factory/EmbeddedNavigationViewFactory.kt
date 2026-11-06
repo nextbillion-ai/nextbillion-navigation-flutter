@@ -18,11 +18,12 @@ import io.flutter.plugin.platform.PlatformViewFactory
 
 class EmbeddedNavigationViewFactory(
     private val messenger: BinaryMessenger,
-    private val activity: Activity,
+    private val activityProvider: () -> Activity?,
     private val lifecycleProvider: NbNavigationFlutterPlugin.LifecycleProvider
 ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
 
     override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
+        val activity = checkNotNull(activityProvider()) { "A foreground Activity is required" }
         storeNavThemeConfig(context, args)
 
         val inflater = LayoutInflater.from(context)

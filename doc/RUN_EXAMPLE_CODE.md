@@ -22,7 +22,8 @@ A secret access key is required before running the example, otherwise you will s
   ```
 ## iOS
 * Clone this repo
-* Open `example/ios/Runner.xcworkspace` in XCode
+* From `example`, run `flutter pub get` to generate the Swift Package Manager integration. Version 4.0.0 and later use SPM exclusively for the native Navigation and Maps SDKs.
+* Open `example/ios/Runner.xcworkspace` in Xcode. Its Runner target links the generated `FlutterGeneratedPluginSwiftPackage`.
 * Select the Runner and changet the Bundle identifier to your own. On the `signing & capabilities` tab change the team to your own.
   ![image](https://github.com/nextbillion-ai/nb-navigation-flutter/assets/100656364/d02610bd-565d-48bd-86c7-520a5c92b644)
 * Go back to your Flutter Development Platforms
