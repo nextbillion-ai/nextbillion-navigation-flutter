@@ -1,8 +1,8 @@
 group 'ai.nextbillion.navigation.nb_navigation_flutter'
-version '2.2.0'
+version '4.0.0'
 
 buildscript {
-    ext.kotlin_version = '1.9.24'
+    ext.kotlin_version = '2.2.20'
     repositories {
         google()
         mavenCentral()
@@ -56,7 +56,7 @@ android {
 }
 
 dependencies {
-    implementation 'ai.nextbillion:nb-navigation-android:2.7.2-dev.1'
+    implementation 'ai.nextbillion:nb-navigation-android:3.1.2'
 
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.google.android.material:material:1.5.0'

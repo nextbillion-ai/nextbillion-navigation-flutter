@@ -246,8 +246,11 @@ public class Convert {
     class func modifyRoute(routeOptions: NBNavRouteOptions, routeJson: String) -> Route {
         let json = jsonStringToDictionary(routeJson)
         let route = Route.init(json: json, waypoints: routeOptions.waypoints, options: routeOptions)
+        NavigationRouteCodec.restoreComponentResources(in: route, from: json)
         route.speechLocale = routeOptions.locale
-        route.modifyRoute()
+        if json["_nbFlutterGuidanceReady"] as? Bool != true {
+            route.modifyRoute()
+        }
 
         return route
     }
@@ -304,7 +307,7 @@ public class Convert {
             }
         }
      
-        let navigationService = NBNavigationService(routes: routes, routeIndex: index, simulating: simulate)
+        let navigationService = NBNavigation.makeNavigationService(routes: routes, routeIndex: index, simulating: simulate)
         
         let navigationOptions = NavigationOptions(styles: navigationModeStyle, navigationService: navigationService)
         return navigationOptions

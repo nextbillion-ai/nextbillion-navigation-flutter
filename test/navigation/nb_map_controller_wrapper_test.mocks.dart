@@ -1022,10 +1022,10 @@ class MockNextbillionMapController extends _i1.Mock
       ) as _i4.Future<_i2.LatLngBounds?>);
 
   @override
-  _i4.Future<void> setStyleString(String? styleString) => (super.noSuchMethod(
+  _i4.Future<void> setStyleType(_i2.NBMapStyleType? styleType) => (super.noSuchMethod(
         Invocation.method(
-          #setStyleString,
-          [styleString],
+          #setStyleType,
+          [styleType],
         ),
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),

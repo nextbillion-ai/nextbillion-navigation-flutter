@@ -2,6 +2,7 @@ part of '../nb_navigation_flutter.dart';
 
 class NavigationViewController {
   final NBNavigationViewPlatform _navViewPlatform;
+  Future<void>? _disposal;
   late StreamSubscription<NavigationProgress?>? _navProgressSubscription;
   late ProgressChangeCallback? onProgressChange;
   late OnNavigationCancellingCallback? onNavigationCancelling;
@@ -21,7 +22,7 @@ class NavigationViewController {
   }) : _navViewPlatform = navViewPlatform {
     _navProgressSubscription =
         _navViewPlatform.navProgressListener?.listen((navProgress) {
-          onProgressChange?.call(navProgress);
+      onProgressChange?.call(navProgress);
     });
     if (onNavigationCancelling != null) {
       _navViewPlatform
@@ -44,9 +45,24 @@ class NavigationViewController {
     }
   }
 
-  void dispose() {
-    _navProgressSubscription?.cancel();
-    _navViewPlatform.stopNavigation();
-    _navViewPlatform.dispose();
+  Future<void> dispose() => _disposal ??= _dispose();
+
+  Future<void> _dispose() async {
+    _navViewPlatform.setOnNavigationRunningCallback(null);
+    _navViewPlatform.setOnNavigationCancellingCallback(null);
+    _navViewPlatform.setOnArriveAtWaypointCallback(null);
+    _navViewPlatform.setOnRerouteFromLocationCallback(null);
+    _navViewPlatform.setOnRerouteAlongCallback(null);
+    _navViewPlatform.setOnRerouteFailureCallback(null);
+    try {
+      await _navProgressSubscription?.cancel();
+    } finally {
+      _navProgressSubscription = null;
+      try {
+        await _navViewPlatform.stopNavigation();
+      } finally {
+        _navViewPlatform.dispose();
+      }
+    }
   }
 }

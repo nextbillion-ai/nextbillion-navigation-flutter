@@ -1,6 +1,7 @@
 part of '../nb_navigation_flutter.dart';
 
 class DirectionsRoute {
+  Map<String, dynamic>? _nativeJson;
   num? distance;
   num? duration;
   String? geometry;
@@ -35,43 +36,44 @@ class DirectionsRoute {
       duration: map['duration'] as num?,
       geometry: map['geometry'] as String?,
       legs: (map['legs'] as List?)
-          ?.whereType<Map<dynamic, dynamic>>() // Filter only valid maps
-          .map((leg) {
-        final Map<String, dynamic> convertedMap = leg.cast<String, dynamic>();
-        return Leg.fromJson(convertedMap);
-      })
-          .toList() ??
+              ?.whereType<Map<dynamic, dynamic>>() // Filter only valid maps
+              .map((leg) {
+            final Map<String, dynamic> convertedMap =
+                leg.cast<String, dynamic>();
+            return Leg.fromJson(convertedMap);
+          }).toList() ??
           [],
       routeIndex: map['routeIndex'] as String?,
       routeOptions: map['routeOptions'] != null
           ? RouteRequestParams.fromJson(
-          map['routeOptions'] as Map<String, dynamic>)
-          :  throw ArgumentError('routeOptions cannot be null'),
+              map['routeOptions'] as Map<String, dynamic>)
+          : throw ArgumentError('routeOptions cannot be null'),
       weight: map['weight'] as num?,
       countryCode: map['countryCode'] as String?,
       weightName: map['weight_name'] as String?,
       voiceLanguage: map['voiceLocale'] as String?,
       congestion: (map['congestion'] as List<dynamic>?)
-          ?.map((level) =>
-          CongestionLevelExtension.fromValue(level as int))
-          .toList() ??
+              ?.map((level) => CongestionLevelExtension.fromValue(level as int))
+              .toList() ??
           [],
-      roadInfo: (map['road_info'] as Map<dynamic, dynamic>?)?.cast<String, dynamic>(),
-    );
+      roadInfo:
+          (map['road_info'] as Map<dynamic, dynamic>?)?.cast<String, dynamic>(),
+    ).._nativeJson = _copyRouteJson(map);
   }
 
-  factory DirectionsRoute.fromJsonWithOption(Map<String, dynamic> map,RouteRequestParams option) {
+  factory DirectionsRoute.fromJsonWithOption(
+      Map<String, dynamic> map, RouteRequestParams option) {
     return DirectionsRoute(
       distance: map['distance'] as num?,
       duration: map['duration'] as num?,
       geometry: map['geometry'] as String?,
       legs: (map['legs'] as List?)
-          ?.whereType<Map<dynamic, dynamic>>() // Filter only valid maps
-          .map((leg) {
-        final Map<String, dynamic> convertedMap = leg.cast<String, dynamic>();
-        return Leg.fromJson(convertedMap);
-      })
-          .toList() ??
+              ?.whereType<Map<dynamic, dynamic>>() // Filter only valid maps
+              .map((leg) {
+            final Map<String, dynamic> convertedMap =
+                leg.cast<String, dynamic>();
+            return Leg.fromJson(convertedMap);
+          }).toList() ??
           [],
       routeIndex: map['routeIndex'] as String?,
       routeOptions: option,
@@ -80,16 +82,16 @@ class DirectionsRoute {
       weightName: map['weight_name'] as String?,
       voiceLanguage: map['voiceLocale'] as String?,
       congestion: (map['congestion'] as List<dynamic>?)
-          ?.map((level) =>
-          CongestionLevelExtension.fromValue(level as int))
-          .toList() ??
+              ?.map((level) => CongestionLevelExtension.fromValue(level as int))
+              .toList() ??
           [],
-      roadInfo: (map['road_info'] as Map<dynamic, dynamic>?)?.cast<String, dynamic>(),
-    );
+      roadInfo:
+          (map['road_info'] as Map<dynamic, dynamic>?)?.cast<String, dynamic>(),
+    ).._nativeJson = _copyRouteJson(map);
   }
 
   Map<String, dynamic> toJson() {
-    return {
+    return _mergeRouteJson(_nativeJson, {
       'distance': distance,
       'duration': duration,
       'geometry': geometry,
@@ -103,8 +105,47 @@ class DirectionsRoute {
       "congestion":
           congestion?.map((congestion) => congestion.index).toList() ?? [],
       'road_info': roadInfo,
-    };
+    });
   }
+}
+
+// Retain native annotations and future SDK fields through a Dart round trip.
+// Merge modeled values recursively so application edits still take effect.
+Map<String, dynamic> _copyRouteJson(Map<String, dynamic> map) =>
+    (_copyRouteValue(map) as Map).cast<String, dynamic>();
+
+dynamic _copyRouteValue(dynamic value) {
+  if (value is Map) {
+    return value.map(
+        (dynamic key, dynamic item) => MapEntry(key, _copyRouteValue(item)));
+  }
+  if (value is List) return value.map(_copyRouteValue).toList();
+  return value;
+}
+
+Map<String, dynamic> _mergeRouteJson(
+    Map<String, dynamic>? original, Map<String, dynamic> updated) {
+  dynamic merge(dynamic old, dynamic value) {
+    if (value is Map) {
+      return <String, dynamic>{
+        if (old is Map) ...old.cast<String, dynamic>(),
+        for (final entry in value.entries)
+          entry.key as String:
+              merge(old is Map ? old[entry.key] : null, entry.value),
+      };
+    }
+    if (value is List) {
+      return [
+        for (var index = 0; index < value.length; index++)
+          merge(old is List && index < old.length ? old[index] : null,
+              value[index])
+      ];
+    }
+    return value;
+  }
+
+  return (merge(_copyRouteValue(original), updated) as Map)
+      .cast<String, dynamic>();
 }
 
 class Leg {
@@ -124,17 +165,17 @@ class Leg {
           ? TimeDuration.fromJson(map['duration'] as Map<String, dynamic>)
           : null,
       steps: (map['steps'] as List<dynamic>?)
-          ?.whereType<Map<dynamic, dynamic>>() // Fi
-          .map((step) {
-        final Map<String, dynamic> convertedMap = step.cast<String, dynamic>();
-        // final Map<String, dynamic> convertedMap = Map<String, dynamic>.from(step);
+              ?.whereType<Map<dynamic, dynamic>>() // Fi
+              .map((step) {
+            final Map<String, dynamic> convertedMap =
+                step.cast<String, dynamic>();
+            // final Map<String, dynamic> convertedMap = Map<String, dynamic>.from(step);
             return RouteStep.fromJson(convertedMap);
-      }).toList() ??
+          }).toList() ??
           [],
       summary: map['summary'] as String?,
     );
   }
-
 
   Map<String, dynamic> toJson() {
     return {

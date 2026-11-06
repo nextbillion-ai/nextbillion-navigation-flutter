@@ -114,8 +114,6 @@ class DrawRouteLineState extends State<DrawRouteLine> {
         routes = routeResponse.directionsRoutes;
       });
       drawRoutes(routes);
-      var options =  routes.first.routeOptions?.toJson();
-      print("options ： $options");
     } else if (routeResponse.message != null) {
       if (kDebugMode) {
         print(

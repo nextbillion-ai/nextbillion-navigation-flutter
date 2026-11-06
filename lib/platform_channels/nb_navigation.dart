@@ -2,6 +2,9 @@ part of '../nb_navigation_flutter.dart';
 
 /// Stateless facade of the nextbillion navigation platform
 mixin NBNavigation {
+  /// Regional downloads and runtime configuration owned by the Navigation SDK.
+  static OfflineNavigation get offline => OfflineNavigation.instance;
+
   static NBNavigationPlatform _nbNavigationPlatform =
       NBNavigationPlatform.instance;
 

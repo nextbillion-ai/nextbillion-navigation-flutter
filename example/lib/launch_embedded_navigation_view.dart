@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nb_navigation_flutter/nb_navigation_flutter.dart';
-import 'package:nb_navigation_flutter_example/constants.dart';
 import 'package:nb_navigation_flutter_example/waypoint_dialog.dart';
 
 class LaunchEmbeddedNavigationView extends StatefulWidget {

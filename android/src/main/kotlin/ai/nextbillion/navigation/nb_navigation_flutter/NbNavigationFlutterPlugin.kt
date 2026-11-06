@@ -1,6 +1,5 @@
 package ai.nextbillion.navigation.nb_navigation_flutter
 
-import ai.nextbillion.navigation.core.routefetcher.RoutingAPIUtils
 import ai.nextbillion.navigation.factory.EmbeddedNavigationViewFactory
 import android.app.Activity
 import androidx.annotation.NonNull
@@ -16,7 +15,6 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.platform.PlatformViewRegistry
-import java.lang.String
 
 /** NbNavigationFlutterPlugin */
 class NbNavigationFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
@@ -27,15 +25,19 @@ class NbNavigationFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware
   private var binaryMessenger: BinaryMessenger? = null
   private var viewId = "FlutterNBNavigationView"
   private var activityLifecycle: Lifecycle? = null
+  private var offlineHandler: OfflineNavigationHandler? = null
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPluginBinding) {
+    offlineHandler = OfflineNavigationHandler(flutterPluginBinding.binaryMessenger, flutterPluginBinding.applicationContext)
     navigationChannel = MethodChannel(flutterPluginBinding.binaryMessenger, Constants.NAVIGATION_CHANNEL)
     methodHandleFactory = MethodHandleFactory(navigationChannel)
     navigationChannel.setMethodCallHandler(this)
-    platformViewRegistry = flutterPluginBinding.platformViewRegistry
-    binaryMessenger = flutterPluginBinding.binaryMessenger
-    val crossPlatformName = String.format("Flutter-%s-%s", BuildConfig.NBNAV_FLUTTER_VERSION, BuildConfig.GIT_REVISION_SHORT)
-    RoutingAPIUtils.setCrossPlatformInfo(crossPlatformName)
+    flutterPluginBinding.platformViewRegistry.registerViewFactory(
+      viewId,
+      EmbeddedNavigationViewFactory(flutterPluginBinding.binaryMessenger, { activity }, object : LifecycleProvider {
+        override val lifecycle: Lifecycle? get() = activityLifecycle
+      })
+    )
   }
 
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
@@ -43,23 +45,17 @@ class NbNavigationFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware
   }
 
   override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+    offlineHandler?.dispose()
+    offlineHandler = null
     navigationChannel.setMethodCallHandler(null)
     methodHandleFactory?.deInit()
   }
 
   override fun onAttachedToActivity(binding: ActivityPluginBinding) {
     activityLifecycle = FlutterLifecycleAdapter.getActivityLifecycle(binding)
+    offlineHandler?.onHostLifecycleChanged(activityLifecycle)
 
     activity = binding.activity
-    if (platformViewRegistry != null && binaryMessenger != null && activity != null) {
-      platformViewRegistry?.registerViewFactory(
-        viewId,
-        EmbeddedNavigationViewFactory(binaryMessenger!!, activity!!, object : LifecycleProvider {
-          override val lifecycle: Lifecycle?
-            get() = activityLifecycle
-        })
-      )
-    }
 
   }
 
@@ -72,6 +68,7 @@ class NbNavigationFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware
   }
 
   override fun onDetachedFromActivity() {
+    offlineHandler?.onHostLifecycleChanged(null)
     activity = null
     activityLifecycle = null
   }

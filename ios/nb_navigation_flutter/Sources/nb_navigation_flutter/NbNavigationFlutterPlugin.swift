@@ -8,6 +8,7 @@ public class NbNavigationFlutterPlugin: NSObject, FlutterPlugin {
     private static var channel: FlutterMethodChannel?
     
     public static func register(with registrar: FlutterPluginRegistrar) {
+        OfflineNavigationHandler.register(with: registrar)
         channel = FlutterMethodChannel(name: "nb_navigation_flutter", binaryMessenger: registrar.messenger())
         MethodChannelManager.shared.navigationChannel = channel
         let instance = NbNavigationFlutterPlugin()

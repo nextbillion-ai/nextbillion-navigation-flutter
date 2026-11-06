@@ -31,47 +31,34 @@ class RouteFetcherHandler: MethodChannelHandler {
         
         switch call.method {
         case MethodID.NAVIGATION_FETCH_ROUTE:
-            guard let args = call.arguments as? String else {
+            guard let args = call.arguments as? String,
+                  let routeOptions = Convert.convertRouteRequestParams(arguments: args) else {
+                result(FlutterError(code: "INVALID_ARGUMENT", message: "Invalid route parameters", details: nil))
                 return
             }
-            if let routeOptions = Convert.convertRouteRequestParams(arguments: args) {
-                requestRoute(with: routeOptions, call: call, result: result)
-            }
+            requestRoute(with: routeOptions, call: call, result: result)
         case MethodID.NAVIGATION_FIND_SELECTED_ROUTE:
             guard let args = call.arguments as? [String : Any] else {
+                result(FlutterError(code: "INVALID_ARGUMENT", message: "Missing route selection arguments", details: nil))
                 return
             }
             guard let clicked = args["clickPoint"] as? [Double],
-                  let coordinates = args["coordinates"] as? [[[Double]]] else {
+                  let coordinates = args["coordinates"] as? [[[Double]]],
+                  Self.validCoordinate(clicked),
+                  coordinates.allSatisfy({ $0.allSatisfy(Self.validCoordinate) }) else {
+                result(FlutterError(code: "INVALID_ARGUMENT", message: "Invalid route selection coordinates", details: nil))
                 return
             }
             
             let tapCoordinate = CLLocationCoordinate2D(latitude: clicked[0], longitude: clicked[1])
-            var lines: [[CLLocationCoordinate2D]] = []
-            for line in coordinates {
-                var coordinates: [CLLocationCoordinate2D] = []
-                for coordinate in line {
-                    let coord = CLLocationCoordinate2D(latitude: coordinate[0], longitude: coordinate[1])
-                    coordinates.append(coord)
-                }
-                lines.append(coordinates)
+            let candidates = coordinates.enumerated().compactMap { index, line -> (Int, Double)? in
+                guard line.count >= 2 else { return nil }
+                let shape = line.map { CLLocationCoordinate2D(latitude: $0[0], longitude: $0[1]) }
+                guard let closest = NBPolyline(shape).closestCoordinate(to: tapCoordinate) else { return nil }
+                let distance = closest.coordinate.distance(to: tapCoordinate)
+                return distance < 5000 ? (index, distance) : nil
             }
-            let closest = lines.sorted { (left, right) -> Bool in
-                //existance has been assured through use of filter.
-                let leftLine = NBPolyline(left)
-                let rightLine = NBPolyline(right)
-                let leftDistance = leftLine.closestCoordinate(to: tapCoordinate)!.distance
-                let rightDistance = rightLine.closestCoordinate(to: tapCoordinate)!.distance
-                
-                return leftDistance < rightDistance
-            }
-            let candidates = closest.filter {
-                let closestCoordinate = NBPolyline($0).closestCoordinate(to: tapCoordinate)!.coordinate
-                return closestCoordinate.distance(to: tapCoordinate) < 5000
-            }
-            if !candidates.isEmpty, let routeIndex = lines.firstIndex(of: candidates.first!) {
-                result(routeIndex)
-            }
+            result(candidates.min { $0.1 < $1.1 }?.0)
         case MethodID.NAVIGATION_GET_FORMATTED_ROUTE_DURATION:
             guard let arguments = call.arguments as? [String: Any] else {
                 result("")
@@ -101,8 +88,7 @@ class RouteFetcherHandler: MethodChannelHandler {
                 
                 if let symbolImage = durationSymbol.screenshotImage() {
                     result(symbolImage.pngData())
-                }
-                result(nil)
+                } else { result(nil) }
             } else {
                 result(nil)
             }
@@ -119,8 +105,7 @@ class RouteFetcherHandler: MethodChannelHandler {
                 let circularView = WayPointSymbol(frame: CGRect(x: 0, y: 0, width: 28, height: 28), labelText: indexString)
                 if let circularImage = circularView.captureScreenshot() {
                     result(circularImage.pngData())
-                }
-                result(nil)
+                } else { result(nil) }
             } else {
                 result(nil)
             }
@@ -131,24 +116,34 @@ class RouteFetcherHandler: MethodChannelHandler {
         }
     }
 
+    private static func validCoordinate(_ value: [Double]) -> Bool {
+        value.count >= 2 && value[0].isFinite && value[1].isFinite &&
+            (-90...90).contains(value[0]) && (-180...180).contains(value[1])
+    }
+
     func requestRoute(with options: RouteOptions, call: FlutterMethodCall, result: @escaping FlutterResult) {
         
-        Directions.shared.calculate(options, completionHandler: {(potentialRoutes, potentialError) in
-            if let error = potentialError {
-                result(["message": error.toastError(), "errorCode": error.code])
+        NBNavigation.fetchRoute(options: options, completion: { routes, source, error in
+            DispatchQueue.main.async {
+                if let error {
+                    let failure = NavigationBridgeError.flutterError(error)
+                    result(["message": failure.message ?? "Route request failed", "errorCode": (error as NSError).code,
+                            "errorDetails": ["code": failure.code, "nativeDetails": failure.details as Any]])
+                    return
+                }
+                guard let routes, !routes.isEmpty else {
+                    result(["message": "No routes returned", "errorCode": -1])
+                    return
+                }
+                do {
+                    let serialized = try routes.map(NavigationRouteCodec.encode)
+                    result(["routeResult": serialized,
+                            "routeOptions": Convert.convertRouteOptionsToMap(routeOptions: options),
+                            "routeSource": source == .offline ? "offline" : "online"])
+                } catch {
+                    result(FlutterError(code: "ROUTE_SERIALIZATION_FAILED", message: error.localizedDescription, details: nil))
+                }
             }
-            
-            guard let routes = potentialRoutes else { return }
-            
-            let routeResult = routes.map { route in
-                return route.json
-            }
-            let routeOptions = Convert.convertRouteOptionsToMap(routeOptions: options)
-            var args: [String: Any] = [:]
-            args["routeResult"] = routeResult
-            args["routeOptions"] = routeOptions
-            result(args)
         })
     }
-    
 }

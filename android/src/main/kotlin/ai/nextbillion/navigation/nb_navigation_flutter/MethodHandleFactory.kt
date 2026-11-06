@@ -31,6 +31,7 @@ class MethodHandleFactory(methodChannel: MethodChannel) {
         var methodChannelHandler: MethodChannelHandler? = null
         val method = call.method
         if (TextUtils.isEmpty(method)) {
+            result.notImplemented()
             return
         }
         when (method) {
@@ -48,7 +49,11 @@ class MethodHandleFactory(methodChannel: MethodChannel) {
             MethodID.NAVIGATION_SET_BASE_URL -> methodChannelHandler =
                 nbNavigationHandler
 
-            else -> {}
+            else -> { result.notImplemented(); return }
+        }
+        if (activity == null && method != MethodID.NAVIGATION_FETCH_ROUTE) {
+            result.error("NO_ACTIVITY", "A foreground Activity is required", null)
+            return
         }
         methodChannelHandler?.handleMethodCallResult(activity, call, result)
     }

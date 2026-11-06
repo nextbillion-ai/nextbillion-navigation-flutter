@@ -908,10 +908,10 @@ class MockMapController extends _i1.Mock implements _i3.MapController {
       ) as _i5.Future<_i4.LatLngBounds?>);
 
   @override
-  _i5.Future<void> setStyleString(String? styleString) => (super.noSuchMethod(
+  _i5.Future<void> setStyleType(_i4.NBMapStyleType? styleType) => (super.noSuchMethod(
         Invocation.method(
-          #setStyleString,
-          [styleString],
+          #setStyleType,
+          [styleType],
         ),
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),

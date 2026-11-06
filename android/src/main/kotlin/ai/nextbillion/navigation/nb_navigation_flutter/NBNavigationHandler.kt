@@ -1,7 +1,7 @@
 package ai.nextbillion.navigation.nb_navigation_flutter
 
 import ai.nextbillion.maps.Nextbillion
-import ai.nextbillion.navigation.core.routefetcher.RoutingAPIUtils
+import ai.nextbillion.navigation.ui.NBNavigation
 import android.app.Activity
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -39,13 +39,18 @@ class NBNavigationHandler(methodChannel: MethodChannel?) : MethodChannelHandler(
             }
 
             MethodID.NAVIGATION_GET_BASE_URL -> {
-                val navigationBaseUri = RoutingAPIUtils.getBaseUri()
+                val navigationBaseUri = NBNavigation.getApiBaseUri()
                 result.success(navigationBaseUri)
             }
 
             MethodID.NAVIGATION_SET_BASE_URL -> {
                 val args = call.arguments as? Map<*, *>
-                RoutingAPIUtils.setBaseUri(args?.get("navigationBaseUri")?.toString())
+                try {
+                    NBNavigation.setApiBaseUri(args?.get("navigationBaseUri")?.toString() ?: "")
+                } catch (error: IllegalArgumentException) {
+                    result.error("INVALID_ARGUMENT", error.message, null)
+                    return
+                }
                 result.success(true)
             }
         }

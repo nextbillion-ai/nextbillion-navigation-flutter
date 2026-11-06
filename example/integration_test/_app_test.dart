@@ -166,7 +166,7 @@ Future checkDragBottomSheet(
   final Size screenSize = tester.getSize(find.byType(MaterialApp));
   final Offset dragUpFrom = Offset(
     screenSize.width / 2,
-    screenSize.height - 50, // 距离底部 50px
+    screenSize.height - 50, // 50 px above the bottom edge
   );
 
   await tester.dragFrom(dragUpFrom, const Offset(0, -300));

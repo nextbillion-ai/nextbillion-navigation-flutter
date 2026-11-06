@@ -19,6 +19,7 @@ class NavNextBillionMap implements NavigationMap {
   bool _isIndependentRoute = false;
   int _primaryRouteIndex = 0;
   final List<DirectionsRoute> _routes = [];
+  bool _disposed = false;
 
   NavNextBillionMap._create(this.controller,
       {this.routeLineProperties = const RouteLineProperties()});
@@ -26,7 +27,8 @@ class NavNextBillionMap implements NavigationMap {
   static Future<NavNextBillionMap> create(NextbillionMapController controller,
       {RouteLineProperties routeLineProperties =
           const RouteLineProperties()}) async {
-    final MapController mapController = NextbillionMapControllerWrapper(controller);
+    final MapController mapController =
+        NextbillionMapControllerWrapper(controller);
     final navMap = NavNextBillionMap._create(mapController,
         routeLineProperties: routeLineProperties);
     navMap.assetManager = AssetManager();
@@ -48,7 +50,7 @@ class NavNextBillionMap implements NavigationMap {
 
   @override
   Future<void> initGeoJsonSource() async {
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
     await _removePreviousSource();
@@ -59,7 +61,7 @@ class NavNextBillionMap implements NavigationMap {
   }
 
   Future<void> _removePreviousSource() async {
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
     await safeRemoveLayer(routeShieldLayerId);
@@ -74,7 +76,7 @@ class NavNextBillionMap implements NavigationMap {
   }
 
   Future<void> _prepareSources() async {
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
 
@@ -86,20 +88,21 @@ class NavNextBillionMap implements NavigationMap {
   }
 
   Future<void> _loadAssetImage() async {
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
-    final origin = await assetManager.load(routeLineProperties.originMarkerName);
-    if (controller.disposed) {
+    final origin =
+        await assetManager.load(routeLineProperties.originMarkerName);
+    if (_disposed || controller.disposed) {
       return;
     }
     final destination =
         await assetManager.load(routeLineProperties.destinationMarkerName);
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
     await controller.addImage(originMarkerName, origin);
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
     await controller.addImage(destinationMarkerName, destination);
@@ -108,7 +111,7 @@ class NavNextBillionMap implements NavigationMap {
   /// add route shield layer, route layer, waypoint layer and route duration layer
   @override
   Future<void> initRouteLayers() async {
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
     final String? belowLayer = await controller.findBelowLayerId(
@@ -122,7 +125,7 @@ class NavNextBillionMap implements NavigationMap {
       routeLineProperties.alternativeRouteShieldColor,
     );
 
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
     await controller.addLineLayer(
@@ -131,7 +134,8 @@ class NavNextBillionMap implements NavigationMap {
 
     routeLayers[routeShieldLayerId] = routeShieldLayer;
 
-    final LineLayerProperties routeLayer = routeLayerProvider.initializeRouteLayer(
+    final LineLayerProperties routeLayer =
+        routeLayerProvider.initializeRouteLayer(
       routeLineProperties.routeScale,
       routeLineProperties.alternativeRouteScale,
       routeLineProperties.routeDefaultColor,
@@ -144,7 +148,7 @@ class NavNextBillionMap implements NavigationMap {
       routeLineProperties.alternativeRouteSevereColor,
     );
 
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
     await controller.addLineLayer(routeSourceId, routeLayerId, routeLayer,
@@ -154,7 +158,7 @@ class NavNextBillionMap implements NavigationMap {
 
     final SymbolLayerProperties wayPointLayer = routeLayerProvider
         .initializeWayPointLayer(originMarkerName, destinationMarkerName);
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
     await controller.addSymbolLayer(
@@ -163,7 +167,7 @@ class NavNextBillionMap implements NavigationMap {
     final SymbolLayerProperties durationSymbolLayer =
         routeLayerProvider.initializeDurationSymbolLayer();
 
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
     await controller.addSymbolLayer(
@@ -183,7 +187,7 @@ class NavNextBillionMap implements NavigationMap {
     assert(primaryRouteIndex >= 0 && primaryRouteIndex < routes.length,
         "primaryRouteIndex should be between 0 and routes.length - 1 inclusive.");
 
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
 
@@ -211,7 +215,7 @@ class NavNextBillionMap implements NavigationMap {
     assert(primaryRouteIndex >= 0 && primaryRouteIndex < routes.length,
         "primaryRouteIndex should be between 0 and routes.length - 1 inclusive.");
 
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
 
@@ -229,7 +233,7 @@ class NavNextBillionMap implements NavigationMap {
   }
 
   Future<void> _drawRoutesFeatureCollections() async {
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
     final List<Map<String, dynamic>> routeLineFeatures = [];
@@ -256,7 +260,8 @@ class NavNextBillionMap implements NavigationMap {
       return;
     }
 
-    final List<Map<String, dynamic>> reversed = routeLineFeatures.reversed.toList();
+    final List<Map<String, dynamic>> reversed =
+        routeLineFeatures.reversed.toList();
     await safeSetGeoJsonSource(
         routeShieldSourceId, buildFeatureCollection(reversed));
     await safeSetGeoJsonSource(routeSourceId, buildFeatureCollection(reversed));
@@ -291,7 +296,8 @@ class NavNextBillionMap implements NavigationMap {
         congestion.length > coordinates.length - 1) {
       final Map<String, dynamic> json =
           Line("routeLine", LineOptions(geometry: coordinates)).toGeoJson();
-      final Map<String, dynamic> properties = json["properties"] as Map<String, dynamic>;
+      final Map<String, dynamic> properties =
+          json["properties"] as Map<String, dynamic>;
       properties[primaryRoutePropertyKey] = isPrimary ? "true" : "false";
       json["properties"] = properties;
       congestionFeatures.add(json);
@@ -333,7 +339,7 @@ class NavNextBillionMap implements NavigationMap {
   }
 
   Future<void> _drawWayPoints() async {
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
     if (_routes.isEmpty) {
@@ -341,8 +347,10 @@ class NavNextBillionMap implements NavigationMap {
     }
     final route = _routes[_primaryRouteIndex];
     final List<Map<String, dynamic>> wayPoints = [];
-    final Coordinate origin = route.legs.first.steps!.first.maneuver!.coordinate!;
-    final Coordinate destination = route.legs.last.steps!.last.maneuver!.coordinate!;
+    final Coordinate origin =
+        route.legs.first.steps!.first.maneuver!.coordinate!;
+    final Coordinate destination =
+        route.legs.last.steps!.last.maneuver!.coordinate!;
     final originGeo = _generateWaypointSymbolGeo(origin, originMarkerName);
     wayPoints.add(originGeo);
 
@@ -355,7 +363,7 @@ class NavNextBillionMap implements NavigationMap {
           final wayPointGeo =
               _generateWaypointSymbolGeo(destination, waypointName);
           wayPoints.add(wayPointGeo);
-          if (controller.disposed) {
+          if (_disposed || controller.disposed) {
             return;
           }
           await _buildWaypointNumberView(waypointName, i + 1);
@@ -363,7 +371,8 @@ class NavNextBillionMap implements NavigationMap {
       }
     }
 
-    final desGeo = _generateWaypointSymbolGeo(destination, destinationMarkerName);
+    final desGeo =
+        _generateWaypointSymbolGeo(destination, destinationMarkerName);
     wayPoints.add(desGeo);
 
     await safeSetGeoJsonSource(
@@ -371,7 +380,7 @@ class NavNextBillionMap implements NavigationMap {
   }
 
   Future<void> _drawWayPointsWithRoutes() async {
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
 
@@ -421,7 +430,7 @@ class NavNextBillionMap implements NavigationMap {
       if (destination != null) {
         final String waypointName = "$destinationMarkerName${i + 1}";
         _addWaypoint(wayPoints, destination, waypointName);
-        if (controller.disposed) {
+        if (_disposed || controller.disposed) {
           return;
         }
         await _buildWaypointNumberView(waypointName, i + 1);
@@ -442,18 +451,19 @@ class NavNextBillionMap implements NavigationMap {
     final SymbolOptions coordinateSymbol = SymbolOptions(
         geometry: LatLng(coordinate.latitude, coordinate.longitude));
     final Map<String, dynamic> coordinateGeo = coordinateSymbol.toGeoJson();
-    final Map<String, dynamic> properties = coordinateGeo["properties"] as Map<String, dynamic>;
+    final Map<String, dynamic> properties =
+        coordinateGeo["properties"] as Map<String, dynamic>;
     properties[waypointPropertyKey] = propertiesValue;
     coordinateGeo["properties"] = properties;
     return coordinateGeo;
   }
 
   Future<void> _buildWaypointNumberView(String waypointName, int index) async {
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
     final image = await NBNavigation.captureRouteWaypoints(index);
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
     if (image != null) {
@@ -462,7 +472,7 @@ class NavNextBillionMap implements NavigationMap {
   }
 
   Future<void> _drawRouteDurationSymbol() async {
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
     final List<Map<String, dynamic>> durationSymbols = [];
@@ -475,14 +485,14 @@ class NavNextBillionMap implements NavigationMap {
       final SymbolOptions durationSymbol = SymbolOptions(
           geometry: LatLng(centerPoint.latitude, centerPoint.longitude));
       final Map<String, dynamic> geoJson = durationSymbol.toGeoJson();
-      final Map<String, dynamic> properties = geoJson["properties"] as Map<String, dynamic>;
-      properties[primaryRoutePropertyKey] =
-          isPrimary ? "true" : "false";
+      final Map<String, dynamic> properties =
+          geoJson["properties"] as Map<String, dynamic>;
+      properties[primaryRoutePropertyKey] = isPrimary ? "true" : "false";
       final String durationSymbolKey = "ROUTE_DURATION_SYMBOL_ICON_KEY$i";
       properties[routeDurationSymbolIconKey] = durationSymbolKey;
       geoJson["properties"] = properties;
       durationSymbols.add(geoJson);
-      if (controller.disposed) {
+      if (_disposed || controller.disposed) {
         return;
       }
       await _setRouteDurationSymbol(durationSymbolKey, i, route);
@@ -493,13 +503,13 @@ class NavNextBillionMap implements NavigationMap {
 
   Future<void> _setRouteDurationSymbol(
       String durationSymbolKey, int index, DirectionsRoute route) async {
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
     final image = await NBNavigation.captureRouteDurationSymbol(
         route, index == _primaryRouteIndex);
 
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
     if (image != null) {
@@ -526,7 +536,7 @@ class NavNextBillionMap implements NavigationMap {
   /// The [alternativeVisible] parameter determines whether alternative routes should be visible or not.
   @override
   Future<void> toggleAlternativeVisibilityWith(bool alternativeVisible) async {
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
 
@@ -535,7 +545,7 @@ class NavNextBillionMap implements NavigationMap {
           entry.key == routeLayerId ||
           entry.key == routeDurationLayerId) {
         if (alternativeVisible) {
-          if (controller.disposed) {
+          if (_disposed || controller.disposed) {
             return;
           }
           Platform.isIOS
@@ -543,7 +553,7 @@ class NavNextBillionMap implements NavigationMap {
                   .setFilter(entry.key, ['<=', primaryRoutePropertyKey, 'true'])
               : await controller.setFilter(entry.key, ['literal', true]);
         } else {
-          if (controller.disposed) {
+          if (_disposed || controller.disposed) {
             return;
           }
           await controller
@@ -557,7 +567,7 @@ class NavNextBillionMap implements NavigationMap {
   /// The [durationSymbolVisible] parameter determines whether the duration symbol should be visible or not.
   @override
   void toggleDurationSymbolVisibilityWith(bool durationSymbolVisible) {
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
     controller.setVisibility(routeDurationLayerId, durationSymbolVisible);
@@ -574,7 +584,7 @@ class NavNextBillionMap implements NavigationMap {
   }
 
   Future<void> clearSources() async {
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
     await safeSetGeoJsonSource(routeShieldSourceId, buildFeatureCollection([]));
@@ -585,62 +595,78 @@ class NavNextBillionMap implements NavigationMap {
   }
 
   void _addListeners() {
-    if (controller.disposed) {
+    if (_disposed || controller.disposed) {
       return;
     }
-    controller.onFeatureTapped.add((id, point, coordinates) {
-      if (id == "routeLine") {
-        _findRouteSelectedIndex(coordinates);
-      }
-    });
+    controller.onFeatureTapped.remove(_onFeatureTapped);
+    controller.onFeatureTapped.add(_onFeatureTapped);
   }
 
-  void _findRouteSelectedIndex(LatLng clickedPoint) {
+  void _onFeatureTapped(dynamic id, Point<double> point, LatLng coordinates) {
+    if (!_disposed && id == 'routeLine') _findRouteSelectedIndex(coordinates);
+  }
+
+  /// Releases this route overlay's callbacks without disposing its map owner.
+  void dispose() {
+    if (_disposed) return;
+    _disposed = true;
+    controller.onFeatureTapped.remove(_onFeatureTapped);
+    _onRouteSelectedCallback = null;
+    _routes.clear();
+    routeLines.clear();
+  }
+
+  Future<void> _findRouteSelectedIndex(LatLng clickedPoint) async {
     if (routeLines.length < 2) {
       return;
     }
-    NBNavigationPlatform.instance
-        .findSelectedRouteIndex(clickedPoint, routeLines)
-        .then((routeIndex) {
-      if (routeIndex != null && routeIndex != _primaryRouteIndex) {
-        if (routeIndex >= 0 && routeIndex < routeLines.length) {
-          _primaryRouteIndex = routeIndex;
-        }
+    try {
+      final routeIndex = await NBNavigationPlatform.instance
+          .findSelectedRouteIndex(clickedPoint, routeLines);
+      if (_disposed || controller.disposed) return;
+      if (routeIndex != null &&
+          routeIndex >= 0 &&
+          routeIndex < routeLines.length &&
+          routeIndex != _primaryRouteIndex) {
+        _primaryRouteIndex = routeIndex;
         if (_isIndependentRoute) {
-          drawIndependentRoutes(List.from(_routes),
+          await drawIndependentRoutes(List.from(_routes),
               primaryRouteIndex: _primaryRouteIndex);
         } else {
-          drawRoute(List.from(_routes), primaryRouteIndex: _primaryRouteIndex);
+          await drawRoute(List.from(_routes),
+              primaryRouteIndex: _primaryRouteIndex);
         }
         if (_onRouteSelectedCallback != null) {
           _onRouteSelectedCallback?.call(routeIndex);
         }
       }
-    });
+    } catch (error) {
+      if (kDebugMode) debugPrint('Unable to select route: $error');
+    }
   }
 
   Future safeRemoveLayer(String layerId) async {
-    if (!controller.disposed) {
+    if (!_disposed && !controller.disposed) {
       await controller.removeLayer(layerId);
     }
   }
 
   Future safeRemoveSource(String sourceId) async {
-    if (!controller.disposed) {
+    if (!_disposed && !controller.disposed) {
       await controller.removeSource(sourceId);
     }
   }
 
   Future safeAddGeoJsonSource(
       String sourceId, Map<String, dynamic> geoJson) async {
-    if (!controller.disposed) {
+    if (!_disposed && !controller.disposed) {
       await controller.addGeoJsonSource(sourceId, geoJson);
     }
   }
 
   Future safeSetGeoJsonSource(
       String sourceId, Map<String, dynamic> geoJson) async {
-    if (!controller.disposed) {
+    if (!_disposed && !controller.disposed) {
       await controller.setGeoJsonSource(sourceId, geoJson);
     }
   }

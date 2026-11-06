@@ -732,10 +732,10 @@ void main() {
     expect(actual, equals(expectedLatLngBounds));
   });
 
-  test('setStyleString should call setStyleString on the controller', () async {
-    const styleString = 'style';
-    await mapControllerWrapper.setStyleString(styleString);
-    verify(mockController.setStyleString(styleString)).called(1);
+  test('setStyleType should call setStyleType on the controller', () async {
+    const styleType = NBMapStyleType.night;
+    await mapControllerWrapper.setStyleType(styleType);
+    verify(mockController.setStyleType(styleType)).called(1);
   });
 
   test('setGeoJsonFeature should call setGeoJsonFeature on the controller',

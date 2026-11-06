@@ -28,8 +28,6 @@ class BannerInstructions {
     );
   }
 
-
-
   Map<String, dynamic> toJson() {
     return {
       'distanceAlongGeometry': distanceAlongGeometry,
@@ -62,8 +60,8 @@ class Primary {
   factory Primary.fromJson(Map<String, dynamic> map) {
     return Primary(
       components: (map['components'] as List<dynamic>?)
-          ?.map((x) => Component.fromJson(x as Map<String, dynamic>))
-          .toList() ??
+              ?.map((x) => Component.fromJson(x as Map<String, dynamic>))
+              .toList() ??
           [],
       degrees: map['degrees'] as num?,
       instruction: map['instruction'] as String? ?? "",
@@ -73,7 +71,6 @@ class Primary {
       drivingSide: map['driving_side'] as String?,
     );
   }
-
 
   Map<String, dynamic> toJson() {
     return {
@@ -122,10 +119,11 @@ class Component {
       type: map['type'] as String? ?? "",
       subType: map['subType'] as String? ?? "",
       abbreviation: map['abbr'] as String? ?? "",
-      abbreviationPriority: map['abbr_priority'] as int?,
+      abbreviationPriority:
+          (map['abbr_priority'] ?? map['abbreviation_priority']) as num?,
       imageBaseUrl: map['imageBaseURL'] as String?,
-      imageUrl: map['imageURL'] as String?,
-      directions: map['directions'] as List<String>?,
+      imageUrl: (map['imageURL'] ?? map['image_url']) as String?,
+      directions: (map['directions'] as List?)?.cast<String>().toList(),
       active: map['active'] as bool?,
       reference: map['reference'] as String?,
     );

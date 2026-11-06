@@ -11,17 +11,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:nb_navigation_flutter_example/main.dart';
 
 void main() {
-  testWidgets('Verify Platform version', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(NavigationDemo());
-
-    // Verify that platform version is retrieved.
+  testWidgets('home offers runtime configuration when no build-time key is set',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const MaterialApp(home: NavigationDemo()));
+    expect(find.text('Configure Test Key'), findsOneWidget);
     expect(
-      find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is Text && widget.data!.startsWith('Running on:'),
-      ),
-      findsOneWidget,
-    );
+        tester.widget<TextField>(find.byType(TextField)).obscureText, isTrue);
+    expect(find.text('Initialize and Open Examples'), findsOneWidget);
+    await tester.pumpWidget(const SizedBox.shrink());
   });
 }

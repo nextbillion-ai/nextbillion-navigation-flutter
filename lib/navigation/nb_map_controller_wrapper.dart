@@ -173,7 +173,9 @@ abstract class MapController {
 
   Future<LatLngBounds?> getVisibleRegion();
 
-  Future<void> setStyleString(String styleString);
+  /// Switches the current map to a predefined style.
+  /// Configure custom styles through [NBMap.styleString] when creating the map.
+  Future<void> setStyleType(NBMapStyleType styleType);
 
   Future<void> addImage(String name, Uint8List bytes, [bool sdf = false]);
 
@@ -597,8 +599,8 @@ class NextbillionMapControllerWrapper extends MapController {
   }
 
   @override
-  Future<void> setStyleString(String styleString) {
-    return _controller.setStyleString(styleString);
+  Future<void> setStyleType(NBMapStyleType styleType) {
+    return _controller.setStyleType(styleType);
   }
 
   @override
